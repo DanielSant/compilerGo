@@ -1,8 +1,7 @@
 # ------------------------------------------------------------
-# calclex.py
+# goLex.py
 #
-# tokenizer for a simple expression evaluator for
-# numbers and +,-,*,/
+# tokenizer for a simplification language Golang(Go)
 # ------------------------------------------------------------
 
 import ply.lex as lex
@@ -35,6 +34,7 @@ reserved = {
     'boolean': 'BOOLEAN',
     'true': 'TRUE',
     'false': 'FALSE',
+    'int': 'INT',
 }
 
 # List of token names.   This is always required
@@ -49,6 +49,11 @@ tokens = [
     'PAREN_CLOSE',
     'CHAR',
     'ARRAY',
+    'ATTRIBUTE',
+    'EQUAL',
+    'BIG',
+    'SMALL',
+    'BIGEQUAL',
 ] + list(reserved.values())
 
 # Regular expression rules for simple tokens
@@ -75,10 +80,44 @@ def t_NUMBER(t):
     t.value = int(t.value)    
     return t
 
+# Indentacao # Wedson Help
+ArrayTabulacao = [0]
+IndicePosicao = 0
+ConstTabulacao = 8
+
+def t_IDENTATION(t):
+    r'\n[ \t]*'
+    global IndicePosicao
+    global ConstTabulacao
+    Tamanho = 0
+    
+    for i in t.value:
+        if(i == ' '):
+            Tamanho += 1
+        else:
+            if(i != '\n'):
+                Auxiliar = Tamanho // ConstTabulacao
+                Tamanho = (Auxiliar + 1) * ConstTabulacao
+
+    if(ArrayTabulacao[IndicePosicao] < Tamanho):
+        ArrayTabulacao.append(Tamanho)
+        IndicePosicao += 1
+    if(ArrayTabulacao[IndicePosicao] > Tamanho):
+        if(Tamanho in ArrayTabulacao):
+            del ArrayTabulacao[ArrayTabulacao.index(Tamanho)+1:len(ArrayTabulacao)]
+            IndicePosicao = ArrayTabulacao.index(Tamanho)
+        else:
+            print("Identação ilegal foi encontrada")
+
 # Define a rule so we can track line numbers
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
+
+def t_coment(t):
+    #r'(\/{2}.+)|(\/\*\*\/)' Tentando pegar o de várias linhas btm
+    r'(\/{2}.+)'
+    pass
 
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'
@@ -92,7 +131,8 @@ def t_error(t):
 lexer = lex.lex()
 
 data = '''
-int variavel = 10;
+int variavel = 10
+// Isto é comentário
 '''
 
 lexer.input(data)
