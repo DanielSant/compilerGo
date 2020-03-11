@@ -11,30 +11,26 @@ reserved = {
     'break' : 'BREAK',
     'default': 'DEFAULT',
     'func': 'FUNC',
-    'interface': 'INTERFACE',
-    'select': 'SELECT',
     'const': 'CONST',
     'if': 'IF',
     'range': 'RANGE',
     'case': 'CASE',
-    'defer': 'DEFER',
-    'go': 'GO',
     'map': 'MAP',
     'struct': 'STRUCT',
     'type': 'TYPE',
     'continue': 'CONTINUE',
     'for': 'FOR',
-    'chan': 'CHAN',
     'else': 'ELSE',
-    'goto': 'GOTO',
-    'package': 'PACKAGE',
     'switch': 'SWITCH',
-    'import': 'IMPORT',
     'return': 'RETURN',
     'var': 'VAR',
     'boolean': 'BOOLEAN',
     'true': 'TRUE',
     'false': 'FALSE',
+    'int': 'INT',
+    'string': 'STRING',
+    'print': 'PRINT',
+    'println': 'PRINTLN'
 }
 
 # List of token names.   This is always required
@@ -45,24 +41,29 @@ tokens = [
     'MINUS',
     'TIMES',
     'DIVIDE',
-    'PAREN_OPEN',
-    'PAREN_CLOSE',
-    'CHAR',
-    'ARRAY',
+    'EQUALS',
+    'ASSIGN',
+    'LPAREN',
+    'RPAREN',
+    'GREATER',
+    'LESS',
+    'GREATER_EQUAL',
+    'LESS_EQUAL'
 ] + list(reserved.values())
 
 # Regular expression rules for simple tokens
-t_PLUS        = r'\+'
-t_MINUS       = r'-'
-t_TIMES       = r'\*'
-t_DIVIDE      = r'/'
-t_PAREN_OPEN  = r'\('
-t_PAREN_CLOSE = r'\)'
-t_EQUAL       = r'=='
-t_ATTRIBUTE   = r'\='
-t_BIG         = r'\>'
-t_SMALL       = r'\<'
-t_BIGEQUAL    = r'\>='  
+t_PLUS          = r'\+'
+t_MINUS         = r'-'
+t_TIMES         = r'\*'
+t_DIVIDE        = r'/'
+t_LPAREN        = r'\('
+t_RPAREN        = r'\)'
+t_EQUALS        = r'=='
+t_ASSIGN        = r'\='
+t_GREATER       = r'\>'
+t_LESS          = r'\<'
+t_GREATER_EQUAL = r'\>='
+t_LESS_EQUAL    = r'\<='
 
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
