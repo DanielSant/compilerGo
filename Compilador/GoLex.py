@@ -40,6 +40,7 @@ tokens = [
     'MINUS',
     'TIMES',
     'DIVIDE',
+    'POT',
     'EQUALS',
     'ASSIGN',
     'LPAREN',
@@ -47,7 +48,10 @@ tokens = [
     'GREATER',
     'LESS',
     'GREATER_EQUAL',
-    'LESS_EQUAL'
+    'LESS_EQUAL',
+    'AND',
+    'OR',
+    'NEGATION'
 ] + list(reserved.values())
 
 # Regular expression rules for simple tokens
@@ -63,7 +67,11 @@ t_GREATER       = r'\>'
 t_LESS          = r'\<'
 t_GREATER_EQUAL = r'\>='
 t_LESS_EQUAL    = r'\<='
-
+t_AND           = r'\&&'
+t_OR            = r'\||'
+t_POT           = r'\^'
+t_NEGATION      = r'\!'
+ 
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value, 'ID')    # Check for reserved words
