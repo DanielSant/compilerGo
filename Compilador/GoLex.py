@@ -56,7 +56,8 @@ tokens = [
     'LESS_EQUAL',
     'AND',
     'OR',
-    'SEMICOLON'
+    'SEMICOLON',
+    'TWOPOINTS'
 ] + list(reserved.values())
 
 # Regular expression rules for simple tokens
@@ -79,6 +80,7 @@ t_NEGATION      = r'\!'
 t_LCHAVES       = r'\{'
 t_RCHAVES       = r'\}'
 t_SEMICOLON     = r'\;'
+t_TWOPOINTS     = r'\:'
  
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
