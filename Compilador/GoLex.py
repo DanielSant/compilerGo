@@ -45,6 +45,8 @@ tokens = [
     'ASSIGN',
     'LPAREN',
     'RPAREN',
+    'LCHAVES',
+    'RCHAVES',
     'GREATER',
     'LESS',
     'GREATER_EQUAL',
@@ -71,6 +73,8 @@ t_AND           = r'\&&'
 t_OR            = r'\||'
 t_POT           = r'\^'
 t_NEGATION      = r'\!'
+t_LCHAVES       = r'\{'
+t_RCHAVES       = r'\}'
  
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
