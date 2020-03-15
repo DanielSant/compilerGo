@@ -28,6 +28,9 @@ reserved = {
     'false': 'FALSE',
     'int': 'INT',
     'string': 'STRING',
+    'bool' : 'BOOL',
+    'byte' : 'BYTE',
+    'float' : 'FLOAT',
     'print': 'PRINT',
     'println': 'PRINTLN'
 }
