@@ -71,7 +71,7 @@ def m_switchStmt(p):
     '''switchStmt : SWITCH simpleStmt SEMICOLON expression LCHAVES exprCaseClause RCHAVES'''
 
 def m_exprCaseClause(p):
-    '''exprCaseClause : exprSwitchCase TWOPOINTS statementList'''
+    '''exprCaseClause : exprSwitchCase COLON statementList'''
 
 def m_exprSwitchCase(p):
     '''exprSwitchCase : CASE expressionList
