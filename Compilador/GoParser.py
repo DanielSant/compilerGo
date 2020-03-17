@@ -23,3 +23,14 @@ def m_parameterList(p):
     '''parameterList : parameterDecl COMMA parameterDecl'''
 
 def m_parameterDecl(p):
+    '''parameterDecl : identifier TYPE'''
+
+def m_functionBody(p):
+    '''functionBody : block''' ### OBSERVAÇÃO
+
+def m_block(p):
+    '''block : LCHAVES statementList RCHAVES'''
+
+def m_statementList(p):
+    '''
+
