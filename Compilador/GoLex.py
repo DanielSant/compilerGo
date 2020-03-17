@@ -45,6 +45,7 @@ tokens = [
     'DIVIDE',
     'POT',
     'EQUALS',
+    'DIFERENTE',
     'ASSIGN',
     'LPAREN',
     'RPAREN',
