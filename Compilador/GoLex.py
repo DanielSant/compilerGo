@@ -58,7 +58,8 @@ tokens = [
     'AND',
     'OR',
     'SEMICOLON',
-    'COLON'
+    'COLON',
+    'COMMA'
 ] + list(reserved.values())
 
 # Regular expression rules for simple tokens
@@ -82,6 +83,7 @@ t_LCHAVES       = r'\{'
 t_RCHAVES       = r'\}'
 t_SEMICOLON     = r'\;'
 t_COLON         = r'\:'
+t_COMMA         = r'\,'
  
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
