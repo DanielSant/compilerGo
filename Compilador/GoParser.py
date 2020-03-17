@@ -55,5 +55,73 @@ def m_simpleStmt(p):
                   | shortVarDecl'''
 
 def m_returnStmt(p):
-    '''returnStmt
+    '''returnStmt : RETURN expressionList'''
+
+def m_breakStmt(p):
+    '''breakStmt : BREAK'''
+
+def m_continueStmt(p):
+    '''continueStmt : CONTINUE'''
+
+def m_ifStmt(p):
+    '''ifStmt : IF expressionBlock ELSE if ifStmt
+              | IF expressionBlock ELSE if block ''' ###OBERVAÇÃO VERIFICAR SER ESTAR CORRETO A CONSTRUÇÃO
+
+def m_switchStmt(p):
+    '''switchStmt : SWITCH simpleStmt SEMICOLON expression LCHAVES exprCaseClause RCHAVES'''
+
+def m_exprCaseClause(p):
+    '''exprCaseClause : exprSwitchCase TWOPOINTS statementList'''
+
+def m_exprSwitchCase(p):
+    '''exprSwitchCase : CASE expressionList
+                      | DEFAULT'''
+
+def m_forStmt(p):
+    '''forStmt : FOR condition block
+               | FOR forClause block
+               | FOR rangeClause block
+               | FOR block'''
+
+def m_condition(p):
+    '''condition : expresison'''
+
+def m_forClause(p):
+    '''forClause : initStmt SEMICOLON condition SEMICOLON postStmt
+                 | initStmt SEMICOLON condition
+                 | initStmt
+                 | condition SEMICOLON postStmt
+                 | condition
+                 | initStmt SEMICOLON postStmt
+                 | postStmt''' ###OBSERVA A CONSTRUÇÃO
+
+def m_initStmt(p):
+    '''initStmt : simpleStmt'''
+
+def m_postStmt(p):
+    '''postStmt : simpleStmt'''
+
+def m_rangeClause(p):
+    '''rangeClaus : RANGE expression
+                  | expressionList ASSIGN RANGE expression
+                  | identifierList ASSIGN RANGE expression''' ### Mudei da original :=
+
+def m_constDecl(p):
+    '''constDecl : CONST constSpec
+                 | CONST LPAREN constSpec SEMICOLON RPAREN'''
+
+def m_constSpec(p):
+    '''constSpec : identfierList
+                 | identfierList ASSIGN expressionList
+                 | identfierList type ASSIGN expressionList''' ###Verificar ser estar correta 
+
+def m_identfierList(p):
+    '''identfierList : ID COMMA ID'''
+
+def m_expressionList(p):
+    '''expressionList : expression COMMA expression'''
+
+
+### Seguir criando os def A PARTIR DA TABELA  - COLUNA A LINHA 62 
+
 
