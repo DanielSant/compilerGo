@@ -1,14 +1,25 @@
-m_functionDecl(p):
+def m_functionDecl(p):
     '''functionDecl : FUNC ID signature
                     | FUNC ID signature functionBody'''
 
-m_signature(p):
+def m_signature(p):
     '''signature : parameters
                  | parameters result'''
 
-m_result(p):
+def m_result(p):
     '''result : type'''
 
-m_type(p):
+def m_type(p):
     '''type : INT
             | STRING
+            | BOOL
+            | BYTE
+            | FLOAT'''
+
+def m_parameters(p):
+    '''parameters : LPAREN parameterList COMMA RPAREN''' 
+
+def m_parameterList(p):
+    '''parameterList : parameterDecl COMMA parameterDecl'''
+
+def m_parameterDecl(p):
