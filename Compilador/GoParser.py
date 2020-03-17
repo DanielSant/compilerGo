@@ -1,35 +1,35 @@
 def m_functionDecl(p):
     '''functionDecl : FUNC ID signature
-                    | FUNC ID signature functionBody '''
+                    | FUNC ID signature functionBody'''
 
 def m_signature(p):
     '''signature : parameters
-                 | parameters result '''
+                 | parameters result'''
 
 def m_result(p):
-    '''result : type '''
+    '''result : type'''
 
 def m_type(p):
     '''type : INT
             | STRING
             | BOOL
             | BYTE
-            | FLOAT '''
+            | FLOAT'''
 
 def m_parameters(p):
-    '''parameters : LPAREN parameterList COMMA RPAREN ''' 
+    '''parameters : LPAREN parameterList COMMA RPAREN''' 
 
 def m_parameterList(p):
-    '''parameterList : parameterDecl COMMA parameterDecl '''
+    '''parameterList : parameterDecl COMMA parameterDecl'''
 
 def m_parameterDecl(p):
-    '''parameterDecl : identifier TYPE '''
+    '''parameterDecl : identifier TYPE'''
 
 def m_functionBody(p):
-    '''functionBody : block''' ### OBSERVAÇÃO
+    '''functionBody : block'''
 
 def m_block(p):
-    '''block : LCHAVES statementList RCHAVES '''
+    '''block : LCHAVES statementList RCHAVES'''
 
 def m_statementList(p):
     '''statementList : declaration
@@ -40,5 +40,20 @@ def m_statementList(p):
                      | block  
                      | ifStmt
                      | switchStmt
-                     | forStmt '''
+                     | forStmt'''
+
+def m_declaration(p):
+    '''declaration : constDecl
+                   | typeDecl
+                   | varDecl'''
+
+def m_simpleStmt(p):
+    '''simpleStmt : empty
+                  | expression
+                  | incDec
+                  | assignment
+                  | shortVarDecl'''
+
+def m_returnStmt(p):
+    '''returnStmt
 
