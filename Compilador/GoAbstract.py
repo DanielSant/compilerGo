@@ -147,3 +147,25 @@ class CompParamsDecl(ParameterList): ##PRECISA OBSERVAR ISSO
         self.ParameterDecl = ParameterDecl
     def accept(self, Visitor):
         Visitor.visitCompParamsDecl(self)
+
+
+##ABSTRATA##
+class ParameterDecl(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+##CONCRETA##
+class ParamDecl(ParameterDecl):
+    def __init__(self, Type):
+        self.Type = Type
+
+    def accept(self, Visitor):
+        Visitor.visitParamDecl(self)
+
+class ParamIdDecl(ParameterDecl):
+    def __init__(self, IdentifierList, Type):
+        self.IdentifierList = IdentifierList
+        self.Type = Type
+
+    def accept(self, Visitor):
+        Visitor.visitParamIdDecl(self)
