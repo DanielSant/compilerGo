@@ -242,3 +242,48 @@ class BreakStm(metaclass=ABCMeta):
 class StmtBreak(BreakStm) :
     def _init_(self,BREAK):
         self.BREAK = BREAK
+
+##ABSTRATA##
+class ContinueStmt(metaclass=ABCMeta):
+	@abstractclassmethod
+	def accept(self, Visitor):
+		pass
+##CONCRETA##
+class StmtContinue(ContinueStmt):
+    def _init_(self, CONTINUE):
+        self.CONTINUE = CONTINUE
+    def accept(self, Visitor):
+        Visitor.visitStmtContinue(self)
+
+##ABSTRATA##
+class IfStmt(metaclass=ABCMeta):
+	@abstractclassmethod
+	def accept(self, Visitor):
+		pass
+##CONCRETA##
+class SimpleIf(IfStmt):
+    def _init_(self, IF, Expression, Block):
+        self.IF = IF
+        self.Expression = Expression
+        self.Block = Block
+    def accept(self, Visitor):
+        Visitor.visitSimpleIf(self)
+
+class IfElse(IfStmt):
+    def _init_(self, IF, Expression, Block, ELSE, Block):
+        self.IF = IF
+        self.Expression = Expression
+        self.Block = Block
+        self.ELSE = Block
+    def accept(self, Visitor):
+        Visitor.visitIfElse(self)
+##CONCRETA##
+class CompIfElse(IfStmt):
+    def _init_(self, IF, Expression, Block, ELSE, IfStmt):
+        self.IF = IF
+        self.Expression = Expression
+        self.Block = Block
+        self.ELSE = ELSE
+        self.IfStmt = IfStmt
+    def accept(self, Visitor):
+        Visitor.visitCompIfElse(self)
