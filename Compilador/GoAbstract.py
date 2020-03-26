@@ -426,6 +426,58 @@ class CompIfElse(IfStmt):
         Visitor.visitCompIfElse(self)
 
 ##ABSTRATA##
+class SwitchStmt(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+##CONCRETA##
+class ExprSwitch(SwitchStmt):
+    def _init_(self, SWITCH, LCHAVES, ExprCaseClause, RCHAVES):
+        self.SWITCH = SWITCH
+        self.LCHAVES = LCHAVES
+        self.ExprCaseClause = ExprCaseClause
+        self.RCHAVES = RCHAVES
+
+    def accept(self, Visitor):
+        Visitor.visitExprSwitch(self)
+
+class ExprSwitch(SwitchStmt):
+    def _init_(self, SWITCH, SimpleStmt, SEMICOLON, LCHAVES, ExprCaseClause, RCHAVES):
+        self.SWITCH = SWITCH
+        self.SimpleStmt = SimpleStmt
+        self.SEMICOLON = SEMICOLON
+        self.LCHAVES = LCHAVES
+        self.ExprCaseClause = ExprCaseClause
+        self.RCHAVES = RCHAVES
+
+    def accept(self, Visitor):
+        Visitor.visitExprSwitch(self)
+
+class ExprSwitch(SwitchStmt):
+    def _init_(self, SWITCH, SimpleStmt, SEMICOLON, Expression, LCHAVES, ExprCaseClause, RCHAVES):
+        self.SWITCH = SWITCH
+        self.SimpleStmt = SimpleStmt
+        self.SEMICOLON = SEMICOLON
+        self.Exoression = Expression
+        self.LCHAVES = LCHAVES
+        self.ExprCaseClause = ExprCaseClause
+        self.RCHAVES = RCHAVES
+
+    def accept(self, Visitor):
+        Visitor.visitExprSwitch(self)
+
+class ExprSwitch(SwitchStmt):
+    def _init_(self, SWITCH, Expression, LCHAVES, ExprCaseClause, RCHAVES):
+        self.SWITCH = SWITCH
+        self.Exoression = Expression
+        self.LCHAVES = LCHAVES
+        self.ExprCaseClause = ExprCaseClause
+        self.RCHAVES = RCHAVES
+
+    def accept(self, Visitor):
+        Visitor.visitExprSwitch(self)
+
+##ABSTRATA##
 class ExprCaseClause(metaclass=ABCMeta):
 	@abstractclassmethod
 	def accept(self, Visitor):
