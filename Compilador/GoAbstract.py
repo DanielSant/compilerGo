@@ -206,7 +206,7 @@ class StatementList(metaclass=ABCMeta):
 		pass
 ##CONCRETA##
 class DefinirStatement(StatementList): ##PRECISA OBSERVAR ISSO
-    def _init_(self, Statement, SEMICOLON):
+    def __init__ (self, Statement, SEMICOLON):
         self.Statement = Statement
         self.SEMICOLON = SEMICOLON
     def accept(self, Visitor):
@@ -288,21 +288,21 @@ class Declaration(metaclass=ABCMeta):
         pass
 ##CONCRETA##
 class DeclConst(Declaration):
-    def _init_(self, ConstDecl):
+    def __init__(self, ConstDecl):
         self.ConstDecl = ConstDecl
 
     def accept(self, Visitor):
         Visitor.visitDeclConst(self)
 
     class DeclType(Declaration):
-    def _init_(self, TypeDecl):
+    def __init__(self, TypeDecl):
         self.TypeDecl = TypeDecl
 
     def accept(self, Visitor):
         Visitor.visitDeclType(self)
 
     class DeclVar(Declaration):
-    def _init_(self, ConstVar):
+    def __init__(self, ConstVar):
         self.ConstVar = ConstVar
 
     def accept(self, Visitor):
@@ -315,35 +315,35 @@ class SimpleStmt(metaclass=ABCMeta):
         pass
 ##CONCRETA##
 class StmtEmpty(SimpleStmt):
-    def _init_(self, none): #Duvidas
+    def __init__(self, none): #Duvidas
         self.none = none
 
     def accept(self, Visitor):
         Visitor.visitStmtEmpty(self)
 
 class StmtExpression(SimpleStmt):
-    def _init_(self, Expression):
+    def __init__(self, Expression):
         self.Expression = Expression
 
     def accept(self, Visitor):
         Visitor.visitStmtExpression(self)
 
 class StmtIncDec(SimpleStmt):
-    def _init_(self, IncDec):
+    def __init__(self, IncDec):
         self.IncDec = IncDec
 
     def accept(self, Visitor):
         Visitor.visitStmtIncDec(self)
 
 class Assign(SimpleStmt):
-    def _init_(self, Assignment):
+    def __init__(self, Assignment):
         self.Assignment = Assignment
 
     def accept(self, Visitor):
         Visitor.visitAssign(self)
 
 class DeclShortVar(SimpleStmt):
-    def _init_(self, ShortVarDecl):
+    def __init__(self, ShortVarDecl):
         self.ShortVarDecl = ShortVarDecl
 
     def accept(self, Visitor):
@@ -356,14 +356,14 @@ class ReturnStmt(metaclass=ABCMeta):
 		pass
 ##CONCRETA##
 class SimpleReturn(ReturnStm):
-    def _init_(self,RETURN):
+    def __init__(self,RETURN):
         self.RETURN = RETURN
 
     def accept(self, Visitor):
         Visitor.visitSimpleReturn(self)
 
 class ExpReturn(ReturnStm):
-    def _init_(self,RETURN, ExpressionList):
+    def __init__(self,RETURN, ExpressionList):
         self.RETURN = RETURN
         self.ExpressionList = ExpressionList
     
@@ -377,7 +377,7 @@ class BreakStm(metaclass=ABCMeta):
 		pass
 ##CONCRETA## 
 class StmtBreak(BreakStm) :
-    def _init_(self,BREAK):
+    def __init__(self,BREAK):
         self.BREAK = BREAK
 
 ##ABSTRATA##
@@ -387,7 +387,7 @@ class ContinueStmt(metaclass=ABCMeta):
 		pass
 ##CONCRETA##
 class StmtContinue(ContinueStmt):
-    def _init_(self, CONTINUE):
+    def __init__(self, CONTINUE):
         self.CONTINUE = CONTINUE
     def accept(self, Visitor):
         Visitor.visitStmtContinue(self)
@@ -399,7 +399,7 @@ class IfStmt(metaclass=ABCMeta):
 		pass
 ##CONCRETA##
 class SimpleIf(IfStmt):
-    def _init_(self, IF, Expression, Block):
+    def __init__(self, IF, Expression, Block):
         self.IF = IF
         self.Expression = Expression
         self.Block = Block
@@ -407,7 +407,7 @@ class SimpleIf(IfStmt):
         Visitor.visitSimpleIf(self)
 
 class IfElse(IfStmt):
-    def _init_(self, IF, Expression, Block, ELSE, Block):
+    def __init__(self, IF, Expression, Block, ELSE, Block):
         self.IF = IF
         self.Expression = Expression
         self.Block = Block
@@ -416,7 +416,7 @@ class IfElse(IfStmt):
         Visitor.visitIfElse(self)
 ##CONCRETA##
 class CompIfElse(IfStmt):
-    def _init_(self, IF, Expression, Block, ELSE, IfStmt):
+    def __init__(self, IF, Expression, Block, ELSE, IfStmt):
         self.IF = IF
         self.Expression = Expression
         self.Block = Block
@@ -432,7 +432,7 @@ class SwitchStmt(metaclass=ABCMeta):
         pass
 ##CONCRETA##
 class ExprSwitch(SwitchStmt):
-    def _init_(self, SWITCH, LCHAVES, ExprCaseClause, RCHAVES):
+    def __init__(self, SWITCH, LCHAVES, ExprCaseClause, RCHAVES):
         self.SWITCH = SWITCH
         self.LCHAVES = LCHAVES
         self.ExprCaseClause = ExprCaseClause
@@ -442,7 +442,7 @@ class ExprSwitch(SwitchStmt):
         Visitor.visitExprSwitch(self)
 
 class ExprSwitch(SwitchStmt):
-    def _init_(self, SWITCH, SimpleStmt, SEMICOLON, LCHAVES, ExprCaseClause, RCHAVES):
+    def __init__(self, SWITCH, SimpleStmt, SEMICOLON, LCHAVES, ExprCaseClause, RCHAVES):
         self.SWITCH = SWITCH
         self.SimpleStmt = SimpleStmt
         self.SEMICOLON = SEMICOLON
@@ -454,7 +454,7 @@ class ExprSwitch(SwitchStmt):
         Visitor.visitExprSwitch(self)
 
 class ExprSwitch(SwitchStmt):
-    def _init_(self, SWITCH, SimpleStmt, SEMICOLON, Expression, LCHAVES, ExprCaseClause, RCHAVES):
+    def __init__(self, SWITCH, SimpleStmt, SEMICOLON, Expression, LCHAVES, ExprCaseClause, RCHAVES):
         self.SWITCH = SWITCH
         self.SimpleStmt = SimpleStmt
         self.SEMICOLON = SEMICOLON
@@ -467,7 +467,7 @@ class ExprSwitch(SwitchStmt):
         Visitor.visitExprSwitch(self)
 
 class ExprSwitch(SwitchStmt):
-    def _init_(self, SWITCH, Expression, LCHAVES, ExprCaseClause, RCHAVES):
+    def __init__(self, SWITCH, Expression, LCHAVES, ExprCaseClause, RCHAVES):
         self.SWITCH = SWITCH
         self.Exoression = Expression
         self.LCHAVES = LCHAVES
@@ -476,3 +476,4 @@ class ExprSwitch(SwitchStmt):
 
     def accept(self, Visitor):
         Visitor.visitExprSwitch(self)
+        
