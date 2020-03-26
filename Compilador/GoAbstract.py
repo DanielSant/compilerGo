@@ -183,3 +183,19 @@ class DefinirBlock(FunctionBody):
     
     def accept(self, Visitor):
         Visitor.visitDefinirBlock(self)
+
+##ABSTRATA##
+class Block(metaclass=ABCMeta):
+    @abstractclassmethod
+	def accept(self, Visitor):
+		pass
+##CONCRETA##
+class DefinirStatement(Block):
+    def __init__(self,LCHAVES, StatmentList, RCHAVES):
+        self.LCHAVES = LCHAVES
+        self.StatmentList = StatmentList
+        self.RCHAVES = RCHAVES
+
+    def accept(self, Visitor):
+        Visitor.visitDefinirStatement(self)
+        
