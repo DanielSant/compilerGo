@@ -74,3 +74,22 @@ class Tint(Type):
 		Visitor.visitTint(self)
 
 class Tstring(Type):
+    def __init__(self, STRING):
+        self.STRING = STRING
+
+    def accept(self, Visitor):
+        Visitor.visitTstring(self)
+
+class Tbool(Type):
+    def __init__(self, BOOL):
+        self.BOOL = BOOL
+
+    def accept(self, Visitor):
+        Visitor.visitTbool(self)
+
+class Tfloat(Type):
+    def __init__(self, FLOAT)
+        self.FLOAT = FLOAT
+
+    def accept(self, Visitor):
+        Visitor.visitTfloat(self)
