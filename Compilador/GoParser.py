@@ -111,17 +111,49 @@ def m_constDecl(p):
                  | CONST LPAREN constSpec SEMICOLON RPAREN'''
 
 def m_constSpec(p):
-    '''constSpec : identfierList
-                 | identfierList ASSIGN expressionList
-                 | identfierList type ASSIGN expressionList''' ###Verificar ser estar correta 
+    '''constSpec : identifierList
+                 | identifierList ASSIGN expressionList
+                 | identifierList type ASSIGN expressionList''' ###Verificar ser estar correta 
 
-def m_identfierList(p):
-    '''identfierList : ID COMMA ID'''
+def m_identifierList(p):
+    '''identifierList : ID COMMA ID'''
 
 def m_expressionList(p):
     '''expressionList : expression COMMA expression'''
 
 
-### Seguir criando os def A PARTIR DA TABELA  - COLUNA A LINHA 62 
+def m_typeDecl(p):
+    '''typeDecl : TYPE typeSec
+                | TYPE LPAREN typeSec SEMICOLON RPAREN'''
 
+def m_typeSpec(p):
+    '''typeSpec : ID type'''
 
+def m_varDecl(p):
+    '''varDecl : VAR varSpec
+               | VAR LPAREN varSpec SEMICOLON RPAREN'''
+
+def m_spec(p):
+    '''spec : identifierList type
+            | identifierList type ASSIGN expressionList
+            | identifierList ASSIGN expressionList''''
+
+def m_expression(p):
+    '''expression : unaryExpr
+                  | expression binary_op expression'''
+
+def m_unaryExpr(p):
+    '''unaryExpr : Number
+                 | ID
+                 | LPAREN expression RPAREN''' #Talvez teremos que modificar
+
+def m_binary_op(p):
+    '''binary_op : OR
+                 | AND
+                 | rel_op  
+                 | add_op
+                 | mul_op'''
+
+def m_rel_op(p):
+    '''rel_op : EQUALS
+              | ''' ##   
