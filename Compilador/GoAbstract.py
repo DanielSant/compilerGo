@@ -126,3 +126,24 @@ class ParamsList(Parameters):
 
     def accept(self, Visitor):
         Visitor.visitParamsList(self)
+
+##ABSTRATA##
+class ParameterList(metaclass=ABCMeta):
+	@abstractclassmethod
+	def accept(self, Visitor):
+		pass
+##CONCRETA##
+class DefinirParamDecl(ParameterList):
+    def __init__(self, ParameterDecl):
+        self.ParameterDecl = ParameterDecl
+    
+    def accept(self, Visitor):
+        Visitor.visitDefinirParamDecl(self)
+
+class CompParamsDecl(ParameterList): ##PRECISA OBSERVAR ISSO
+    def __init__(self, ParameterDecl, COMMA, ParameterDecl):
+        self.ParameterDecl = ParameterDecl
+        self.COMMA = COMMA
+        self.ParameterDecl = ParameterDecl
+    def accept(self, Visitor):
+        Visitor.visitCompParamsDecl(self)
