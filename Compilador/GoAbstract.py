@@ -281,3 +281,71 @@ class StmtFor(Statement):
 
     def accept(self, Visitor):
         Visitor.visitStmtFor(self)
+
+##ABSTRATA##
+class Declaration(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+##CONCRETA##
+class DeclConst(Declaration):
+    def _init_(self, ConstDecl):
+        self.ConstDecl = ConstDecl
+
+    def accept(self, Visitor):
+        Visitor.visitDeclConst(self)
+
+    class DeclType(Declaration):
+    def _init_(self, TypeDecl):
+        self.TypeDecl = TypeDecl
+
+    def accept(self, Visitor):
+        Visitor.visitDeclType(self)
+
+    class DeclVar(Declaration):
+    def _init_(self, ConstVar):
+        self.ConstVar = ConstVar
+
+    def accept(self, Visitor):
+        Visitor.visitDeclVar(self)
+
+##ABSTRATA##
+class SimpleStmt(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+##CONCRETA##
+class StmtEmpty(SimpleStmt):
+    def _init_(self, none): #Duvidas
+        self.none = none
+
+    def accept(self, Visitor):
+        Visitor.visitStmtEmpty(self)
+
+class StmtExpression(SimpleStmt):
+    def _init_(self, Expression):
+        self.Expression = Expression
+
+    def accept(self, Visitor):
+        Visitor.visitStmtExpression(self)
+
+class StmtIncDec(SimpleStmt):
+    def _init_(self, IncDec):
+        self.IncDec = IncDec
+
+    def accept(self, Visitor):
+        Visitor.visitStmtIncDec(self)
+
+class Assign(SimpleStmt):
+    def _init_(self, Assignment):
+        self.Assignment = Assignment
+
+    def accept(self, Visitor):
+        Visitor.visitAssign(self)
+
+class DeclShortVar(SimpleStmt):
+    def _init_(self, ShortVarDecl):
+        self.ShortVarDecl = ShortVarDecl
+
+    def accept(self, Visitor):
+        Visitor.visitDeclShortVar(self)
