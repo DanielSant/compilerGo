@@ -198,4 +198,73 @@ class DefinirStatement(Block):
 
     def accept(self, Visitor):
         Visitor.visitDefinirStatement(self)
-        
+
+##ABSTRATA##
+class Statement(metaclass=ABCMeta):
+    @abstractclassmethod
+	def accept(self, Visitor):
+		pass
+
+##CONCRETA##
+class StmtDeclaration(Statement):
+    def __init__(self, Declaration):
+        self.Declaration = Declaration
+
+    def accept(self, Visitor):
+        Visitor.visitStmtDeclaration(self)
+
+class StmtSimple(Statement):
+    def __init__(self, SimpleStmt):
+        self.SimpleStmt = SimpleStmt
+
+    def accept(self, Visitor):
+        Visitor.visitStmtSimple(self)
+
+class StmtReturn(Statement):
+    def __init__(self, ReturnStmt):
+        self.ReturnStmt = ReturnStmt
+
+    def accept(self, Visitor):
+        Visitor.visitStmtReturn(self)
+
+class StmtBreak(Statement):
+    def __init__(self, BreakStmt):
+        self.BreakStmt = BreakStmt
+
+    def accept(self, Visitor):
+        Visitor.visitStmtBreak(self)
+
+class StmtContinue(Statement):
+    def __init__(self, ContinueStmt):
+        self.ContinueStmt = ContinueStmt
+
+    def accept(self, Visitor):
+        Visitor.visitStmtContinue(self)
+
+class StmtBlock(Statement):
+    def __init__(self, Block):
+        self.Block = Block
+    
+    def accept(self, Visitor):
+        Visitor.visitStmtBlock(self)
+
+class StmtIf(Statement):
+    def __init__(self, IfStmt)
+        self.IfStmt = IfStmt
+
+    def accept(self, Visitor):
+        Visitor.visitStmtIf(self)
+
+class StmtSwitch(Statement):
+    def __init__(self, SwitchStmt)
+        self.SwitchStmt = SwitchStmt
+
+    def accept(self, Visitor):
+        Visitor.visitStmtSwitch(self)
+
+class StmtFor(Statement):
+    def __init__(self, ForStmt):
+        self.ForStmt = ForStmt
+
+    def accept(self, Visitor):
+        Visitor.visitStmtFor(self)
