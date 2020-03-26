@@ -199,3 +199,15 @@ class DefinirStatement(Block):
     def accept(self, Visitor):
         Visitor.visitDefinirStatement(self)
         
+##ABSTRATA##
+class StatementList(metaclass=ABCMeta):
+	@abstractclassmethod
+	def accept(self, Visitor):
+		pass
+##CONCRETA##
+class DefinirStatement(StatementList): ##PRECISA OBSERVAR ISSO
+    def _init_(self, Statement, SEMICOLON):
+        self.Statement = Statement
+        self.SEMICOLON = SEMICOLON
+    def accept(self, Visitor):
+        Visitor.visitDefinirStatement(self)
