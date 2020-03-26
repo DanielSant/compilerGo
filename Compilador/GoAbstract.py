@@ -190,12 +190,25 @@ class Block(metaclass=ABCMeta):
 	def accept(self, Visitor):
 		pass
 ##CONCRETA##
-class DefinirStatement(Block):
+class DefinirStatementL(Block):
     def __init__(self,LCHAVES, StatmentList, RCHAVES):
         self.LCHAVES = LCHAVES
         self.StatmentList = StatmentList
         self.RCHAVES = RCHAVES
 
+    def accept(self, Visitor):
+        Visitor.visitDefinirStatementL(self)
+
+##ABSTRATA##
+class StatementList(metaclass=ABCMeta):
+	@abstractclassmethod
+	def accept(self, Visitor):
+		pass
+##CONCRETA##
+class DefinirStatement(StatementList): ##PRECISA OBSERVAR ISSO
+    def _init_(self, Statement, SEMICOLON):
+        self.Statement = Statement
+        self.SEMICOLON = SEMICOLON
     def accept(self, Visitor):
         Visitor.visitDefinirStatement(self)
 
