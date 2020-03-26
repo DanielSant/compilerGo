@@ -424,3 +424,19 @@ class CompIfElse(IfStmt):
         self.IfStmt = IfStmt
     def accept(self, Visitor):
         Visitor.visitCompIfElse(self)
+
+##ABSTRATA##
+class ExprCaseClause(metaclass=ABCMeta):
+	@abstractclassmethod
+	def accept(self, Visitor):
+		pass
+
+##CONCRETA##
+class ExprCase(ExprCaseClause):
+    def _init_(self, ExprSwitchCase, COLON, StatementList):
+        self.ExprSwitchCase = ExprSwitchCase
+        self.COLON = COLON
+        self.StatementList = StatementList
+    
+    def accept(self, Visitor):
+        Visitor.visitExprCase(self)
