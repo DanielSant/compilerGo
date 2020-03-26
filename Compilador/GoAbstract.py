@@ -169,3 +169,17 @@ class ParamIdDecl(ParameterDecl):
 
     def accept(self, Visitor):
         Visitor.visitParamIdDecl(self)
+
+##ABSTRATA##
+class FunctionBody(metaclass=ABCMeta):
+    @abstractclassmethod
+	def accept(self, Visitor):
+		pass
+
+##CONCRETA##
+class DefinirBlock(FunctionBody):
+    def __init__(self, Block):
+        self.Block = Block
+    
+    def accept(self, Visitor):
+        Visitor.visitDefinirBlock(self)
