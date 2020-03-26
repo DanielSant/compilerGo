@@ -190,15 +190,15 @@ class Block(metaclass=ABCMeta):
 	def accept(self, Visitor):
 		pass
 ##CONCRETA##
-class DefinirStatement(Block):
+class DefinirStatementL(Block):
     def __init__(self,LCHAVES, StatmentList, RCHAVES):
         self.LCHAVES = LCHAVES
         self.StatmentList = StatmentList
         self.RCHAVES = RCHAVES
 
     def accept(self, Visitor):
-        Visitor.visitDefinirStatement(self)
-        
+        Visitor.visitDefinirStatementL(self)
+
 ##ABSTRATA##
 class StatementList(metaclass=ABCMeta):
 	@abstractclassmethod
@@ -211,37 +211,6 @@ class DefinirStatement(StatementList): ##PRECISA OBSERVAR ISSO
         self.SEMICOLON = SEMICOLON
     def accept(self, Visitor):
         Visitor.visitDefinirStatement(self)
-
-##ABSTRATA##
-class ReturnStmt(metaclass=ABCMeta):
-    @abstractclassmethod
-	def accept(self, Visitor):
-		pass
-##CONCRETA##
-class SimpleReturn(ReturnStm):
-    def _init_(self,RETURN):
-        self.RETURN = RETURN
-
-    def accept(self, Visitor):
-        Visitor.visitSimpleReturn(self)
-
-class ExpReturn(ReturnStm):
-    def _init_(self,RETURN, ExpressionList):
-        self.RETURN = RETURN
-        self.ExpressionList = ExpressionList
-    
-    def accept(self, Visitor):
-        Visitor.visitExpReturn(self)
-
- ##ABSTRATA##
-class BreakStm(metaclass=ABCMeta):
-    @abstractclassmethod
-	def accept(self, Visitor):
-		pass
-##CONCRETA## 
-class StmtBreak(BreakStm) :
-    def _init_(self,BREAK):
-        self.BREAK = BREAK
 
 ##ABSTRATA##
 class ContinueStmt(metaclass=ABCMeta):
@@ -287,3 +256,171 @@ class CompIfElse(IfStmt):
         self.IfStmt = IfStmt
     def accept(self, Visitor):
         Visitor.visitCompIfElse(self)
+=======
+class Statement(metaclass=ABCMeta):
+    @abstractclassmethod
+	def accept(self, Visitor):
+		pass
+
+##CONCRETA##
+class StmtDeclaration(Statement):
+    def __init__(self, Declaration):
+        self.Declaration = Declaration
+
+    def accept(self, Visitor):
+        Visitor.visitStmtDeclaration(self)
+
+class StmtSimple(Statement):
+    def __init__(self, SimpleStmt):
+        self.SimpleStmt = SimpleStmt
+
+    def accept(self, Visitor):
+        Visitor.visitStmtSimple(self)
+
+class StmtReturn(Statement):
+    def __init__(self, ReturnStmt):
+        self.ReturnStmt = ReturnStmt
+
+    def accept(self, Visitor):
+        Visitor.visitStmtReturn(self)
+
+class StmtBreak(Statement):
+    def __init__(self, BreakStmt):
+        self.BreakStmt = BreakStmt
+
+    def accept(self, Visitor):
+        Visitor.visitStmtBreak(self)
+
+class StmtContinue(Statement):
+    def __init__(self, ContinueStmt):
+        self.ContinueStmt = ContinueStmt
+
+    def accept(self, Visitor):
+        Visitor.visitStmtContinue(self)
+
+class StmtBlock(Statement):
+    def __init__(self, Block):
+        self.Block = Block
+    
+    def accept(self, Visitor):
+        Visitor.visitStmtBlock(self)
+
+class StmtIf(Statement):
+    def __init__(self, IfStmt)
+        self.IfStmt = IfStmt
+
+    def accept(self, Visitor):
+        Visitor.visitStmtIf(self)
+
+class StmtSwitch(Statement):
+    def __init__(self, SwitchStmt)
+        self.SwitchStmt = SwitchStmt
+
+    def accept(self, Visitor):
+        Visitor.visitStmtSwitch(self)
+
+class StmtFor(Statement):
+    def __init__(self, ForStmt):
+        self.ForStmt = ForStmt
+
+    def accept(self, Visitor):
+        Visitor.visitStmtFor(self)
+
+##ABSTRATA##
+class Declaration(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+##CONCRETA##
+class DeclConst(Declaration):
+    def _init_(self, ConstDecl):
+        self.ConstDecl = ConstDecl
+
+    def accept(self, Visitor):
+        Visitor.visitDeclConst(self)
+
+    class DeclType(Declaration):
+    def _init_(self, TypeDecl):
+        self.TypeDecl = TypeDecl
+
+    def accept(self, Visitor):
+        Visitor.visitDeclType(self)
+
+    class DeclVar(Declaration):
+    def _init_(self, ConstVar):
+        self.ConstVar = ConstVar
+
+    def accept(self, Visitor):
+        Visitor.visitDeclVar(self)
+
+##ABSTRATA##
+class SimpleStmt(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+##CONCRETA##
+class StmtEmpty(SimpleStmt):
+    def _init_(self, none): #Duvidas
+        self.none = none
+
+    def accept(self, Visitor):
+        Visitor.visitStmtEmpty(self)
+
+class StmtExpression(SimpleStmt):
+    def _init_(self, Expression):
+        self.Expression = Expression
+
+    def accept(self, Visitor):
+        Visitor.visitStmtExpression(self)
+
+class StmtIncDec(SimpleStmt):
+    def _init_(self, IncDec):
+        self.IncDec = IncDec
+
+    def accept(self, Visitor):
+        Visitor.visitStmtIncDec(self)
+
+class Assign(SimpleStmt):
+    def _init_(self, Assignment):
+        self.Assignment = Assignment
+
+    def accept(self, Visitor):
+        Visitor.visitAssign(self)
+
+class DeclShortVar(SimpleStmt):
+    def _init_(self, ShortVarDecl):
+        self.ShortVarDecl = ShortVarDecl
+
+    def accept(self, Visitor):
+        Visitor.visitDeclShortVar(self)
+
+##ABSTRATA##
+class ReturnStmt(metaclass=ABCMeta):
+    @abstractclassmethod
+	def accept(self, Visitor):
+		pass
+##CONCRETA##
+class SimpleReturn(ReturnStm):
+    def _init_(self,RETURN):
+        self.RETURN = RETURN
+
+    def accept(self, Visitor):
+        Visitor.visitSimpleReturn(self)
+
+class ExpReturn(ReturnStm):
+    def _init_(self,RETURN, ExpressionList):
+        self.RETURN = RETURN
+        self.ExpressionList = ExpressionList
+    
+    def accept(self, Visitor):
+        Visitor.visitExpReturn(self)
+
+ ##ABSTRATA##
+class BreakStm(metaclass=ABCMeta):
+    @abstractclassmethod
+	def accept(self, Visitor):
+		pass
+##CONCRETA## 
+class StmtBreak(BreakStm) :
+    def _init_(self,BREAK):
+        self.BREAK = BREAK
