@@ -492,3 +492,24 @@ class ExprCase(ExprCaseClause):
     
     def accept(self, Visitor):
         Visitor.visitExprCase(self)
+
+##ABSTRATA##
+class ExprSwitchCase(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+##CONCRETA##
+class CaseClause(ExprSwitchCase):
+    def __init__(self, CASE, ExpressionList):
+        self.CASE = CASE
+        self.ExpressionList = ExpressionList
+
+    def accept(self, Visitor):
+        Visitor.visitCaseClause(self)
+
+class CaseClause(ExprSwitchCase):
+    def __init__(self, DEFAULT):
+        self.DEFAULT = DEFAULT
+
+    def accept(self, Visitor):
+        Visitor.visitCaseClause(self)
