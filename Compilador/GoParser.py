@@ -156,4 +156,27 @@ def m_binary_op(p):
 
 def m_rel_op(p):
     '''rel_op : EQUALS
-              | ''' ##   
+              | DIFERENTE
+              | LESS
+              | LELESS_EQUAL
+              | GREATER
+              | GREATER_EQUAL'''
+
+def m_add_op(p):
+    '''add_op : PLUS
+              | MINUS'''
+
+def m_mul_op(p):
+    '''mul_op : TIMES
+              | DIVIDE
+              | MOD'''              
+
+def m_inc(p):
+    '''inc : expression PLUS PLUS
+           | expression MINUS MINUS'''
+
+def m_assignment(p):
+    '''assignment : expressionList ASSIGN expressionList'''
+
+def m_shortVarDec(p):
+    '''shortVarDec : identifierLis ASSIGN expressionList'''#Era para ser :=
