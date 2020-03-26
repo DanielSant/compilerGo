@@ -211,3 +211,34 @@ class DefinirStatement(StatementList): ##PRECISA OBSERVAR ISSO
         self.SEMICOLON = SEMICOLON
     def accept(self, Visitor):
         Visitor.visitDefinirStatement(self)
+
+##ABSTRATA##
+class ReturnStmt(metaclass=ABCMeta):
+    @abstractclassmethod
+	def accept(self, Visitor):
+		pass
+##CONCRETA##
+class SimpleReturn(ReturnStm):
+    def _init_(self,RETURN):
+        self.RETURN = RETURN
+
+    def accept(self, Visitor):
+        Visitor.visitSimpleReturn(self)
+
+class ExpReturn(ReturnStm):
+    def _init_(self,RETURN, ExpressionList):
+        self.RETURN = RETURN
+        self.ExpressionList = ExpressionList
+    
+    def accept(self, Visitor):
+        Visitor.visitExpReturn(self)
+
+ ##ABSTRATA##
+class BreakStm(metaclass=ABCMeta):
+    @abstractclassmethod
+	def accept(self, Visitor):
+		pass
+##CONCRETA## 
+class StmtBreak(BreakStm) :
+    def _init_(self,BREAK):
+        self.BREAK = BREAK
