@@ -47,3 +47,30 @@ class DefinirParamsT(Signature):
 	def accept(self, Visitor):
 		Visitor.visitDefinirParams(self)
 
+##ABSTRATA##
+class Result(metaclass=ABCMeta):
+	@abstractclassmethod
+	def accept(self, Vistor):
+		pass
+##CONCRETA##
+class DefinirTipo(Result):
+	def __init__(self, Type):
+		self.Type = Type
+
+	def accept(self, Visitor):
+		Visitor.visitDefinirTipo(self)
+
+##ABSTRATA##
+class Type(metaclass=ABCMeta):
+	@abstractclassmethod
+	def accept(self, Visitor):
+		pass
+##CONCRETA##
+class Tint(Type):
+	def __init__(self, INT):
+		self.INT = INT
+
+	def accept(self, Visitor):
+		Visitor.visitTint(self)
+
+class Tstring(Type):
