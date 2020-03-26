@@ -476,4 +476,82 @@ class ExprSwitch(SwitchStmt):
 
     def accept(self, Visitor):
         Visitor.visitExprSwitch(self)
-        
+
+##ABSTRATA##
+class ExprCaseClause(metaclass=ABCMeta):
+	@abstractclassmethod
+	def accept(self, Visitor):
+		pass
+
+##CONCRETA##
+class ExprCase(ExprCaseClause):
+    def _init_(self, ExprSwitchCase, COLON, StatementList):
+        self.ExprSwitchCase = ExprSwitchCase
+        self.COLON = COLON
+        self.StatementList = StatementList
+    
+    def accept(self, Visitor):
+        Visitor.visitExprCase(self)
+
+##ABSTRATA##
+class ExprSwitchCase(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+##CONCRETA##
+class CaseClauseExp(ExprSwitchCase):
+    def __init__(self, CASE, ExpressionList):
+        self.CASE = CASE
+        self.ExpressionList = ExpressionList
+
+    def accept(self, Visitor):
+        Visitor.visitCaseClause(self)
+
+class CaseClause(ExprSwitchCase):
+    def __init__(self, DEFAULT):
+        self.DEFAULT = DEFAULT
+
+    def accept(self, Visitor):
+        Visitor.visitCaseClause(self)
+
+##ABSTRATA##
+class ForStmt(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class StmtFor(ForStmt):
+    def __init__(FOR, Condition, Block):
+        self.FOR = FOR
+        self.Condition = Condition
+        self.Block = Block
+
+    def accept(self, Visitor):
+        Visitor.visitStmtFor(self)
+
+class StmtForClause(ForStmt):
+    def __init__(FOR, ForClause, Block):
+        self.FOR = FOR
+        self.ForClause = ForClause
+        self.Block = Block
+
+    def accept(self, Visitor):
+        Visitor.visitStmtForClause(self)
+
+class StmtForRange(ForStmt):
+    def __init__(FOR, RangeClause, Block):
+        self.FOR = FOR
+        self.RangeClause = Block
+        self.Block = Block
+
+    def accept(self, Visitor):
+        Visitor.visitStmtForRange(self)
+
+class StmtForBlock(ForStmt):
+    def __init__(FOR, Block):
+        self.FOR = FOR
+        self.Block = Block
+
+    def accept(self, Visitor):
+        Visitor.visitStmtForBlock(self)
