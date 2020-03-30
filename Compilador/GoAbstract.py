@@ -485,7 +485,7 @@ class ExprCaseClause(metaclass=ABCMeta):
 
 ##CONCRETA##
 class ExprCase(ExprCaseClause):
-    def _init_(self, ExprSwitchCase, COLON, StatementList):
+    def __init__(self, ExprSwitchCase, COLON, StatementList):
         self.ExprSwitchCase = ExprSwitchCase
         self.COLON = COLON
         self.StatementList = StatementList
