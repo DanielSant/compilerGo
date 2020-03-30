@@ -23,8 +23,8 @@ class DefinirFuncBody(FunctionDecl):
         self.Signature = Signature
         self.FunctionBody = FunctionBody
 
-    def accept(self, Vistor):
-        Vistor.visitDefinirFuncBody(self)
+    def accept(self, Visitor):
+        Visitor.visitDefinirFuncBody(self)
 
 ##ABSTRATA##
 class Signature(metaclass=ABCMeta):
@@ -50,7 +50,7 @@ class DefinirParamsT(Signature):
 ##ABSTRATA##
 class Result(metaclass=ABCMeta):
 	@abstractclassmethod
-	def accept(self, Vistor):
+	def accept(self, Visitor):
 		pass
 ##CONCRETA##
 class DefinirTipo(Result):
