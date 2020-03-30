@@ -97,12 +97,12 @@ class Tfloat(Type):
 ##ABSTRATA##
 class Parameters(metaclass=ABCMeta):
     @abstractclassmethod
-	def accept(self, Visitor):
-		pass
+    def accept(self, Visitor):
+        pass
 ##CONCRETA##
 class DefinirParams(Parameters):
-	def __init__(self,LPAREN,RPAREN):
-		self.LPAREN = LPAREN
+    def __init__(self,LPAREN,RPAREN):
+        self.LPAREN = LPAREN
         self.RPAREN = RPAREN
 
     def accept(self, Visitor):
@@ -110,7 +110,7 @@ class DefinirParams(Parameters):
 
 class Params(Parameters):
     def __init__(self,LPAREN,ParameterList,RPAREN):
-    	self.LPAREN = LPAREN
+        self.LPAREN = LPAREN
         self.ParameterList = ParameterList
         self.RPAREN = RPAREN
 
