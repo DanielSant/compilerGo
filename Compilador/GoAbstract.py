@@ -88,7 +88,7 @@ class Tbool(Type):
         Visitor.visitTbool(self)
 
 class Tfloat(Type):
-    def __init__(self, FLOAT)
+    def __init__(self, FLOAT):
         self.FLOAT = FLOAT
 
     def accept(self, Visitor):
