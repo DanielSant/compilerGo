@@ -458,7 +458,7 @@ class ExprSwitch(SwitchStmt):
         self.SWITCH = SWITCH
         self.SimpleStmt = SimpleStmt
         self.SEMICOLON = SEMICOLON
-        self.Exoression = Expression
+        self.Expression = Expression
         self.LCHAVES = LCHAVES
         self.ExprCaseClause = ExprCaseClause
         self.RCHAVES = RCHAVES
@@ -469,7 +469,7 @@ class ExprSwitch(SwitchStmt):
 class ExprSwitch(SwitchStmt):
     def __init__(self, SWITCH, Expression, LCHAVES, ExprCaseClause, RCHAVES):
         self.SWITCH = SWITCH
-        self.Exoression = Expression
+        self.Expression = Expression
         self.LCHAVES = LCHAVES
         self.ExprCaseClause = ExprCaseClause
         self.RCHAVES = RCHAVES
