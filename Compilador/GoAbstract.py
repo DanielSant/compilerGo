@@ -694,3 +694,129 @@ class RangeIDList(RangeClause):
 
     def accept(self, Visitor):
         Visitor.visitRangIDList(self)
+
+##ABSTRATA##
+class ConstDecl(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+##CONCRETA##
+class SimpleConst(ConstDecl):
+    def __init__ (CONST, ConstSpec):
+        self.CONST = CONST
+        self.ConstSpec = ConstSpec
+
+    def accept(self, Visitor):
+        Visitor.visitSimpleConst(self)
+
+class CompConst(ConstDecl):
+    def __init__(CONST, LPAREN, ConstSpec, SEMICOLON, RPAREN):
+        self.CONST = CONST
+        self.LPAREN = LPAREN
+        self.ConstSpec = ConstSpec
+        self.SEMICOLON = SEMICOLON
+        self.RPAREN = RPAREN
+    
+    def accept(self, Visitor):
+        Visitor.visitCompConst(self)
+
+##ABSTRATA##
+class ConstSpec(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+##CONCRETA##
+class SimpleIdList(ConstSpec):
+    def __init__(IdentifierList):
+        self.IdentifierList = IdentifierList
+
+    def accept(self, Visitor):
+        Visitor.visitSimpleIdList(self)
+
+class ListIdExp(ConstSpec):
+    def __init__(IdentifierList, ASSIGN, ExpressionList):
+        self.IdentifierList = IdentifierList
+        self.ASSIGN = ASSIGN
+        self.ExpressionList = ExpressionList
+
+    def accept(self, Visitor):
+        Visitor.visitListIdExp(self)
+
+class ListIdTypeExp(ConstSpec):
+    def __init__(IdentifierList, Type, ASSIGN, ExpressionList):
+        self.IdentifierList = IdentifierList
+        self.Type = Type
+        self.ASSIGN = ASSIGN
+        self.ExpressionList = ExpressionList
+
+    def accept(self, Visitor):
+        Visitor.visitListTypeExp(self)
+
+##ABSTRATA##
+class IdentifierList(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor)
+        pass
+##CONCRETA##
+class DefinirIDList(IdentifierList):
+    def __init__(ID):
+        self.ID = ID
+
+    def accept(self, Visitor):
+        Visitor.visitDefinirIDList(self)
+
+class CompIDList(IdentifierList): 
+    def __init__(ID, COMMA, ID): #OBS: 2 "ID"
+        self.ID = ID
+        self.COMMA = COMMA
+        self.ID = ID
+
+    def accept(self, Visitor):
+        Visitor.visitCompIDList(self)
+
+##ABSTRATA##
+class ExpressionList(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+##CONCRETA##
+class DefinirExpList(ExpressionList):
+    def __init__(Expression):
+        self.Expression = Expression
+
+    def accept(self, Visitor):
+        Visitor.visitDefinirExpList(self)
+
+class CompExpList(ExpressionList):
+    def __init__(Expression, COMMA, Expression): #OBS: 2 "Expression"
+        self.Expression = Expression
+        self.COMMA = COMMA
+        self.Expression = Expression
+
+    def accept(self, Visitor):
+        Visitor.visitDefinirExpList(self)
+
+##ABSTRATA##
+class TypeDecl(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+##CONCRETA##
+class DefinirType(TypeDecl):
+    def __init__(TYPE, TypeSpec):
+        self.TYPE = TYPE
+        self.TypeSpec = TypeSpec
+
+    def accept(self, Visitor):
+        Visitor.visitDefinirType(self)
+
+class CompType(TypeDecl):
+    def __init__(TYPE, LPAREN, TypeSpec, SEMICOLON, RPAREN):
+        self.TYPE = TYPE
+        self.LPAREN = LPAREN
+        self.TypeSpec = TypeSpec
+        self.SEMICOLON = SEMICOLON
+        self.RPAREN = RPAREN
+
+    def accept(self, Visitor):
+        Visitor.visitCompType(self)
