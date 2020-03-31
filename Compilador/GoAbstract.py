@@ -943,4 +943,4 @@ class OpMul(Binary_op):
 	def __init__(self, mul_op):
 		self.mul_op = mul_op
 	def accept(self, Visitor):
-		Visitor.visitOpMul
+		Visitor.visitOpMul(self)
