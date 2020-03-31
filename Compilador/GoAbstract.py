@@ -820,3 +820,127 @@ class CompType(TypeDecl):
 
     def accept(self, Visitor):
         Visitor.visitCompType(self)
+
+##ABSTRATA##
+class TypeSpec(metaclass=ABCMeta):
+	@abstractclassmethod
+	def accept(self, Visitor):
+		pass
+
+##CONCRETA##
+class SpecType(TypeSpec):
+	def __init__(self, ID, Type):
+self.ID = ID
+self.Type = Type
+def accept(self, Visitor):
+	Visitor.visitSpecType(self)
+
+##ABSTRATA##
+class VarDecl(metaclass=ABCMeta):
+	@abstractmethod
+	def accept(self, Visitor):
+		pass
+
+##CONCRETA##
+class DefinirVar(VarDecl):
+	def __init__(self, VAR, VarSpec):
+		self.VAR = VAR
+		self.VarSpec = Spec
+	def accept(self, Visitor):
+		Visitor.visitDefinirVar(self)
+
+class CompVar(VarDecl):
+	def __init__(self, VAR, VarSpec, SEMICOLON):
+		self.VAR = VAR
+		self.VarSpec = VarSpec
+		self.SEMICOLON = SEMICOLON
+	def accept(self, Visitor):
+		Visitor.visitCompVar(self)
+
+##ABSTRATA##
+class VarSpec(metaclass=ABCMeta):
+	@abstractmethod
+def accept(self, Visitor):
+	pass
+
+##CONCRETA##
+class SpecVar(VarSpec):
+	def __init__(self, IdentifierList, Type):
+		self.IdentifierList = IdentifierList
+		self.Type = Type
+	def accept(self, Visitor):
+		Visitor.visitSpecVar(self)
+
+class ClassicVarSpec(VarSpec):
+	def __init__(self, IdentifierList, Type, ASSIGN, ExpressionList):
+		self.IdentifierList = IdentifierList
+		self.Type = Type
+		self.ASSIGN = ASSIGN
+		self.ExpressionList = ExpressionList
+	def accept(self, Visitor):
+		Visitor.visitClassicVarSpec(self)
+
+class SimpleVarSpec(VarSpec):
+	def __init__(self, IdentifierList, ASSIGN, ExpressionList):
+		self.IdentifierList = IdentifierList
+		self.ASSIGN = ASSIGN
+		self.ExpressionList = ExpressionList
+	def accept(self, Visitor):
+		Visitor.visitSimpleVarSpec(self)
+
+##ABSTRATA##
+class Expression(metaclass=ABCMeta):
+	@abstractmethod
+def accept(self, Visitor):
+	pass
+
+##CONCRETA##
+class DefinirExp(Expression):
+	def __init__(self, Expression, binary_op, Expression):
+		self.Expression = Expression
+		self.binary_op =  binary_op
+		self.Expression = Expression
+	def accept(self, Visititor):
+		Visitor.visitDefinirExp(self)
+
+class ExprUnary(Expression):
+	def __init__(self, UnaryExpr):
+		self.UnaryExpr = UnaryExpr
+	def accept(self, Visitor):
+		Visitor.visitExprUnary(self)
+
+##ABSTRATA##
+class Binary_op(metaclass=ABCMeta):
+	@abstractmethod
+def accept(self, Visitor):
+	pass
+
+##CONCRETA##
+class OpOr(Binary_op):
+	def __init__(self, OR):
+		self.”OR” = “OR”
+	def accept(self, Visitor):
+		Visitor.visitOpOr(self)
+
+class OpAnd(Binary_op):
+	def __init__(self, AND):
+		self.AND = AND
+	def accept(self, Visitor):
+		Visitor.visitOpAnd(self)
+class OpRel(Binary_op):
+	def __init__(self, rel_op):
+		self.rel_op = rel_op
+	def accept(self, Visitor):
+		Visitor.visitOpRel(self)
+
+class OpAdd(Binary_op):
+	def __init__(self, add_op):
+		self.add_op = add_op
+	def accept(self, Visitor):
+		Visitor.visitOpAdd(self)
+
+class OpMul(Binary_op):
+	def __init__(self, mul_op):
+		self.mul_op = mul_op
+	def accept(self, Visitor):
+		Visitor.visitOpMul
