@@ -555,3 +555,142 @@ class StmtForBlock(ForStmt):
 
     def accept(self, Visitor):
         Visitor.visitStmtForBlock(self)
+
+##ABSTRATA##
+class Condition(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class DefinirCondition(Condition):
+    def __init__(self, Expression):
+        self.Expression = Expression
+
+    def accept(self, Visitor):
+        Visitor.visitDefinirCondition(self)
+
+##ABSTRATA##
+class ForClause(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class ClassicFor(ForClause):
+    def __init__(self, InitStmt, SEMICOLON, Condition, SEMICOLON, PostStmt)
+        self.InitStmt = InitStmt
+        self.SEMICOLON = SEMICOLON
+        self.Condition = Condition
+        self.SEMICOLON = SEMICOLON
+        self.PostStmt = PostStmt
+
+    def accept(self, Visitor):
+        Visitor.visitClassicFor(self)
+
+class ConditionFor(ForClause):
+    def __init__(self, Condition):
+        self.Condition = Condition
+
+    def accept(self, Visitosr):
+        Visitosr.visitConditionFor(self)
+
+class InitFor(ForClause):
+    def __init__(self, InitStmt):
+        self.InitStmt = InitStmt
+
+    def accept(self, Visitor):
+        Visitor.visitInitFor(self)
+
+class PostFor(ForClause):
+    def __init__(self, PostStmt):
+        self.PostStmt = PostStmt
+
+    def accept(self, Visitor):
+        Visitor.visitPostFor(self)
+
+class InCoFor(ForClause):
+    def __init__(self, InitStmt, Condition):
+        self.InitStmt = InitStmt
+        self.Condition = Condition
+
+    def accept(self, Visitor):
+        Visitor.visitInCoFor(self)
+
+class CoPoFor(ForClause):
+    def __init__(self, Condition, PostStmt):
+        self.Condition = Condition
+        self.PostStmt = PostStmt
+
+    def accept(self, Visitor):
+        Visitor.visitCoPoFor(self)
+
+class InPoFor(ForClause):
+    def __init__(self, InitStmt, PostStmt):
+        self.InitStmt = InitStmt
+        self.PostStmt = PostStmt
+
+    def accept(self, Visitor):
+        Visitor.visitInPoFor(self)
+
+##ABSTRATA##
+class InitStmt(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class StmtInit(InitStmt):
+    def __init__(self, SimpleStmt):
+        self.SimpleStmt = SimpleStmt
+
+    def accept(self, Visitor)
+        Visitor.visitStmtInit(self)
+
+##ABSTRATA##
+class PostStmt(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class StmtPost(PostStmt):
+    def __init__(self, SimpleStmt):
+        self.SimpleStmt = SimpleStmt
+
+    def accept(self, Visitor):
+        Visitor.visitStmtPost(self)
+
+##ABSTRATA##
+class RangeClause(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class DefinirRange(RangeClause):
+    def __init__(self, RANGE, Expression):
+        self.RANGE = RANGE
+        self.Expression = Expression
+
+    def accept(self, Visitor):
+        Visitor.visitDefinirRange(self)
+
+class RangeExpList(RangeClause): ### Duvida observacao
+    def __init__(self, ExpressionList, ASSIGN, RANGE, Expression):
+        self.ExpressionList = ExpressionList
+        self.ASSIGN = ASSIGN
+        self.RANGE = RANGE
+        self.Expression = Expression
+
+    def accept(self, Visitor):
+        Visitor.visitRangeExpList(self)
+
+class RangeIDList(RangeClause):
+    def __init__(self, IdentifierList, ASSIGN, Expression):
+        self.IdentifierList = IdentifierList
+        self.ASSIGN = ASSIGN
+        self.Expression = Expression
+
+    def accept(self, Visitor):
+        Visitor.visitRangIDList(self)
