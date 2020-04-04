@@ -944,3 +944,144 @@ class OpMul(Binary_op):
 		self.mul_op = mul_op
 	def accept(self, Visitor):
 		Visitor.visitOpMul(self)
+
+##ABSTRATA##
+class Rel_op(metaclass=ABCMeta):
+	@abstractmethod
+def accept(self, Visitor):
+	pass
+
+##CONCRETA##
+class iqualsOp(Rel_op):
+	def __init__(self, EQUALS):
+		self.EQUALS = EQUALS
+	def accept(self, Visitor):
+		Visitor.visitiqualsOp(self)
+
+class difereOp(Rel_op):
+    def __init__(self, DIFERENTE):
+		self.DIFERENTE = DIFERENTE
+	def accept(self, Visitor):
+		Visitor.visitdifereOp(self)
+
+class menorOp(Rel_op):
+    def __init__(self, LESS):
+		self.LESS = LESS
+	def accept(self, Visitor):
+		Visitor.visitmenorOp(self)
+
+class menorIgualOp(Rel_op):
+    def __init__(self, LESS_EQUAL):
+		self.LESS_EQUAL = LESS_EQUAL
+    def accept(self, Visitor):
+		Visitor.visitmenorIgualOp(self)
+
+class maiorOp(Rel_op):
+    def __init__(self, GREATER):
+		self.GREATER = GREATER
+    def accept(self, Visitor):
+		Visitor.visitmaiorOp(self)  
+
+class maiorIgual(Rel_op):
+    def __init__(self, GREATER_EQUAL):
+		self.GREATER_EQUAL = GREATER_EQUAL
+    def accept(self, Visitor):
+		Visitor.visitmaiorIgual(self)
+
+##ABSTRATA##
+class Add_op(metaclass=ABCMeta):
+	@abstractmethod
+def accept(self, Visitor):
+	pass
+
+##CONCRETA##
+class maisOp(Add_op):
+	def __init__(self,PLUS):
+		self.PLUS = PLUS
+	def accept(self, Visititor):
+		Visitor.visitmaisOp(self)
+
+class menosOp(Add_op):
+    	def __init__(self,MINUS):
+		self.MINUS = MINUS
+	def accept(self, Visititor):
+		Visitor.visitmenosOp(self)
+    
+##ABSTRATA##
+class Mul_op(metaclass=ABCMeta):
+	@abstractmethod
+def accept(self, Visitor):
+	pass
+
+##CONCRETA##
+class vezesOp(Mul_op):
+	def __init__(self,TIMES):
+		self.TIMES =  TIMES
+	def accept(self, Visititor):
+		Visitor.visitvezesOp(self)
+
+class divideOp(Mul_op):
+    	def __init__(self,DIVIDE):
+		self.DIVIDE = DIVIDE
+	def accept(self, Visititor):
+		Visitor.visitdivideOp(self)
+
+class modOp(Mul_op):
+    	def __init__(self,MOD):
+		self.MOD = MOD
+	def accept(self, Visititor):
+		Visitor.visitmodOp(self)
+
+##ABSTRATA##
+class IncDec(metaclass=ABCMeta):
+	@abstractmethod
+def accept(self, Visitor):
+	pass
+
+##CONCRETA##
+class IncOp(IncDec):
+	def __init__(self,Expression,PLUS, PLUS):
+		self.Expression = Expression
+        self.PLUS = PLUS
+        self.PLUS = PLUS                       ##observar 
+	def accept(self, Visititor):
+		Visitor.visitIncOp(self)
+
+class DecOp(IncDec):
+    def __init__(self,Expression,MINUS,MINUS):
+		self.Expression = Expression
+        self.MINUS = MINUS
+        self.MINUS = MINUS                     ##observar 
+	def accept(self, Visititor):
+		Visitor.visitDecOp(self)
+
+##ABSTRATA##
+class Assignment(metaclass=ABCMeta):
+	@abstractmethod
+def accept(self, Visitor):
+	pass
+
+##CONCRETA##
+class AssignOp(Assignment):
+    def __init__(self,Expression,ASSIGN,ExpressionList):
+		self.Expression = Expression
+        self.ASSIGN = ASSIGN
+        self.ExpressionList = ExpressionList    ##observar 
+	def accept(self, Visititor):
+		Visitor.visitAssignOp(self)
+
+##ABSTRATA##
+class ShortVarDecl(metaclass=ABCMeta):
+	@abstractmethod
+def accept(self, Visitor):
+	pass
+
+##CONCRETA##
+class DeclShortVar(ShortVarDecl):
+    def __init__(self,IdentifierList,ASSIGN,ExpressionList):
+		self.IdentifierList = IdentifierList
+        self.ASSIGN = ASSIGN
+        self.ExpressionList = ExpressionList    ##observar 
+	def accept(self, Visititor):
+		Visitor.visitDeclShortVar(self)
+
