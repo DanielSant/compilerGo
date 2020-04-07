@@ -775,6 +775,7 @@ class ConstSpec(metaclass=ABCMeta):
     @abstractclassmethod
     def accept(self, Visitor):
         pass
+
 ##CONCRETA##
 class SimpleIdList(ConstSpec):
     def __init__(IdentifierList):
@@ -801,6 +802,30 @@ class ListIdTypeExp(ConstSpec):
 
     def accept(self, Visitor):
         Visitor.visitListTypeExp(self)
+
+##ABSTRATA##
+class ConstSpecList(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class CallConstSpec(ConstSpecList):
+    def __init__(self, ConstSpec, SEMICOLON):
+        self.ConstSpec = ConstSpec
+        self.SEMICOLON = SEMICOLON
+
+    def accept(self, Visitor):
+        Visitor.visitCallConstSpec(self)
+
+class CompoundConstSpec(ConstSpecList):
+    def __init__(self, ConstSpec, SEMICOLON, ConstSpecList):
+        self.ConstSpec = ConstSpec
+        self.SEMICOLON = SEMICOLON
+        self.ConstSpecList = ConstSpecList
+
+    def accept(self, Visitor):
+        Visitor.visitCompoundConstSpec(self)
 
 ##ABSTRATA##
 class IdentifierList(metaclass=ABCMeta):

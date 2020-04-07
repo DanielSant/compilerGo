@@ -134,6 +134,10 @@ def m_constSpec(p):
                  | identifierList ASSIGN expressionList
                  | identifierList type ASSIGN expressionList''' ###Verificar ser estar correta 
 
+def m_constSpecList(p):
+    '''constSpecList : constSpec SEMICOLON
+                     | constSpec SEMICOLON constSpecList'''
+
 def m_identifierList(p):
     '''identifierList : ID compIDList'''
 
