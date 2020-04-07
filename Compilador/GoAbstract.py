@@ -807,22 +807,15 @@ class IdentifierList(metaclass=ABCMeta):
     @abstractclassmethod
     def accept(self, Visitor)
         pass
+
 ##CONCRETA##
 class DefinirIDList(IdentifierList):
-    def __init__(ID):
+    def __init__(self, ID, CompIDList):
         self.ID = ID
+        self.CompIDList
 
     def accept(self, Visitor):
         Visitor.visitDefinirIDList(self)
-
-class CompIDList(IdentifierList): 
-    def __init__(ID, COMMA, ID): #OBS: 2 "ID"
-        self.ID = ID
-        self.COMMA = COMMA
-        self.ID = ID
-
-    def accept(self, Visitor):
-        Visitor.visitCompIDList(self)
 
 ##ABSTRATA
 class CompIDList(metaclass=ABCMeta):

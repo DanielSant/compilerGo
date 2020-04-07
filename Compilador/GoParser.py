@@ -135,7 +135,7 @@ def m_constSpec(p):
                  | identifierList type ASSIGN expressionList''' ###Verificar ser estar correta 
 
 def m_identifierList(p):
-    '''identifierList : ID COMMA ID'''
+    '''identifierList : ID compIDList'''
 
 def m_compIDList(p):
     '''compIDList : COMMA ID
