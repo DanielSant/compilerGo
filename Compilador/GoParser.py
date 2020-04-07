@@ -17,7 +17,9 @@ def m_type(p):
             | FLOAT'''
 
 def m_parameters(p):
-    '''parameters : LPAREN parameterList COMMA RPAREN''' 
+    '''parameters : LPAREN parameterList RPAREN
+                  | LPAREN parameterList COMMA RPAREN 
+                  | LPAREN RPAREN''' 
 
 def m_parameterList(p):
     '''parameterList : parameterDecl COMMA parameterDecl'''
