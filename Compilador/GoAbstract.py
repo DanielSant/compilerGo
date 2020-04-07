@@ -909,24 +909,23 @@ class TypeDecl(metaclass=ABCMeta):
     def accept(self, Visitor):
         pass
 ##CONCRETA##
-class DefinirType(TypeDecl):
-    def __init__(TYPE, TypeSpec):
+class DefinirType(TypeDecl): #Não é o type dos tipos primitivos
+    def __init__(self, TYPE, TypeSpec):
         self.TYPE = TYPE
         self.TypeSpec = TypeSpec
 
     def accept(self, Visitor):
         Visitor.visitDefinirType(self)
 
-class CompType(TypeDecl):
-    def __init__(TYPE, LPAREN, TypeSpec, SEMICOLON, RPAREN):
+class CallTypeSpecList(TypeDecl):
+    def __init__(self, TYPE, LPAREN, TypeSpecList, RPAREN):
         self.TYPE = TYPE
         self.LPAREN = LPAREN
-        self.TypeSpec = TypeSpec
-        self.SEMICOLON = SEMICOLON
+        self.TypeSpecList = TypeSpecList
         self.RPAREN = RPAREN
 
     def accept(self, Visitor):
-        Visitor.visitCompType(self)
+        Visitor.visitCallTypeSpecList(self)
 
 ##ABSTRATA##
 class TypeSpecList(metaclass=ABCMeta):
@@ -984,15 +983,18 @@ class VarDecl(metaclass=ABCMeta):
 class DefinirVar(VarDecl):
 	def __init__(self, VAR, VarSpec):
 		self.VAR = VAR
-		self.VarSpec = Spec
+		self.VarSpec = VarSpec
+
 	def accept(self, Visitor):
 		Visitor.visitDefinirVar(self)
 
 class CompVar(VarDecl):
-	def __init__(self, VAR, VarSpec, SEMICOLON):
+	def __init__(self, VAR, LPAREN, VarSpecList, RPAREN):
 		self.VAR = VAR
-		self.VarSpec = VarSpec
-		self.SEMICOLON = SEMICOLON
+        self.LPAREN = LPAREN
+        self.VarSpecList = VarSpecList
+        self.RPAREN = RPAREN
+
 	def accept(self, Visitor):
 		Visitor.visitCompVar(self)
 

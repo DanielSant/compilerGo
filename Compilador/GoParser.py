@@ -147,8 +147,8 @@ def m_listExpr(p):
 
 
 def m_typeDecl(p):
-    '''typeDecl : TYPE typeSec
-                | TYPE LPAREN typeSec SEMICOLON RPAREN'''
+    '''typeDecl : TYPE typeSpec
+                | TYPE LPAREN typeSpecList RPAREN'''
 
 def m_typeSpecList(p):
     '''typeSpecList : typeSpec SEMICOLON
@@ -160,7 +160,7 @@ def m_typeSpec(p):
 
 def m_varDecl(p):
     '''varDecl : VAR varSpec
-               | VAR LPAREN varSpec SEMICOLON RPAREN'''
+               | VAR LPAREN varSpecList RPAREN'''
 
 def m_varSpecList(p):
     '''varSpecList : varSpec SEMICOLON
