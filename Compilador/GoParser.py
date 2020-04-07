@@ -75,7 +75,11 @@ def m_ifStmt(p):
               | IF expressionBlock ELSE if block ''' ###OBERVAÇÃO VERIFICAR SER ESTAR CORRETO A CONSTRUÇÃO
 
 def m_switchStmt(p):
-    '''switchStmt : SWITCH simpleStmt SEMICOLON expression LCHAVES exprCaseClause RCHAVES'''
+    '''switchStmt : SWITCH simpleStmt SEMICOLON expression LCHAVES exprCaseClauseList RCHAVES
+                  | SWITCH LCHAVES exprCaseClauseList RCHAVES
+                  | SWITCH simpleStmt LCHAVES exprCaseClauseList RCHAVES
+                  | SWITCH expression LCHAVES exprCaseClauseList RCHAVES'''
+
 
 def m_exprCaseClauseList(p):
     '''exprCaseClauseList : exprCaseClause

@@ -454,42 +454,40 @@ class SwitchStmt(metaclass=ABCMeta):
         pass
 ##CONCRETA##
 class ExprSwitch(SwitchStmt):
-    def __init__(self, SWITCH, LCHAVES, ExprCaseClause, RCHAVES):
-        self.SWITCH = SWITCH
-        self.LCHAVES = LCHAVES
-        self.ExprCaseClause = ExprCaseClause
-        self.RCHAVES = RCHAVES
-
-    def accept(self, Visitor):
-        Visitor.visitExprSwitch(self)
-
-class ExprSwitch(SwitchStmt):
-    def __init__(self, SWITCH, SimpleStmt, SEMICOLON, LCHAVES, ExprCaseClause, RCHAVES):
-        self.SWITCH = SWITCH
-        self.SimpleStmt = SimpleStmt
-        self.SEMICOLON = SEMICOLON
-        self.LCHAVES = LCHAVES
-        self.ExprCaseClause = ExprCaseClause
-        self.RCHAVES = RCHAVES
-
-    def accept(self, Visitor):
-        Visitor.visitExprSwitch(self)
-
-class ExprSwitch(SwitchStmt):
-    def __init__(self, SWITCH, SimpleStmt, SEMICOLON, Expression, LCHAVES, ExprCaseClause, RCHAVES):
-        self.SWITCH = SWITCH
+    def __init__(self, SimpleStmt, SEMICOLON, Expression, LCHAVES, ExprCaseClauseList, RCHAVES):
         self.SimpleStmt = SimpleStmt
         self.SEMICOLON = SEMICOLON
         self.Expression = Expression
         self.LCHAVES = LCHAVES
-        self.ExprCaseClause = ExprCaseClause
+        self.ExprCasaClauseList = ExprCasaClauseList
         self.RCHAVES = RCHAVES
 
     def accept(self, Visitor):
         Visitor.visitExprSwitch(self)
 
-class ExprSwitch(SwitchStmt):
-    def __init__(self, SWITCH, Expression, LCHAVES, ExprCaseClause, RCHAVES):
+class ExprSwitchNone(SwitchStmt):
+    def __init__(self, SWITCH, LCHAVES, ExprCaseClauseList, RCHAVES):
+        self.SWITCH = SWITCH
+        self.LCHAVES = LCHAVES
+        self.ExprCaseClauseList = ExprCaseClauseList
+        self.RCHAVES = RCHAVES
+
+    def accept(self, Visitor):
+        Visitor.visitExprSwitch(self)
+
+class ExprSwitchSimple(SwitchStmt):
+    def __init__(self, SWITCH, SimpleStmt, LCHAVES, ExprCaseClauseList, RCHAVES):
+        self.SWITCH = SWITCH
+        self.SimpleStmt = SimpleStmt
+        self.LCHAVES = LCHAVES
+        self.ExprCaseClauseList = ExprCaseClauseList
+        self.RCHAVES = RCHAVES
+
+    def accept(self, Visitor):
+        Visitor.visitExprSwitch(self)
+
+class ExprSwitchExp(SwitchStmt):
+    def __init__(self, SWITCH, Expression, LCHAVES, ExprCaseClauseList, RCHAVES):
         self.SWITCH = SWITCH
         self.Expression = Expression
         self.LCHAVES = LCHAVES
