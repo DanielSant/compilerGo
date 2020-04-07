@@ -140,11 +140,10 @@ class DefinirParamDecl(ParameterList):
     def accept(self, Visitor):
         Visitor.visitDefinirParamDecl(self)
 
-class CompParamsDecl(ParameterList): ##PRECISA OBSERVAR ISSO
-    def __init__(self, ParameterDecl, COMMA, ParameterDecl):
+class CompoundParamDecl(ParameterList): ##PRECISA OBSERVAR ISSO
+    def __init__(self, ParameterDecl, ParameterDecList):
         self.ParameterDecl = ParameterDecl
-        self.COMMA = COMMA
-        self.ParameterDecl = ParameterDecl
+        self.ParameterDecList = ParameterDecList
     def accept(self, Visitor):
         Visitor.visitCompParamsDecl(self)
 

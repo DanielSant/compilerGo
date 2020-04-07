@@ -22,7 +22,8 @@ def m_parameters(p):
                   | LPAREN RPAREN''' 
 
 def m_parameterList(p):
-    '''parameterList : parameterDecl COMMA parameterDecl'''
+    '''parameterList : parameterDecl
+                     | parameterDecl parameterDecList '''
 
 def m_parameterDecl(p):
     '''parameterDecl : identifier TYPE'''
