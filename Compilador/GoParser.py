@@ -25,6 +25,10 @@ def m_parameterList(p):
     '''parameterList : parameterDecl
                      | parameterDecl parameterDecList '''
 
+def m_paramterDecList(p):
+    '''parameterDecList : COMMA parameterDecl
+                        | COMMA parameterDecl parameterDecList'''
+
 def m_parameterDecl(p):
     '''parameterDecl : identifier TYPE'''
 
@@ -73,6 +77,14 @@ def m_ifStmt(p):
 def m_switchStmt(p):
     '''switchStmt : SWITCH simpleStmt SEMICOLON expression LCHAVES exprCaseClause RCHAVES'''
 
+def m_exprCaseClauseList(p):
+    '''exprCaseClauseList : exprCaseClause
+                          | exprCaseClause ExprCaseClauseList
+                          | empty'''
+def m_empty(p):
+    '''empty :'''
+    pass
+
 def m_exprCaseClause(p):
     '''exprCaseClause : exprSwitchCase COLON statementList'''
 
@@ -120,6 +132,11 @@ def m_constSpec(p):
 
 def m_identifierList(p):
     '''identifierList : ID COMMA ID'''
+
+def m_compIDList(p):
+    '''compIDList : COMMA ID
+                  | COMMA ID compIDList
+                  | empty'''
 
 def m_expressionList(p):
     '''expressionList : expression COMMA expression'''

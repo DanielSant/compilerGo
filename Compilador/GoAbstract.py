@@ -147,6 +147,29 @@ class CompoundParamDecl(ParameterList): ##PRECISA OBSERVAR ISSO
     def accept(self, Visitor):
         Visitor.visitCompParamsDecl(self)
 
+##ABSTRATA##
+class ParameterDecList(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCREATA##
+class DecParamComp(ParameterDecList):
+    def __init__(self, COMMA, ParameterDecl):
+        self.COMMA = COMMA
+        self.ParameterDecl = ParameterDecl
+
+    def accept(self, Visitor):
+        Visitor.visitDecParamComp(self)
+
+class DecListCompound(ParameterDecList):
+    def __init__(self, COMMA, ParameterDecl, ParameterDecList):
+        self.COMMA = COMMA
+        self.ParameterDecl = ParameterDecl
+        self.ParameterDecList = ParameterDecList
+
+    def accept(self, Visitor):
+        Visitor.visitDecListCompound(self)
 
 ##ABSTRATA##
 class ParameterDecl(metaclass=ABCMeta):
@@ -314,8 +337,8 @@ class SimpleStmt(metaclass=ABCMeta):
         pass
 ##CONCRETA##
 class StmtEmpty(SimpleStmt):
-    def __init__(self, none): #Duvidas
-        self.none = none
+    def __init__(self, None): #Duvidas
+        self = None
 
     def accept(self, Visitor):
         Visitor.visitStmtEmpty(self)
@@ -475,6 +498,36 @@ class ExprSwitch(SwitchStmt):
 
     def accept(self, Visitor):
         Visitor.visitExprSwitch(self)
+
+##ABSTRATA
+class ExprCaseClauseList(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA
+class CallExprCaseClause(ExprCaseClauseList):
+    def __init__(self, ExprCaseClause):
+        self.ExprCaseClause = ExprCaseClause
+
+    def accept(self, Visitor):
+        Visitor.visitCallExprCaseClause(self)
+
+class CompoundCaseClause(ExprCaseClauseList):
+    def __init__(self, ExprCaseClause, ExprCaseClauseList):
+        self.ExprCaseClause = ExprCaseClause
+        self.ExprCaseClauseList = ExprCaseClauseList
+
+    def accept(self, Visitor):
+        Visitor.visitCompoundCaseClase(self)
+
+class EmptyCaseClause(ExprCaseClauseList):
+    def __init__(self, None)
+        self = None
+        pass
+
+    def accept(self, Visitor):
+        Visitor.visitEmptyCaseClause(self)
 
 ##ABSTRATA##
 class ExprCaseClause(metaclass=ABCMeta):
@@ -773,6 +826,37 @@ class CompIDList(IdentifierList):
     def accept(self, Visitor):
         Visitor.visitCompIDList(self)
 
+##ABSTRATA
+class CompIDList(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class DoubleID(CompIDList):
+    def __init__(self, COMMA, ID):
+        self.COMMA = COMMA
+        self.ID
+
+    def accept(self, Visitor):
+        Visitor.visitDoubleID(self)
+
+class CompoundIDList(CompIDList):
+    def __init__(self, COMMA, CompIDList):
+        self.COMMA = COMMA
+        self.CompIDList = CompIDList
+
+    def accept(self, Visitor):
+        Visitor.visitCompoundIDList(self)
+
+class SimpleID(CompIDList):
+    def __init__(self, None):
+        self = None
+        pass
+
+    def accept(self, Visitor):
+        Visitor.visitSimpleID(self)
+
 ##ABSTRATA##
 class ExpressionList(metaclass=ABCMeta):
     @abstractclassmethod
@@ -899,7 +983,7 @@ class DefinirExp(Expression):
 		self.Expression = Expression
 		self.binary_op =  binary_op
 		self.Expression = Expression
-	def accept(self, Visititor):
+	def accept(self, Visitor):
 		Visitor.visitDefinirExp(self)
 
 class ExprUnary(Expression):
@@ -997,13 +1081,13 @@ def accept(self, Visitor):
 class maisOp(Add_op):
 	def __init__(self,PLUS):
 		self.PLUS = PLUS
-	def accept(self, Visititor):
+	def accept(self, Visitor):
 		Visitor.visitmaisOp(self)
 
 class menosOp(Add_op):
     	def __init__(self,MINUS):
 		self.MINUS = MINUS
-	def accept(self, Visititor):
+	def accept(self, Visitor):
 		Visitor.visitmenosOp(self)
     
 ##ABSTRATA##
@@ -1016,19 +1100,19 @@ def accept(self, Visitor):
 class vezesOp(Mul_op):
 	def __init__(self,TIMES):
 		self.TIMES =  TIMES
-	def accept(self, Visititor):
+	def accept(self, Visitor):
 		Visitor.visitvezesOp(self)
 
 class divideOp(Mul_op):
     	def __init__(self,DIVIDE):
 		self.DIVIDE = DIVIDE
-	def accept(self, Visititor):
+	def accept(self, Visitor):
 		Visitor.visitdivideOp(self)
 
 class modOp(Mul_op):
     	def __init__(self,MOD):
 		self.MOD = MOD
-	def accept(self, Visititor):
+	def accept(self, Visitor):
 		Visitor.visitmodOp(self)
 
 ##ABSTRATA##
@@ -1043,7 +1127,7 @@ class IncOp(IncDec):
 		self.Expression = Expression
         self.PLUS = PLUS
         self.PLUS = PLUS                       ##observar 
-	def accept(self, Visititor):
+	def accept(self, Visitor):
 		Visitor.visitIncOp(self)
 
 class DecOp(IncDec):
@@ -1051,7 +1135,7 @@ class DecOp(IncDec):
 		self.Expression = Expression
         self.MINUS = MINUS
         self.MINUS = MINUS                     ##observar 
-	def accept(self, Visititor):
+	def accept(self, Visitor):
 		Visitor.visitDecOp(self)
 
 ##ABSTRATA##
@@ -1066,7 +1150,7 @@ class AssignOp(Assignment):
 		self.Expression = Expression
         self.ASSIGN = ASSIGN
         self.ExpressionList = ExpressionList    ##observar 
-	def accept(self, Visititor):
+	def accept(self, Visitor):
 		Visitor.visitAssignOp(self)
 
 ##ABSTRATA##
@@ -1081,6 +1165,6 @@ class DeclShortVar(ShortVarDecl):
 		self.IdentifierList = IdentifierList
         self.ASSIGN = ASSIGN
         self.ExpressionList = ExpressionList    ##observar 
-	def accept(self, Visititor):
+	def accept(self, Visitor):
 		Visitor.visitDeclShortVar(self)
 
