@@ -760,11 +760,10 @@ class SimpleConst(ConstDecl):
         Visitor.visitSimpleConst(self)
 
 class CompConst(ConstDecl):
-    def __init__(CONST, LPAREN, ConstSpec, SEMICOLON, RPAREN):
+    def __init__(CONST, LPAREN, ConstSpec, RPAREN):
         self.CONST = CONST
         self.LPAREN = LPAREN
         self.ConstSpec = ConstSpec
-        self.SEMICOLON = SEMICOLON
         self.RPAREN = RPAREN
     
     def accept(self, Visitor):
