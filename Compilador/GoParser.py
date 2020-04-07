@@ -139,7 +139,8 @@ def m_compIDList(p):
                   | empty'''
 
 def m_expressionList(p):
-    '''expressionList : expression COMMA expression'''
+    '''expressionList : expression 
+                      | expression listExpr'''
 
 def m_listExpr(p):
     '''listExpr : COMMA expression

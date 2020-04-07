@@ -870,11 +870,10 @@ class DefinirExpList(ExpressionList):
     def accept(self, Visitor):
         Visitor.visitDefinirExpList(self)
 
-class CompExpList(ExpressionList):
-    def __init__(Expression, COMMA, Expression): #OBS: 2 "Expression"
+class CallExpList(ExpressionList):
+    def __init__(Expression, ListExpr):
         self.Expression = Expression
-        self.COMMA = COMMA
-        self.Expression = Expression
+        self.ListExpr = ListExpr
 
     def accept(self, Visitor):
         Visitor.visitDefinirExpList(self)
