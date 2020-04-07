@@ -880,6 +880,30 @@ class CompExpList(ExpressionList):
         Visitor.visitDefinirExpList(self)
 
 ##ABSTRATA##
+class ListExpr(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class SimpleExpList(ListExpr):
+    def __init__(self, COMMA, Expression):
+        self.COMMA = COMMA
+        self.Expression = Expression
+
+    def accept(self, Visitor):
+        Visitor.visitSimpleExpList(self)
+
+class CompoundExpList(ListExpr):
+    def __init__(self, COMMA, Expression, ListExpr):
+        self.COMMA = COMMA
+        self.Expression = Expression
+        self.ListExpr = ListExpr
+
+    def accept(self, Visitor):
+        Visitor.visitCompoundExpList(self)
+
+##ABSTRATA##
 class TypeDecl(metaclass=ABCMeta):
     @abstractclassmethod
     def accept(self, Visitor):
@@ -903,6 +927,38 @@ class CompType(TypeDecl):
 
     def accept(self, Visitor):
         Visitor.visitCompType(self)
+
+##ABSTRATA##
+class TypeSpecList(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class TypeSpecDouble(TypeSpecList):
+    def __init__(self, TypeSpec, SEMICOLON):
+        self.TypeSpec = TypeSpec
+        self.SEMICOLON = SEMICOLON
+
+    def accept(self, Visitor):
+        Visitor.visitTypeSpecDouble(self)
+
+class CompTypeSpecList(TypeSpecList):
+    def __init__(self, TypeSpec, SEMICOLON, TypeSpecList):
+        self.TypeSpec = TypeSpec
+        self.SEMICOLON = SEMICOLON
+        self.TypeSpecList = TypeSpecList
+
+    def accept(self, Visitor):
+        Visitor.visitCompTypeSpecList(self)
+
+class TypeSpecSimple(TypeSpecList):
+    def __init__(self, None):
+        self = None
+        pass
+
+    def accept(self, Visitor):
+        Visitor.visitTypeSpecSimple(self)
 
 ##ABSTRATA##
 class TypeSpec(metaclass=ABCMeta):
@@ -939,6 +995,38 @@ class CompVar(VarDecl):
 		self.SEMICOLON = SEMICOLON
 	def accept(self, Visitor):
 		Visitor.visitCompVar(self)
+
+##ABSTRATA##
+class VarSpecList(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class VarDef(VarSpecList):
+    def __init__(self, VarSpec, SEMICOLON):
+        self.VarSpec = VarSpec
+        self.SEMICOLON = SEMICOLON
+
+    def accept(self, Visitor):
+        Visitor.visitVarDef(self)
+
+class CompoundVarSpec(VarSpecList):
+    def __init__(self, VarSpec, SEMICOLON, VarSpecList):
+        self.VarSpec = VarSpec
+        self.SEMICOLON = SEMICOLON
+        self.VarSpecList = VarSpecList
+
+    def accept(self, Visitor):
+        Visitor.visitCompoundVarSpec(self)
+
+class SimpleVar(VarSpecList):
+    def __init__(self, None):
+        self = None
+        pass
+
+    def accept(self, Visitor):
+        Visitor.visitSimpleVar(self)
 
 ##ABSTRATA##
 class VarSpec(metaclass=ABCMeta):

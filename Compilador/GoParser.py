@@ -141,10 +141,19 @@ def m_compIDList(p):
 def m_expressionList(p):
     '''expressionList : expression COMMA expression'''
 
+def m_listExpr(p):
+    '''listExpr : COMMA expression
+                | COMMA expression listExpr'''
+
 
 def m_typeDecl(p):
     '''typeDecl : TYPE typeSec
                 | TYPE LPAREN typeSec SEMICOLON RPAREN'''
+
+def m_typeSpecList(p):
+    '''typeSpecList : typeSpec SEMICOLON
+                    | typeSpec SEMICOLON typeSpecList
+                    | empty'''
 
 def m_typeSpec(p):
     '''typeSpec : ID type'''
@@ -152,6 +161,11 @@ def m_typeSpec(p):
 def m_varDecl(p):
     '''varDecl : VAR varSpec
                | VAR LPAREN varSpec SEMICOLON RPAREN'''
+
+def m_varSpecList(p):
+    '''varSpecList : varSpec SEMICOLON
+                   | varSpec SEMICOLON varSpecList
+                   | empty'''
 
 def m_spec(p):
     '''spec : identifierList type
