@@ -30,7 +30,8 @@ def m_paramterDecList(p):
                         | COMMA parameterDecl parameterDecList'''
 
 def m_parameterDecl(p):
-    '''parameterDecl : identifier TYPE'''
+    '''parameterDecl : identifierList TYPE
+                     | TYPE'''
 
 def m_functionBody(p):
     '''functionBody : block'''
@@ -39,6 +40,10 @@ def m_block(p):
     '''block : LCHAVES statementList RCHAVES'''
 
 def m_statementList(p):
+    '''statementList : statement SEMICOLON
+                     | statement SEMICOLON statementList'''
+
+def m_statement(p):
     '''statementList : declaration
                      | simpleStmt
                      | returnStmt
@@ -62,7 +67,8 @@ def m_simpleStmt(p):
                   | shortVarDecl'''
 
 def m_returnStmt(p):
-    '''returnStmt : RETURN expressionList'''
+    '''returnStmt : RETURN expressionList
+                  | RETUNR'''
 
 def m_breakStmt(p):
     '''breakStmt : BREAK'''
@@ -71,8 +77,9 @@ def m_continueStmt(p):
     '''continueStmt : CONTINUE'''
 
 def m_ifStmt(p):
-    '''ifStmt : IF expressionBlock ELSE if ifStmt
-              | IF expressionBlock ELSE if block ''' ###OBERVAÇÃO VERIFICAR SER ESTAR CORRETO A CONSTRUÇÃO
+    '''ifStmt : IF expression block
+              | IF expression block ELSE ifStmt
+              | IF expression block ELSE block''' ###OBERVAÇÃO VERIFICAR SER ESTAR CORRETO A CONSTRUÇÃO
 
 def m_switchStmt(p):
     '''switchStmt : SWITCH simpleStmt SEMICOLON expression LCHAVES exprCaseClauseList RCHAVES
@@ -127,16 +134,17 @@ def m_rangeClause(p):
 
 def m_constDecl(p):
     '''constDecl : CONST constSpec
-                 | CONST LPAREN constSpec SEMICOLON RPAREN'''
+                 | CONST LPAREN constSpecList RPAREN'''
+
+def m_constSpecList(p):
+    '''constSpecList : constSpec SEMICOLON
+                     | constSpec SEMICOLON constSpecList'''
 
 def m_constSpec(p):
     '''constSpec : identifierList
                  | identifierList ASSIGN expressionList
                  | identifierList type ASSIGN expressionList''' ###Verificar ser estar correta 
 
-def m_constSpecList(p):
-    '''constSpecList : constSpec SEMICOLON
-                     | constSpec SEMICOLON constSpecList'''
 
 def m_identifierList(p):
     '''identifierList : ID compIDList'''
@@ -176,17 +184,17 @@ def m_varSpecList(p):
                    | varSpec SEMICOLON varSpecList
                    | empty'''
 
-def m_spec(p):
-    '''spec : identifierList type
-            | identifierList type ASSIGN expressionList
-            | identifierList ASSIGN expressionList''''
+def m_varSpec(p):
+    '''varSpec : identifierList type
+               | identifierList type ASSIGN expressionList
+               | identifierList ASSIGN expressionList''''
 
 def m_expression(p):
     '''expression : unaryExpr
                   | expression binary_op expression'''
 
 def m_unaryExpr(p):
-    '''unaryExpr : Number
+    '''unaryExpr : NUMBER
                  | ID
                  | LPAREN expression RPAREN''' #Talvez teremos que modificar
 
@@ -201,7 +209,7 @@ def m_rel_op(p):
     '''rel_op : EQUALS
               | DIFERENTE
               | LESS
-              | LELESS_EQUAL
+              | LESS_EQUAL
               | GREATER
               | GREATER_EQUAL'''
 
