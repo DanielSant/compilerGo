@@ -45,7 +45,7 @@ class DefinirParamsT(Signature):
 		self.Result = Result
 
 	def accept(self, Visitor):
-		Visitor.visitDefinirParams(self)
+		Visitor.visitDefinirParamsT(self)
 
 ##ABSTRATA##
 class Result(metaclass=ABCMeta):
@@ -233,7 +233,8 @@ class DefinirStatement(StatementList): ##PRECISA OBSERVAR ISSO
         self.SEMICOLON = SEMICOLON
     def accept(self, Visitor):
         Visitor.visitDefinirStatement(self)
-        
+
+##ABSTRATA##       
 class Statement(metaclass=ABCMeta):
     @abstractclassmethod
 	def accept(self, Visitor):
