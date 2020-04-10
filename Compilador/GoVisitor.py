@@ -110,6 +110,4 @@ class Visitor():
         stmtFor.ForStmt.accept(self)
     
 
-##Parada na linha 307 da GoAbstract.py
-##Daniel vefiricar a linha deste codigo na linha 23 até a 33
-##Deve dar continuidade na  -- def visitDeclConst
+##Parada na linha 307 da GoAbstract.pyc
