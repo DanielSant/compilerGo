@@ -1,12 +1,12 @@
 class Visitor():
     def visitDefinirFunc(self, definirFunc):
-        print('FUNC')
-        print('ID')
+        print('func', end =' ')
+        print(definirFunc.ID, end = ' ')
         definirFunc.Signature.accept(self)
 
     def visitDefinirFuncBody(self, definirFuncBody):
-        print('FUNC')
-        print('ID')
+        print('func', end =' ')
+        print(definirFuncBody.ID, end = ' ')
         definirFuncBody.Signature.accept(self)
         definirFuncBody.FunctionBody.accept(self)
 
@@ -21,31 +21,31 @@ class Visitor():
         definirTipo.Type.accept(self)
     
     def visitTint(self, Tint):
-        print('INT')
+        print('int', end = ' ')
 
     def visitTstring(self, Tstring):
-        print('STRING')                 #Observação Paramentro com Letra Maiúscula  #(Tint,Tstring,Tbool,Tfloat)
+        print('string', end = ' ')                 #Observação Paramentro com Letra Maiúscula  #(Tint,Tstring,Tbool,Tfloat)
 
     def visitTbool(self, Tbool):
-        print('BOOL')
+        print('bool', end = ' ')
     
     def visitTfloat(self, Tfloat):
-        print('FLOAT')
+        print('float', end = ' ')
     
     def visitDefinirParams(self, definirParams):
-        print('LPAREN')
-        print('RPAREN')
+        print('(', end = ' ')
+        print(')', end = ' ')
     
     def visitParams(self, params):
-        print('LPAREN')
+        print('(', end = ' ')
         params.ParameterList.accept(self)
-        print('RPAREN')
+        print(')', end = ' ')
     
     def visitParamsList(self, paramsList):
-        print('LPAREN')
+        print('(', end = ' ')
         paramsList.ParameterList.accept(self)
-        print('COMMA')
-        print('RPAREN')
+        print('\,', end = ' ')
+        print(')', end = ' ')
     
     def visitDefinirParamDecl(self, definirParamDecl):
         definirParamDecl.ParameterDecl.accept(self)
@@ -55,11 +55,11 @@ class Visitor():
         compParamsDecl.ParameterDecList.accept(self)
     
     def visitDecParamComp(self, decParamComp):
-        print('COMMA')
+        print('\,', end = ' ')
         decParamComp.ParameterDecl.accept(self)
     
     def visitDecListCompound(self, decListCompound):
-        print('COMMA')
+        print('\,', end = ' ')
         decListCompound.ParameterDecl.accept(self)
         decListCompound.ParameterDecList.accept(self)
     
@@ -74,13 +74,13 @@ class Visitor():
         definirBlock.Block.accept(self)
     
     def visitDefinirStatementL(self, definirStatementL):
-        print('LCHAVES')
+        print('(', end = ' ')
         definirStatementL.StatmentList.accept(self)
-        print('RCHAVES')
+        print(')', end = ' ')
     
     def visitDefinirStatement(self, definirStatement):
         definirStatement.Statement.accept(self)
-        print('SEMICOLON')
+        print('\;', end = ' ')
     
     def visitStmtDeclaration(self, stmtDeclaration):
         stmtDeclaration.Declaration.accept(self)
@@ -108,6 +108,7 @@ class Visitor():
     
     def visitStmtFor(self, stmtFor):
         stmtFor.ForStmt.accept(self)
+    
 
 ##Parada na linha 307 da GoAbstract.py
 ##Daniel vefiricar a linha deste codigo na linha 23 até a 33
