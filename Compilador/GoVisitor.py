@@ -44,7 +44,7 @@ class Visitor():
     def visitParamsList(self, paramsList):
         print('(', end = ' ')
         paramsList.ParameterList.accept(self)
-        print('\,', end = ' ')
+        print(',', end = ' ')
         print(')', end = ' ')
     
     def visitDefinirParamDecl(self, definirParamDecl):
@@ -55,11 +55,11 @@ class Visitor():
         compParamsDecl.ParameterDecList.accept(self)
     
     def visitDecParamComp(self, decParamComp):
-        print('\,', end = ' ')
+        print(',', end = ' ')
         decParamComp.ParameterDecl.accept(self)
     
     def visitDecListCompound(self, decListCompound):
-        print('\,', end = ' ')
+        print(',', end = ' ')
         decListCompound.ParameterDecl.accept(self)
         decListCompound.ParameterDecList.accept(self)
     
@@ -74,13 +74,13 @@ class Visitor():
         definirBlock.Block.accept(self)
     
     def visitDefinirStatementL(self, definirStatementL):
-        print('(', end = ' ')
+        print('{', end = ' ')
         definirStatementL.StatmentList.accept(self)
-        print(')', end = ' ')
+        print('}', end = ' ')
     
     def visitDefinirStatement(self, definirStatement):
         definirStatement.Statement.accept(self)
-        print('\;', end = ' ')
+        print(';', end = ' ')
     
     def visitStmtDeclaration(self, stmtDeclaration):
         stmtDeclaration.Declaration.accept(self)
@@ -108,6 +108,88 @@ class Visitor():
     
     def visitStmtFor(self, stmtFor):
         stmtFor.ForStmt.accept(self)
-    
 
-##Parada na linha 307 da GoAbstract.pyc
+    def visitDeclConst(self, declConst):
+        declConst.ConstDecl.accept(self)
+    
+    def visitDeclType(self, declType):
+        declType.TypeDecl.accept(self)
+    
+    def visitDeclVar(self, declVar):
+        declVar.ConstVar.accept(self)
+    
+    def visitStmtEmpty(self, stmtEmpty):
+        stmtEmpty.None.accept(self)       #Duvidas -  Verificar linha 355 da GoAbstract
+        
+    def visitStmtExpression(self, stmtExpression):
+        stmtExpression.Expression.accept(self)
+    
+    def visitStmtIncDec(self, stmtIncDec):
+        stmtIncDec.IncDec.accept(self)
+    
+    def visitAssign(self, assign):
+        assign.Assignment.accept(self)
+    
+    def visitDeclShortVar(self, declShortVar):
+        declShortVar.ShortVarDecl.accept(self)
+    
+    def visitSimpleReturn(self, simpleReturn):
+       print('return', end =' ')
+    
+    def visitExpReturn(self, expReturn):
+        print('return', end =' ')
+        expReturn.ExpressionList.accept(self)
+    
+    def visitStmtBreack(self, stmtBreack):
+        print('break', end =' ')
+
+    def visitStmtContinue(self, stmtContinue):
+        print('continue'= end = ' ')
+    
+    def visitSimpleIf(self, simpleIf):
+        print('if', end = ' ')
+        simpleIf.Expression.accept(self)
+        simpleIf.Block.accept(self)
+    
+    def visitIfElse(self, ifElse):
+        print('if', end = ' ')
+        ifElse.Expression.accept(self)
+        ifElse.Block.accept(self)
+        print('else', end = ' ')         #OBSERVAÇÃO -  Verificar linha 458 da GoAbstract
+    
+    def visitCompIfElse(self, compIfElse):
+        print('if', end = ' ')
+        compIfElse.Expression.accept(self)
+        compIfElse.Block.accept(self)
+        print('else', end = ' ')
+        compIfElse.IfStmt.accept(self)
+
+    def visitExprSwitch(self, exprSwitch):
+        exprSwitch.SimpleStmt.accept(self)
+        print(';', end = ' ')
+        exprSwitch.Expression.accept(self)
+        print('{', end = ' ')
+        exprSwitch.ExprCasaClauseList.accept(self)
+        print('}', end = ' ')
+    
+    def visitExprSwitchNone(self, exprSwitchNone):
+        print('switch', end = ' ')
+        print('{', end = ' ')
+        exprSwitchNone.ExprCaseClauseList.accept(self)
+        print('}', end = ' ')
+    
+    def visitExprSwitchSimple(self, exprSwitchSimple):
+        print('switch', end = ' ')
+        exprSwitchSimple.SimpleStmt.accept(self)
+        print('{', end = ' ')
+        exprSwitchSimple.ExprCaseClauseList.accept(self)
+        print('}', end = ' ')
+    
+    def visitExprSwitchExp(self, exprSwitchExp):
+        print('switch', end = ' ')
+        exprSwitchExp.Expression.accept(self)
+        print('{', end = ' ')
+        exprSwitchExp.ExprCaseClause.accept(self)
+        print('}', end = ' ')
+
+#Para na Linha 525 da GoAbstract.py

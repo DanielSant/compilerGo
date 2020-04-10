@@ -447,6 +447,7 @@ class SimpleIf(IfStmt):
         self.IF = IF
         self.Expression = Expression
         self.Block = Block
+
     def accept(self, Visitor):
         Visitor.visitSimpleIf(self)
 
@@ -455,12 +456,11 @@ class IfElse(IfStmt):
         self.IF = IF
         self.Expression = Expression
         self.Block = Block
-        self.ELSE = Block
+        self.ELSE = Block  
 
     def accept(self, Visitor):
         Visitor.visitIfElse(self)
 
-##CONCRETA##
 class CompIfElse(IfStmt):
     def __init__(self, IF, Expression, Block, ELSE, IfStmt):
         self.IF = IF
@@ -468,6 +468,7 @@ class CompIfElse(IfStmt):
         self.Block = Block
         self.ELSE = ELSE
         self.IfStmt = IfStmt
+
     def accept(self, Visitor):
         Visitor.visitCompIfElse(self)
 
@@ -498,7 +499,7 @@ class ExprSwitchNone(SwitchStmt):
         self.RCHAVES = RCHAVES
 
     def accept(self, Visitor):
-        Visitor.visitExprSwitch(self)
+        Visitor.visitExprSwitchNone(self)
 
 class ExprSwitchSimple(SwitchStmt):
     def __init__(self, SWITCH, SimpleStmt, LCHAVES, ExprCaseClauseList, RCHAVES):
@@ -509,7 +510,7 @@ class ExprSwitchSimple(SwitchStmt):
         self.RCHAVES = RCHAVES
 
     def accept(self, Visitor):
-        Visitor.visitExprSwitch(self)
+        Visitor.visitExprSwitchSimple(self)
 
 class ExprSwitchExp(SwitchStmt):
     def __init__(self, SWITCH, Expression, LCHAVES, ExprCaseClauseList, RCHAVES):
@@ -520,7 +521,7 @@ class ExprSwitchExp(SwitchStmt):
         self.RCHAVES = RCHAVES
 
     def accept(self, Visitor):
-        Visitor.visitExprSwitch(self)
+        Visitor.visitExprSwitchExp(self)
 
 ##ABSTRATA
 class ExprCaseClauseList(metaclass=ABCMeta):
