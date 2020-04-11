@@ -91,6 +91,13 @@ class Tbool(Type):
     def accept(self, Visitor):
         Visitor.visitTbool(self)
 
+class Tbyte(Type):
+    def __init__(self, BYTE):
+        self.BYTE = BYTE
+
+    def accept(self, Visitor):
+        Visitor.visitTbyte(self)
+
 class Tfloat(Type):
     def __init__(self, FLOAT):
         self.FLOAT = FLOAT
@@ -105,13 +112,13 @@ class Parameters(metaclass=ABCMeta):
         pass
 
 ##CONCRETA##
-class DefinirParams(Parameters):
+class DefinirParamsParameters(Parametrs):
     def __init__(self,LPAREN,RPAREN):
         self.LPAREN = LPAREN
         self.RPAREN = RPAREN
 
     def accept(self, Visitor):
-        Visitor.visitDefinirParams(self)
+        Visitor.visitDefinirParamsParameters(self)
 
 class Params(Parameters):
     def __init__(self,LPAREN,ParameterList,RPAREN):
@@ -245,6 +252,15 @@ class DefinirStatement(StatementList): ##PRECISA OBSERVAR ISSO
     def accept(self, Visitor):
         Visitor.visitDefinirStatement(self)
 
+class CompoundStatementList(StatementList):
+    def _init_(self, statement, SEMICOLON, statementList)
+        self.statement = statement
+        self.SEMICOLON = SEMICOLON
+        self.statementList = statmentList
+
+    def accept(self, Visitor):
+        Visitor.visitCompoundStatmenteList(self)
+
 ##ABSTRATA##       
 class Statement(metaclass=ABCMeta):
     @abstractclassmethod
@@ -329,14 +345,14 @@ class DeclConst(Declaration):
     def accept(self, Visitor):
         Visitor.visitDeclConst(self)
 
-    class DeclType(Declaration):
+class DeclType(Declaration):
     def __init__(self, TypeDecl):
         self.TypeDecl = TypeDecl
 
     def accept(self, Visitor):
         Visitor.visitDeclType(self)
 
-    class DeclVar(Declaration):
+class DeclVar(Declaration):
     def __init__(self, ConstVar):
         self.ConstVar = ConstVar
 
@@ -582,7 +598,7 @@ class CaseClauseExp(ExprSwitchCase):
         self.ExpressionList = ExpressionList
 
     def accept(self, Visitor):
-        Visitor.visitCaseClause(self)
+        Visitor.visitCaseClauseExp(self)
 
 class CaseClause(ExprSwitchCase):
     def __init__(self, DEFAULT):
@@ -619,7 +635,7 @@ class StmtForClause(ForStmt):
 class StmtForRange(ForStmt):
     def __init__(self, FOR, RangeClause, Block):
         self.FOR = FOR
-        self.RangeClause = Block
+        self.RangeClause = RangeClause
         self.Block = Block
 
     def accept(self, Visitor):
@@ -920,7 +936,7 @@ class CallExpList(ExpressionList):
         self.ListExpr = ListExpr
 
     def accept(self, Visitor):
-        Visitor.visitDefinirExpList(self)
+        Visitor.visitCallExpList(self)
 
 ##ABSTRATA##
 class ListExpr(metaclass=ABCMeta):
@@ -1141,7 +1157,7 @@ class Binary_op(metaclass=ABCMeta):
 ##CONCRETA##
 class OpOr(Binary_op):
 	def __init__(self, OR):
-		self.”OR” = “OR”
+		self.OR = OR
 
 	def accept(self, Visitor):
 		Visitor.visitOpOr(self)
@@ -1186,42 +1202,42 @@ class iqualsOp(Rel_op):
 		self.EQUALS = EQUALS
 
 	def accept(self, Visitor):
-		Visitor.visitiqualsOp(self)
+		Visitor.visitEqualsOp(self)
 
 class difereOp(Rel_op):
     def __init__(self, DIFERENTE):
 		self.DIFERENTE = DIFERENTE
 
 	def accept(self, Visitor):
-		Visitor.visitdifereOp(self)
+		Visitor.visitDifereOp(self)
 
 class menorOp(Rel_op):
     def __init__(self, LESS):
 		self.LESS = LESS
 
 	def accept(self, Visitor):
-		Visitor.visitmenorOp(self)
+		Visitor.visitMenorOp(self)
 
 class menorIgualOp(Rel_op):
     def __init__(self, LESS_EQUAL):
 		self.LESS_EQUAL = LESS_EQUAL
 
     def accept(self, Visitor):
-		Visitor.visitmenorIgualOp(self)
+		Visitor.visitMenorIgualOp(self)
 
 class maiorOp(Rel_op):
     def __init__(self, GREATER):
 		self.GREATER = GREATER
 
     def accept(self, Visitor):
-		Visitor.visitmaiorOp(self)  
+		Visitor.visitMaiorOp(self)  
 
 class maiorIgual(Rel_op):
     def __init__(self, GREATER_EQUAL):
 		self.GREATER_EQUAL = GREATER_EQUAL
 
     def accept(self, Visitor):
-		Visitor.visitmaiorIgual(self)
+		Visitor.visitMaiorIgualOp(self)
 
 ##ABSTRATA##
 class Add_op(metaclass=ABCMeta):
@@ -1235,14 +1251,14 @@ class maisOp(Add_op):
 		self.PLUS = PLUS
 
 	def accept(self, Visitor):
-		Visitor.visitmaisOp(self)
+		Visitor.visitMaisOp(self)
 
 class menosOp(Add_op):
     def __init__(self,MINUS):
 		self.MINUS = MINUS
 
 	def accept(self, Visitor):
-		Visitor.visitmenosOp(self)
+		Visitor.visitMenosOp(self)
     
 ##ABSTRATA##
 class Mul_op(metaclass=ABCMeta):
@@ -1256,21 +1272,21 @@ class vezesOp(Mul_op):
 		self.TIMES =  TIMES
 
 	def accept(self, Visitor):
-		Visitor.visitvezesOp(self)
+		Visitor.visitVezesOp(self)
 
 class divideOp(Mul_op):
     	def __init__(self,DIVIDE):
 		self.DIVIDE = DIVIDE
 
 	def accept(self, Visitor):
-		Visitor.visitdivideOp(self)
+		Visitor.visitDivideOp(self)
 
 class modOp(Mul_op):
     def __init__(self,MOD):
 		self.MOD = MOD
 
 	def accept(self, Visitor):
-		Visitor.visitmodOp(self)
+		Visitor.visitModOp(self)
 
 ##ABSTRATA##
 class IncDec(metaclass=ABCMeta):
