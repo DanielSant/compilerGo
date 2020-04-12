@@ -127,7 +127,7 @@ class Visitor():
         declVar.ConstVar.accept(self)
     
     def visitStmtEmpty(self, stmtEmpty):
-        stmtEmpty.None.accept(self)       #Duvidas -  Verificar linha 355 da GoAbstract
+        print('', end = ' ')
         
     def visitStmtExpression(self, stmtExpression):
         stmtExpression.Expression.accept(self)
@@ -208,7 +208,7 @@ class Visitor():
         compoundCaseClase.ExprCaseClauseList.accept(self)
 
     def visitEmptyCaseClause(self, emptyCaseClause):
-        print(' ') #OBSERVAÇÃO: NONE É VAZIO?
+        print('', end = ' ')
 
     def visitExprCase(self, exprCase):
         exprCase.exprSwitchCase.accept(self)
