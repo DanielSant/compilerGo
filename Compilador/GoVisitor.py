@@ -152,7 +152,7 @@ class Visitor():
         print('break', end =' ')
 
     def visitStmtContinue(self, stmtContinue):
-        print('continue'= end = ' ')
+        print('continue', end = ' ')
     
     def visitSimpleIf(self, simpleIf):
         print('if', end = ' ')
@@ -164,7 +164,8 @@ class Visitor():
         ifElse.Expression.accept(self)
         ifElse.Block.accept(self)
         print('else', end = ' ')         #OBSERVAÇÃO -  Verificar linha 458 da GoAbstract
-    
+        ifElse.Block1.accept(self)
+        
     def visitCompIfElse(self, compIfElse):
         print('if', end = ' ')
         compIfElse.Expression.accept(self)
@@ -428,7 +429,7 @@ class Visitor():
     def visitDefinirExp(self, definirExp):
         definirExp.Expression.accept(self)
         definirExp.binary_op.accept(self)
-        definirExp.Expression.accept(self)
+        definirExp.Expression1.accept(self)
 
     def visitExprUnary(self, exprUnary):
         exprUnary.UnaryExpr.accept(self)
@@ -505,7 +506,7 @@ class Visitor():
     def visitAssignOp(self, assignOp):
         assignOp.ExpressionList.accept(self)
         print('=', end = ' ')
-        assignOp.ExpressionList.accept(self)
+        assignOp.ExpressionList1.accept(self)
 
     def visitDeclShortVar(self, declShortVar):
         declShortVar.IdentifierList.accept(self)
