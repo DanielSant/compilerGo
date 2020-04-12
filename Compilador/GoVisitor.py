@@ -251,22 +251,29 @@ class Visitor():
         print(';', end = ' ')
         classicFor.PostStmt.accept(self)
 
-    def visitConditionFor(self, conditionFor):
-        conditionFor.Condition.accept(self)
+    def visitInCoFor(self, inCoFor):
+        inCoFor.InitStmt.accept(self)
+        print(';', end = ' ')
+        inCoFor.Condition.accept(self)
 
     def visitInitFor(self, initFor):
         initFor.InitStmt.accept(self)
 
-    def visitPostFor(self, postFor):
-        postFor.PostStmt.accept(self)
-
-    def visitInCoFor(self, inCoFor):
-        inCoFor.InitStmt.accept(self)
-        inCoFor.Condition.accept(self)
-
     def visitCoPoFor(self, coPoFor):
         coPoFor.Condition.accept(self)
+        print(';', end = ' ')
         coPoFor.PostStmt.accept(self)
+
+    def visitConditionFor(self, conditionFor):
+        conditionFor.Condition.accept(self)
+
+    def visitInPoFor(self, inPoFor):
+        inPoFor.InitStmt.accept(self)
+        print(';', end = ' ')
+        inPoFor.PostStmt.accept(self)
+
+    def visitPostFor(self, postFor):
+        postFor.PostStmt.accept(self)
 
     def visitStmtInit(self, stmtInit):
         stmtInit.SimpleStmt.accept(self)
@@ -287,6 +294,7 @@ class Visitor():
     def visitRangIDList(self, rangIDList):
         visitRangIDList.IdentifierList.accept(self)
         print('=', end = ' ')
+        print('range', end = ' ')
         visitRangIDList.Expression.accept(self)
 
     def visitSimpleConst(self, simpleConst):
@@ -323,15 +331,16 @@ class Visitor():
         compoundConstSpec.ConstSpecList.accept(self)
 
     def visitDefinirIDList(self, definirIDList):
-        print('id', end = ' ')
+        print(definirIDList.ID, end = ' ')
         definirIDList.CompIDList.accept(self)
 
     def visitDoubleID(self, doubleID):
         print(',', end = ' ')
-        print('id', end = ' ')
+        print(doubleID.ID, end = ' ')
 
     def visitCompoundIDList(self, compoundIDList):
         print(',', end = ' ')
+        print(compoundIDList.ID, end = ' ')
         compoundIDList.CompIDList.accept(self)
 
     def visitSimpleID(self, simpleID):
@@ -424,6 +433,17 @@ class Visitor():
     def visitExprUnary(self, exprUnary):
         exprUnary.UnaryExpr.accept(self)
 
+    def visitUnaryExprNumber(self, unaryExprNumber):
+        print(unaryExprNumber.NUMBER, end = ' ')
+
+    def visitUnaryExprID(self, unaryExprID):
+        print(unaryExprID.ID, end = ' ')
+
+    def visitUnaryExprParen(self, unaryExprParen):
+        print('(', end = ' ')
+        unaryExprParen.Expression.accept(self)
+        print(')', end = ' ')
+
     def visitOpOr(self, opOr):
         print('||', end = ' ')
 
@@ -483,7 +503,7 @@ class Visitor():
         print('-', end = ' ')
 
     def visitAssignOp(self, assignOp):
-        assignOp.Expression.accept(self)
+        assignOp.ExpressionList.accept(self)
         print('=', end = ' ')
         assignOp.ExpressionList.accept(self)
 

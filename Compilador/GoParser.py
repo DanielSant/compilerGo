@@ -181,31 +181,58 @@ def m_switchStmt(p):
                   | SWITCH simpleStmt LCHAVES exprCaseClauseList RCHAVES
                   | SWITCH expression LCHAVES exprCaseClauseList RCHAVES'''
     if (len(p) == 8):
-        p[0] = abstract.
+        p[0] = abstract.ExprSwitch(p[1], p[2], p[3], p[4], p[5], p[6], p[7])
+    elif (len(p) == 5):
+        p[0] = abstract.ExprSwitchNone(p[1], p[2], p[3], p[4])
+    elif (isinstance(p[2], abstract.SimpleStmt)):
+        p[0] = abstract.ExprSwitchSimple(p[1], p[2], p[3], p[4], p[5])
+    elif (isinstance(p[2], abstract.Expression))
+        p[0] = abstract.ExprSwitchExp(p[1], p[2], p[3], p[4], p[5])
 
 def m_exprCaseClauseList(p):
     '''exprCaseClauseList : exprCaseClause
                           | exprCaseClause ExprCaseClauseList
                           | empty'''
-def m_empty(p):
+    if (isinstance(p[1], abstract.ExprCaseClause)):
+        p[0] = abstract.CallExprCaseClause(p[1])
+    elif (len(p) == 3):
+        p[0] = abstract.CompoundCaseClause(p[1])
+    else:
+        p[0] = abstract.EmptyCaseClause(p[1])
+
+def m_empty(p): # Big observação
     '''empty :'''
     pass
 
 def m_exprCaseClause(p):
     '''exprCaseClause : exprSwitchCase COLON statementList'''
+    p[0] = abstract.ExprCase(p[1], p[2], p[3])
 
 def m_exprSwitchCase(p):
     '''exprSwitchCase : CASE expressionList
                       | DEFAULT'''
+    if (len(p) == 3):
+        p[0] = abstract.CaseClauseExp(p[1], p[2])
+    else:
+        p[0] = abstract.CaseClause(p[1])
 
 def m_forStmt(p):
     '''forStmt : FOR condition block
                | FOR forClause block
                | FOR rangeClause block
                | FOR block'''
+    if (isinstance(p[2], abstract.Condition)):
+        p[0] = abstract.StmtFor(p[1], p[2], p[3])
+    elif (isinstance(p[2], abstract.ForClause)):
+        p[0] = abstract.StmtForClause(p[1], p[2], p[3])
+    elif (isinstance(p[2], abstract.RangeClause)):
+        p[0] = abstract.StmtForRange(p[1], p[2], p[3])
+    elif (len(p) == 3):
+        p[0] = abstract.StmtForBlock(p[1], p[2])
 
 def m_condition(p):
     '''condition : expresison'''
+    p[0] = abstract.DefinirCondition(p[1])
 
 def m_forClause(p):
     '''forClause : initStmt SEMICOLON condition SEMICOLON postStmt
@@ -215,83 +242,169 @@ def m_forClause(p):
                  | condition
                  | initStmt SEMICOLON postStmt
                  | postStmt''' ###OBSERVA A CONSTRUÇÃO
+    if (len(p) == 6):
+        p[0] = abstract.ClassicFor(p[1], p[2], p[3], p[4], p[5])
+    elif (isinstance(p[3], abstract.Condition) and len(p) == 4):
+        p[0] = abstract.InCoFor(p[1], p[2], p[3])
+    elif (isinstance(p[1], abstract.InitStmt) and len(p) == 2):
+        p[0] = abstract.InitFor(p[1])
+    elif (isinstance(p[1], abstract.Condition) and len(p) == 4):
+        p[0] = abstract.CoPoFor(p[1], p[2], p[3])
+    elif (isinstance(p[1], abstract.Condition) and len(p) == 2):
+        p[0] = abstract.ConditionFor(p[1])
+    elif (isinstance(p[3], abstract.PostStmt) and len(p) == 4):
+        p[0] = abstract.InPoFor(p[1], p[2], p[3])
+    elif (isinstance(p[1], abstract.PostStmt)):
+        p[0] = abstract.PostFor(p[1])
 
 def m_initStmt(p):
     '''initStmt : simpleStmt'''
+    p[0] = abstract.StmtInit(p[1])
 
 def m_postStmt(p):
     '''postStmt : simpleStmt'''
+    p[0] = abstract.StmtPost(p[1])
 
 def m_rangeClause(p):
-    '''rangeClaus : RANGE expression
+    '''rangeClause : RANGE expression
                   | expressionList ASSIGN RANGE expression
                   | identifierList ASSIGN RANGE expression''' ### Mudei da original :=
+    if (len(p) == 2):
+        p[0] = abstract.DefinirRange(p[1], p[2])
+    elif (isinstance(p[1], abstract.ExpressionList)):
+        p[0] = abstract.RangeExpList(p[1], p[2], p[3], p[4])
+    elif (isinstance(p[1], abstract.IdentfierList)):
+        p[0] = abstract.visitRangIDList(p[1], p[2], p[3], p[4])
 
 def m_constDecl(p):
     '''constDecl : CONST constSpec
                  | CONST LPAREN constSpecList RPAREN'''
+    if (len(p) == 3):
+        p[0] = abstract.SimpleConst(p[1], p[2])
+    else:
+        p[0] = abstract.CompConst(p[1], p[2], p[3], p[4])
 
 def m_constSpecList(p):
     '''constSpecList : constSpec SEMICOLON
                      | constSpec SEMICOLON constSpecList'''
+    if (len(p) == 2):
+        p[0] = abstract.CallConstSpec(p[1], p[2])
+    else:
+        p[0] = abstract.CompoundConstSpec(p[1], p[2], p[3])
 
 def m_constSpec(p):
     '''constSpec : identifierList
                  | identifierList ASSIGN expressionList
                  | identifierList type ASSIGN expressionList''' ###Verificar ser estar correta 
-
+    if (len(p) == 2):
+        p[0] = abstract.SimpleIdList(p[1])
+    elif (len(p) == 4):
+        p[0] = abstract.ListIdExp(p[1], p[2], p[3])
+    elif (len(p) == 5):
+        p[0] = abstract.ListIdTypeExp(p[1], p[2], p[3], p[4])
 
 def m_identifierList(p):
     '''identifierList : ID compIDList'''
+    p[0] = abstract.DefinirIDList(p[1], p[2])
 
 def m_compIDList(p):
     '''compIDList : COMMA ID
                   | COMMA ID compIDList
                   | empty'''
+    if (len(p) == 3):
+        p[0] = abstract.DoubleID(p[1], p[2])
+    elif (len(p) == 4):
+        p[0] = abstract.CompoundIDList(p[1], p[2], p[3])
+    else:
+        p[0] = p[1] #observar
 
 def m_expressionList(p):
     '''expressionList : expression 
                       | expression listExpr'''
+    if (len(p) == 2):
+        p[0] = abstract.DefinirExpList(p[1])
+    else:
+        p[0] = abstract.CallExpList(p[1], p[2])
 
 def m_listExpr(p):
     '''listExpr : COMMA expression
                 | COMMA expression listExpr'''
-
+    if (len(p) == 3):
+        p[0] = abstract.SimpleExpList(p[1], p[2])
+    else:
+        p[0] = abstract.CompoundExpList(p[1], p[2], p[3])
 
 def m_typeDecl(p):
     '''typeDecl : TYPE typeSpec
                 | TYPE LPAREN typeSpecList RPAREN'''
+    if (len(p) == 3):
+        p[0] = abstract.DefinirType(p[1], p[2])
+    else:
+        p[0] = abstract.CallTypeSpecList(p[1], p[2], p[3], p[4])
 
 def m_typeSpecList(p):
     '''typeSpecList : typeSpec SEMICOLON
                     | typeSpec SEMICOLON typeSpecList
                     | empty'''
+    if (len(p) == 3):
+        p[0] = abstract.TypeSpecDouble(p[1], p[2])
+    elif (len(p) == 4):
+        p[0] = abstract.CompTypeSpecList(p[1], p[2], p[3])
+    else:
+        p[0] = p[1]
 
 def m_typeSpec(p):
     '''typeSpec : ID type'''
+    p[0] = abstract.SpecType(p[1], p[2])
 
 def m_varDecl(p):
     '''varDecl : VAR varSpec
                | VAR LPAREN varSpecList RPAREN'''
+    if (len(p) == 3):
+        p[0] = abstract.DefinirVar(p[1], p[2])
+    else:
+        p[0] = abstract.CompVar(p[1], p[2], p[3], p[4])
 
 def m_varSpecList(p):
     '''varSpecList : varSpec SEMICOLON
                    | varSpec SEMICOLON varSpecList
                    | empty'''
+    if (len(p) == 3):
+        p[0] = abstract.VarDef(p[1], p[2])
+    elif (len(p) == 4):
+        p[0] = abstract.CompoundVarSpec(p[1], p[2], p[3])
+    else:
+        p[0] = p[1]
 
 def m_varSpec(p):
     '''varSpec : identifierList type
                | identifierList type ASSIGN expressionList
                | identifierList ASSIGN expressionList''''
+    if (len(p) == 3):
+        p[0] = abstract.SpecVar(p[1], p[2])
+    elif (len(p) == 5):
+        p[0] = abstract.ClassicVarSpec(p[1], p[2], p[3], p[4])
+    else:
+        p[0] = abstract.SimpleVarSpec(p[1], p[2], p[3])
 
 def m_expression(p):
     '''expression : unaryExpr
                   | expression binary_op expression'''
+    if (len(p) == 2):
+        p[0] = abstract.ExprUnary(p[1])
+    else:
+        p[0] = abstract.DefinirExp(p[1], p[2], p[3])
 
 def m_unaryExpr(p):
     '''unaryExpr : NUMBER
                  | ID
                  | LPAREN expression RPAREN''' #Talvez teremos que modificar
+    if ('NUMBER'):
+        p[0] = abstract.UnaryExprNumber(p[1])
+    elif ('ID'):
+        p[0] = abstract.UnaryExprID(p[1])
+    else:
+        p[0] = abstract.UnaryExprParen(p[1], p[2], p[3])
 
 def m_binary_op(p):
     '''binary_op : OR
@@ -299,6 +412,16 @@ def m_binary_op(p):
                  | rel_op  
                  | add_op
                  | mul_op'''
+    if ('OR'):
+        p[0] = abstract.OpOr(p[1])
+    elif ('AND'):
+        p[0] = abstract.OpAnd(p[1])
+    elif (isinstance(p[1], abstract.Rel_op)):
+        p[0] = abstract.OpRel(p[1])
+    elif (isinstance(p[1], abstract.Add_op)):
+        p[0] = abstract.OpAdd(p[1])
+    else: (isinstance(p[1], abstract.Mul_op)):
+        p[0] = abstract.OpMul(p[1])
 
 def m_rel_op(p):
     '''rel_op : EQUALS
@@ -307,22 +430,60 @@ def m_rel_op(p):
               | LESS_EQUAL
               | GREATER
               | GREATER_EQUAL'''
+    if ('EQUALS'):
+        p[0] = abstract.IqualsOp(p[1]):
+    elif ('DIFERENTE'):
+        p[0] = abstract.DifereOp(p[1])
+    elif ('LESS'):
+        p[0] = abstract.MenorOp(p[1])
+    elif ('LESS_EQUAL'):
+        p[0] = abstract.MenorIgualOp(p[1])
+    elif ('GREATER'):
+        p[0] = abstract.MaiorOp(p[1])
+    elif ('GREATER_EQUAL'):
+        p[0] = abstract.MaiorIgual(p[1])
 
 def m_add_op(p):
     '''add_op : PLUS
               | MINUS'''
+    if ('PLUS'):
+        p[0] = abstract.MaisOp(p[1])
+    else:
+        p[0] = abstract.MenosOp(p[1])
 
 def m_mul_op(p):
     '''mul_op : TIMES
               | DIVIDE
-              | MOD'''              
+              | MOD'''
+    if ('TIMES'):
+        p[0] = abstract.VezesOp(p[1])
+    elif ('DIVIDE'):
+        p[0] = abstract.DivideOp(p[1])
+    else:
+        p[0] = abstract.ModOp(p[1])
 
 def m_inc(p):
     '''inc : expression PLUS PLUS
            | expression MINUS MINUS'''
+    if (p[2] == 'PLUS'):
+        p[0] = abstract.IncOp(p[1], p[2], p[3])
+    else:
+        p[0] = abstract.DecOp(p[1], p[2], p[3])
 
 def m_assignment(p):
     '''assignment : expressionList ASSIGN expressionList'''
+    p[0] = abstract.AssignOp(p[1], p[2], p[3])
 
 def m_shortVarDec(p):
-    '''shortVarDec : identifierLis ASSIGN expressionList'''#Era para ser :=
+    '''shortVarDec : identifierList ASSIGN expressionList'''#Era para ser :=
+    p[0] = abstract.DeclShortVar(p[1], p[2], p[3])
+
+#Execute
+
+parser = yacc.yacc()
+
+result = parser.parse(debug=True)
+
+visit = abstract.Visitor.Visitor()
+
+result.accept(visit)

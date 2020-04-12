@@ -496,7 +496,8 @@ class SwitchStmt(metaclass=ABCMeta):
 
 ##CONCRETA##
 class ExprSwitch(SwitchStmt):
-    def __init__(self, SimpleStmt, SEMICOLON, Expression, LCHAVES, ExprCaseClauseList, RCHAVES):
+    def __init__(self, SWITCH, SimpleStmt, SEMICOLON, Expression, LCHAVES, ExprCaseClauseList, RCHAVES):
+        self.SWITCH = SWITCH
         self.SimpleStmt = SimpleStmt
         self.SEMICOLON = SEMICOLON
         self.Expression = Expression
@@ -681,12 +682,14 @@ class ClassicFor(ForClause):
     def accept(self, Visitor):
         Visitor.visitClassicFor(self)
 
-class ConditionFor(ForClause):
-    def __init__(self, Condition):
+class InCoFor(ForClause):
+    def __init__(self, InitStmt, SEMICOLON, Condition):
+        self.InitStmt = InitStmt
+        self.SEMICOLON = SEMICOLON
         self.Condition = Condition
 
-    def accept(self, Visitosr):
-        Visitosr.visitConditionFor(self)
+    def accept(self, Visitor):
+        Visitor.visitInCoFor(self)
 
 class InitFor(ForClause):
     def __init__(self, InitStmt):
@@ -695,36 +698,37 @@ class InitFor(ForClause):
     def accept(self, Visitor):
         Visitor.visitInitFor(self)
 
+class CoPoFor(ForClause):
+    def __init__(self, Condition, SEMICOLON, PostStmt):
+        self.Condition = Condition
+        self.SEMICOLON = SEMICOLON
+        self.PostStmt = PostStmt
+
+    def accept(self, Visitor):
+        Visitor.visitCoPoFor(self)
+
+class ConditionFor(ForClause):
+    def __init__(self, Condition):
+        self.Condition = Condition
+
+    def accept(self, Visitor):
+        Visitosr.visitConditionFor(self)
+
+class InPoFor(ForClause):
+    def __init__(self, InitStmt, SEMICOLON, PostStmt):
+        self.InitStmt = InitStmt
+        self.SEMICOLON = SEMICOLON
+        self.PostStmt = PostStmt
+
+    def accept(self, Visitor):
+        Visitor.visitInPoFor(self)
+
 class PostFor(ForClause):
     def __init__(self, PostStmt):
         self.PostStmt = PostStmt
 
     def accept(self, Visitor):
         Visitor.visitPostFor(self)
-
-class InCoFor(ForClause):
-    def __init__(self, InitStmt, Condition):
-        self.InitStmt = InitStmt
-        self.Condition = Condition
-
-    def accept(self, Visitor):
-        Visitor.visitInCoFor(self)
-
-class CoPoFor(ForClause):
-    def __init__(self, Condition, PostStmt):
-        self.Condition = Condition
-        self.PostStmt = PostStmt
-
-    def accept(self, Visitor):
-        Visitor.visitCoPoFor(self)
-
-class InPoFor(ForClause):
-    def __init__(self, InitStmt, PostStmt):
-        self.InitStmt = InitStmt
-        self.PostStmt = PostStmt
-
-    def accept(self, Visitor):
-        Visitor.visitInPoFor(self)
 
 ##ABSTRATA##
 class InitStmt(metaclass=ABCMeta):
@@ -780,9 +784,10 @@ class RangeExpList(RangeClause): ### Duvida observacao
         Visitor.visitRangeExpList(self)
 
 class RangeIDList(RangeClause):
-    def __init__(self, IdentifierList, ASSIGN, Expression):
+    def __init__(self, IdentifierList, ASSIGN, RANGE, Expression):
         self.IdentifierList = IdentifierList
         self.ASSIGN = ASSIGN
+        self.RANGE = RANGE
         self.Expression = Expression
 
     def accept(self, Visitor):
@@ -804,7 +809,7 @@ class SimpleConst(ConstDecl):
         Visitor.visitSimpleConst(self)
 
 class CompConst(ConstDecl):
-    def __init__(self, CONST, LPAREN, ConstSpec, RPAREN):
+    def __init__(self, CONST, LPAREN, ConstSpecList, RPAREN):
         self.CONST = CONST
         self.LPAREN = LPAREN
         self.ConstSpec = ConstSpec
@@ -812,6 +817,30 @@ class CompConst(ConstDecl):
     
     def accept(self, Visitor):
         Visitor.visitCompConst(self)
+
+##ABSTRATA##
+class ConstSpecList(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class CallConstSpec(ConstSpecList):
+    def __init__(self, ConstSpec, SEMICOLON):
+        self.ConstSpec = ConstSpec
+        self.SEMICOLON = SEMICOLON
+
+    def accept(self, Visitor):
+        Visitor.visitCallConstSpec(self)
+
+class CompoundConstSpec(ConstSpecList):
+    def __init__(self, ConstSpec, SEMICOLON, ConstSpecList):
+        self.ConstSpec = ConstSpec
+        self.SEMICOLON = SEMICOLON
+        self.ConstSpecList = ConstSpecList
+
+    def accept(self, Visitor):
+        Visitor.visitCompoundConstSpec(self)
 
 ##ABSTRATA##
 class ConstSpec(metaclass=ABCMeta):
@@ -847,30 +876,6 @@ class ListIdTypeExp(ConstSpec):
         Visitor.visitListTypeExp(self)
 
 ##ABSTRATA##
-class ConstSpecList(metaclass=ABCMeta):
-    @abstractclassmethod
-    def accept(self, Visitor):
-        pass
-
-##CONCRETA##
-class CallConstSpec(ConstSpecList):
-    def __init__(self, ConstSpec, SEMICOLON):
-        self.ConstSpec = ConstSpec
-        self.SEMICOLON = SEMICOLON
-
-    def accept(self, Visitor):
-        Visitor.visitCallConstSpec(self)
-
-class CompoundConstSpec(ConstSpecList):
-    def __init__(self, ConstSpec, SEMICOLON, ConstSpecList):
-        self.ConstSpec = ConstSpec
-        self.SEMICOLON = SEMICOLON
-        self.ConstSpecList = ConstSpecList
-
-    def accept(self, Visitor):
-        Visitor.visitCompoundConstSpec(self)
-
-##ABSTRATA##
 class IdentifierList(metaclass=ABCMeta):
     @abstractclassmethod
     def accept(self, Visitor)
@@ -901,8 +906,9 @@ class DoubleID(CompIDList):
         Visitor.visitDoubleID(self)
 
 class CompoundIDList(CompIDList):
-    def __init__(self, COMMA, CompIDList):
+    def __init__(self, COMMA, ID, CompIDList):
         self.COMMA = COMMA
+        self.ID = ID
         self.CompIDList = CompIDList
 
     def accept(self, Visitor):
@@ -1149,6 +1155,36 @@ class ExprUnary(Expression):
 		Visitor.visitExprUnary(self)
 
 ##ABSTRATA##
+class UnaryExpr(metaclass=ABCMeta):
+    @abstractmethod
+    def accept(self, Visitor):
+	    pass
+
+##CONCRETA##
+class UnaryExprNumber(UnaryExpr):
+    def __init__(self, NUMBER):
+        self.NUMBER = NUMBER
+
+    def accept(self, Visitor):
+        Visitor.visitUnaryExprNumber(self)
+
+class UnaryExprID(UnaryExpr):
+    def __init__(self, ID):
+        self.ID = ID
+
+    def accept(self, Visitor):
+        Visitor.visitUnaryExprID(self)
+
+class UnaryExprParen(UnaryExpr):
+    def __init__(self, LPAREN, Expression, RPAREN):
+        self.LPAREN = LPAREN
+        self.Expression = Expression
+        self.RPAREN = RPAREN
+
+    def accept(self, Visitor):
+        Visitor.visitUnaryExprParen(self)
+
+##ABSTRATA##
 class Binary_op(metaclass=ABCMeta):
 	@abstractmethod
     def accept(self, Visitor):
@@ -1197,42 +1233,42 @@ class Rel_op(metaclass=ABCMeta):
 	    pass
 
 ##CONCRETA##
-class iqualsOp(Rel_op):
+class IqualsOp(Rel_op):
 	def __init__(self, EQUALS):
 		self.EQUALS = EQUALS
 
 	def accept(self, Visitor):
 		Visitor.visitEqualsOp(self)
 
-class difereOp(Rel_op):
+class DifereOp(Rel_op):
     def __init__(self, DIFERENTE):
 		self.DIFERENTE = DIFERENTE
 
 	def accept(self, Visitor):
 		Visitor.visitDifereOp(self)
 
-class menorOp(Rel_op):
+class MenorOp(Rel_op):
     def __init__(self, LESS):
 		self.LESS = LESS
 
 	def accept(self, Visitor):
 		Visitor.visitMenorOp(self)
 
-class menorIgualOp(Rel_op):
+class MenorIgualOp(Rel_op):
     def __init__(self, LESS_EQUAL):
 		self.LESS_EQUAL = LESS_EQUAL
 
     def accept(self, Visitor):
 		Visitor.visitMenorIgualOp(self)
 
-class maiorOp(Rel_op):
+class MaiorOp(Rel_op):
     def __init__(self, GREATER):
 		self.GREATER = GREATER
 
     def accept(self, Visitor):
 		Visitor.visitMaiorOp(self)  
 
-class maiorIgual(Rel_op):
+class MaiorIgual(Rel_op):
     def __init__(self, GREATER_EQUAL):
 		self.GREATER_EQUAL = GREATER_EQUAL
 
@@ -1246,14 +1282,14 @@ class Add_op(metaclass=ABCMeta):
 	    pass
 
 ##CONCRETA##
-class maisOp(Add_op):
+class MaisOp(Add_op):
 	def __init__(self,PLUS):
 		self.PLUS = PLUS
 
 	def accept(self, Visitor):
 		Visitor.visitMaisOp(self)
 
-class menosOp(Add_op):
+class MenosOp(Add_op):
     def __init__(self,MINUS):
 		self.MINUS = MINUS
 
@@ -1267,21 +1303,21 @@ class Mul_op(metaclass=ABCMeta):
         pass
 
 ##CONCRETA##
-class vezesOp(Mul_op):
+class VezesOp(Mul_op):
 	def __init__(self,TIMES):
 		self.TIMES =  TIMES
 
 	def accept(self, Visitor):
 		Visitor.visitVezesOp(self)
 
-class divideOp(Mul_op):
+class DivideOp(Mul_op):
     	def __init__(self,DIVIDE):
 		self.DIVIDE = DIVIDE
 
 	def accept(self, Visitor):
 		Visitor.visitDivideOp(self)
 
-class modOp(Mul_op):
+class ModOp(Mul_op):
     def __init__(self,MOD):
 		self.MOD = MOD
 
@@ -1305,7 +1341,7 @@ class IncOp(IncDec):
 		Visitor.visitIncOp(self)
 
 class DecOp(IncDec):
-    def __init__(self,Expression,MINUS,MINUS):
+    def __init__(self, Expression, MINUS, MINUS):
 		self.Expression = Expression
         self.MINUS = MINUS
         self.MINUS = MINUS                     ##observar
@@ -1321,8 +1357,8 @@ class Assignment(metaclass=ABCMeta):
 
 ##CONCRETA##
 class AssignOp(Assignment):
-    def __init__(self,Expression,ASSIGN,ExpressionList):
-		self.Expression = Expression
+    def __init__(self, ExpressionList, ASSIGN, ExpressionList):
+		self.Expression = ExpressionList
         self.ASSIGN = ASSIGN
         self.ExpressionList = ExpressionList    ##observar
 
@@ -1337,7 +1373,7 @@ class ShortVarDecl(metaclass=ABCMeta):
 
 ##CONCRETA##
 class DeclShortVar(ShortVarDecl):
-    def __init__(self,IdentifierList,ASSIGN,ExpressionList):
+    def __init__(self, IdentifierList, ASSIGN, ExpressionList):
 		self.IdentifierList = IdentifierList
         self.ASSIGN = ASSIGN
         self.ExpressionList = ExpressionList    ##observar
