@@ -147,7 +147,7 @@ def t_error(t):
 
 # START A CLASSE LEXER
 lexer = lex.lex()
-
+    
 data = '''
 func main()
 // Isto é comentário

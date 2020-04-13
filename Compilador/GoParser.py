@@ -490,4 +490,8 @@ result = parser.parse(debug=True)
 
 visit = abstract.Visitor.Visitor()
 
+print('\n')
+
 result.accept(visit)
+
+print('\n')
