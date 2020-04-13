@@ -147,10 +147,11 @@ def t_error(t):
 
 # START A CLASSE LEXER
 lexer = lex.lex()
-    
+
 data = '''
-func main()
-// Isto é comentário
+func main() {
+    var a = 5
+}
 '''
 
 lexer.input(data)

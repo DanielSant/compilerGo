@@ -887,7 +887,7 @@ class IdentifierList(metaclass=ABCMeta):
 class DefinirIDList(IdentifierList):
     def __init__(self, ID, CompIDList):
         self.ID = ID
-        self.CompIDList
+        self.CompIDList = CompIDList
 
     def accept(self, Visitor):
         Visitor.visitDefinirIDList(self)

@@ -131,14 +131,15 @@ def p_declaration(p):
     elif (isinstance(p[1], abstract.VarDecl)):
         p[0] = abstract.DeclVar(p[1])
 
-def p_simpleStmt(p):
+def p_simpleStmt(p): #Ajustar
     '''simpleStmt : empty
-                  | expression
+                  | ID arguments
                   | inc
                   | assignment
                   | shortVarDec'''
     if (isinstance(p[1], abstract.ConstDecl)):
-        p[0] = abstract.StmtEmpty(p[1])
+        #p[0] = abstract.StmtEmpty(p[1])
+        p[0] = p[1]
     elif (isinstance(p[1], abstract.Expression)):
         p[0] = abstract.StmtExpression(p[1])
     elif (isinstance(p[1], abstract.IncDec)):
@@ -198,11 +199,12 @@ def p_exprCaseClauseList(p):
     elif (len(p) == 3):
         p[0] = abstract.CompoundCaseClause(p[1])
     else:
-        p[0] = abstract.EmptyCaseClause(p[1])
+        #p[0] = abstract.EmptyCaseClause(p[1])
+        p[0] = p[1]
 
 def p_empty(p): # Big observação
     '''empty :'''
-    pass
+    p[0] = None
 
 def p_exprCaseClause(p):
     '''exprCaseClause : exprSwitchCase COLON statementList'''
@@ -389,11 +391,16 @@ def p_varSpec(p):
 
 def p_expression(p):
     '''expression : unaryExpr
-                  | expression binary_op expression'''
+                  | expression binary_op expression
+                  | ID arguments'''
     if (len(p) == 2):
         p[0] = abstract.ExprUnary(p[1])
     else:
         p[0] = abstract.DefinirExp(p[1], p[2], p[3])
+
+def p_arguments(p): # Implementar
+    '''arguments : LPAREN RPAREN'''
+    p[0] = p[1]
 
 def p_unaryExpr(p):
     '''unaryExpr : NUMBER
@@ -484,7 +491,7 @@ def p_error(p):
 
 #Execute
 
-parser = yacc.yacc()
+parser = yacc.yacc(debug=True)
 
 result = parser.parse(debug=True)
 
