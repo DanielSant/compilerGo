@@ -436,11 +436,60 @@ class Visitor():
         print('=', end = ' ')
         simpleVarSpec.ExpressionList.accept(self)
 
-    def visitDefinirExp(self, definirExp):
-        definirExp.Expression.accept(self)
-        definirExp.binary_op.accept(self)
-        definirExp.Expression1.accept(self)
+   # def visitDefinirExp(self, definirExp):
+   #    definirExp.Expression.accept(self)
+   #    definirExp.binary_op.accept(self)
+   #    definirExp.Expression1.accept(self)
 
+    def visitOperadorOr(self, operadorOr):
+        operadorOr.exp.accept(self)
+        print(operadorOr.OR, end = ' ')
+        operadorOr.exp1.accept(self)
+    
+    def visitCallExp1(self, callExp1):
+        callExp1.exp1.accept(self)
+    
+    def visitOperadorAnd(self, operadorAnd):
+        operadorAnd.exp1.accept(self)
+        print(operadorAnd.AND, end = ' ')
+        operadorAnd.exp2.accept(self)
+    
+    def visitCallExp2(self, callExp2):
+        callExp2.exp2.accept(self)
+
+    def visitOperadorIgual(self, operadorIgual):
+        operadorIgual.exp2.accept(self)
+        print(operadorIgual.EQUALS, end = ' ')
+        operadorIgual.exp3.accept(self)
+
+    def visitOpetadorDiferente(self, opetadorDiferente):
+        opetadorDiferente.exp2.accept(self)
+        print(opetadorDiferente.DIFERENTE, end = ' ')
+        opetadorDiferente.exp3.accept(self)
+    
+    def visitOpetadorMenor(self, opetadorMenor):
+        opetadorMenor.exp2.accept(self)
+        print(opetadorMenor.LESS, end = ' ')
+        opetadorMenor.exp3.accept(self)
+    
+    def visitOperadorMenorIgual(self, operadorMenorIgual):
+        operadorMenorIgual.exp2.accept(self)
+        print(operadorMenorIgual.LESS_EQUAL, end = ' ')
+        operadorMenorIgual.exp3.accept(self)
+    
+    def visitOperadorMaior(self, operadorMaior):
+        operadorMaior.exp2.accept(self)
+        print(operadorMaior.GREATER, end = ' ')
+        operadorMaior.exp3.accept(self)
+    
+    def visitOperadorMaiorIgual(self, operadorMaiorIgual):
+        operadorMaiorIgual.exp2.accept(self)
+        print(operadorMaiorIgual.GREATER_EQUAL, end = ' ')
+        operadorMaiorIgual.exp3.accept(self)
+    
+    def visitCallExp4(self, callExp4):
+        callExp4.exp3.accept(self)
+    
     def visitExprUnary(self, exprUnary):
         exprUnary.UnaryExpr.accept(self)
 
