@@ -177,7 +177,7 @@ class ParameterDeclList(metaclass=ABCMeta):
         pass
 
 ##CONCREATA##
-class DecParamComp(ParameterDecList):
+class DecParamComp(ParameterDeclList):
     def __init__(self, COMMA, ParameterList2):
         self.COMMA = COMMA
         self.ParameterList2 = ParameterList2

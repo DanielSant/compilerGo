@@ -149,9 +149,7 @@ def t_error(t):
 lexer = lex.lex()
 
 data = '''
-func main() {
-    var a = 5
-}
+func main()
 '''
 
 lexer.input(data)
