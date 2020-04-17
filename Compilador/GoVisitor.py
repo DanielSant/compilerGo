@@ -487,8 +487,8 @@ class Visitor():
         print(operadorMaiorIgual.GREATER_EQUAL, end = ' ')
         operadorMaiorIgual.exp3.accept(self)
     
-    def visitCallExp4(self, callExp4):
-        callExp4.exp3.accept(self)
+    def visitCallExp3(self, callExp3):
+        callExp3.exp3.accept(self)
     
     def visitExprUnary(self, exprUnary):
         exprUnary.UnaryExpr.accept(self)
