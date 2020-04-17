@@ -518,8 +518,8 @@ class Visitor():
     def visitCallArguments(self, callArguments):
         callArguments.arguments.accept(self)
     
-    def visitCallAssigment(self, callAssigment):
-        callAssigment.assigment.accept(self)
+    def visitCallAssignment(self, callAssignment):
+        callAssignment.assignment.accept(self)
     
     def visitCallNumber(self, callNumber):
         print(callNumber.NUMBER, end = ' ')
@@ -546,7 +546,7 @@ class Visitor():
         print('-', end = ' ')
         print('-', end = ' ')
 
-    #Assigment
+    #Assignment
     def visitAssignOp(self, assignOp):
         assignOp.ExpressionList.accept(self)
         print('=', end = ' ')

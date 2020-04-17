@@ -185,15 +185,6 @@ class DecParamComp(ParameterDecList):
     def accept(self, Visitor):
         Visitor.visitDecParamComp(self)
 
-# class DecListCompound(ParameterDecList):
-#     def __init__(self, COMMA, ParameterDecl, ParameterDecList):
-#         self.COMMA = COMMA
-#         self.ParameterDecl = ParameterDecl
-#         self.ParameterDecList = ParameterDecList
-
-#     def accept(self, Visitor):
-#         Visitor.visitDecListCompound(self)
-
 ##ABSTRATA##
 class ParameterDecl(metaclass=ABCMeta):
     @abstractclassmethod
@@ -251,15 +242,6 @@ class StatementList(metaclass=ABCMeta):
 	@abstractclassmethod
 	def accept(self, Visitor):
 		pass
-
-##CONCRETA##
-# class DefinirStatement(StatementList): ##PRECISA OBSERVAR ISSO
-#     def __init__ (self, Statement, SEMICOLON):
-#         self.Statement = Statement
-#         self.SEMICOLON = SEMICOLON
-
-#     def accept(self, Visitor):
-#         Visitor.visitDefinirStatement(self)
 
 class CompoundStatementList(StatementList):
     def _init_(self, statement, SEMICOLON, statementList2):
@@ -387,14 +369,6 @@ class SimpleStmt(metaclass=ABCMeta):
     @abstractclassmethod
     def accept(self, Visitor):
         pass
-
-##CONCRETA##
-# class StmtEmpty(SimpleStmt):
-#     def __init__(self, None): #Duvidas
-#         self = None
-
-#     def accept(self, Visitor):
-#         Visitor.visitStmtEmpty(self)
 
 class StmtExpression(SimpleStmt):
     def __init__(self, Expression):
@@ -904,15 +878,6 @@ class CompIDList(metaclass=ABCMeta):
     def accept(self, Visitor):
         pass
 
-##CONCRETA##
-# class DoubleID(CompIDList):
-#     def __init__(self, COMMA, ID):
-#         self.COMMA = COMMA
-#         self.ID
-
-#     def accept(self, Visitor):
-#         Visitor.visitDoubleID(self)
-
 class CompoundIDList(CompIDList):
     def __init__(self, COMMA, ID, CompIDList2):
         self.COMMA = COMMA
@@ -921,14 +886,6 @@ class CompoundIDList(CompIDList):
 
     def accept(self, Visitor):
         Visitor.visitCompoundIDList(self)
-
-# class SimpleID(CompIDList):
-#     def __init__(self, None):
-#         self = None
-#         pass
-
-#     def accept(self, Visitor):
-#         Visitor.visitSimpleID(self)
 
 ##ABSTRATA##
 class CompIDList2(metaclass=ABCMeta):
@@ -950,14 +907,6 @@ class ExpressionList(metaclass=ABCMeta):
     def accept(self, Visitor):
         pass
 
-##CONCRETA##
-# class DefinirExpList(ExpressionList):
-#     def __init__(self, Expression):
-#         self.Expression = Expression
-
-#     def accept(self, Visitor):
-#         Visitor.visitDefinirExpList(self)
-
 class CallExpList(ExpressionList):
     def __init__(self, Expression, ListExpr):
         self.Expression = Expression
@@ -971,15 +920,6 @@ class ListExpr(metaclass=ABCMeta):
     @abstractclassmethod
     def accept(self, Visitor):
         pass
-
-##CONCRETA##
-# class SimpleExpList(ListExpr):
-#     def __init__(self, COMMA, Expression):
-#         self.COMMA = COMMA
-#         self.Expression = Expression
-
-#     def accept(self, Visitor):
-#         Visitor.visitSimpleExpList(self)
 
 class CompoundExpList(ListExpr):
     def __init__(self, COMMA, Expression, ListExpr):
@@ -1021,15 +961,6 @@ class TypeSpecList(metaclass=ABCMeta):
     def accept(self, Visitor):
         pass
 
-##CONCRETA##
-# class TypeSpecDouble(TypeSpecList):
-#     def __init__(self, TypeSpec, SEMICOLON):
-#         self.TypeSpec = TypeSpec
-#         self.SEMICOLON = SEMICOLON
-
-#     def accept(self, Visitor):
-#         Visitor.visitTypeSpecDouble(self)
-
 class CompTypeSpecList(TypeSpecList):
     def __init__(self, TypeSpec, SEMICOLON, TypeSpecList):
         self.TypeSpec = TypeSpec
@@ -1038,14 +969,6 @@ class CompTypeSpecList(TypeSpecList):
 
     def accept(self, Visitor):
         Visitor.visitCompTypeSpecList(self)
-
-# class TypeSpecSimple(TypeSpecList):
-#     def __init__(self, None):
-#         self = None
-#         pass
-
-#     def accept(self, Visitor):
-#         Visitor.visitTypeSpecSimple(self)
 
 ##ABSTRATA##
 class TypeSpec(metaclass=ABCMeta):
@@ -1093,15 +1016,6 @@ class VarSpecList(metaclass=ABCMeta):
     def accept(self, Visitor):
         pass
 
-##CONCRETA##
-# class VarDef(VarSpecList):
-#     def __init__(self, VarSpec, SEMICOLON):
-#         self.VarSpec = VarSpec
-#         self.SEMICOLON = SEMICOLON
-
-#     def accept(self, Visitor):
-#         Visitor.visitVarDef(self)
-
 class CompoundVarSpec(VarSpecList):
     def __init__(self, VarSpec, SEMICOLON, VarSpecList):
         self.VarSpec = VarSpec
@@ -1110,14 +1024,6 @@ class CompoundVarSpec(VarSpecList):
 
     def accept(self, Visitor):
         Visitor.visitCompoundVarSpec(self)
-
-# class SimpleVar(VarSpecList):
-#     def __init__(self, None):
-#         self = None
-#         pass
-
-#     def accept(self, Visitor):
-#         Visitor.visitSimpleVar(self)
 
 ##ABSTRATA##
 class VarSpec(metaclass=ABCMeta):
@@ -1365,12 +1271,12 @@ class CallArguments(Exp5):
     def accept(self, Visitor):
         Visitor.visitCallArguments(self)
 
-class CallAssigment(Exp5):
-    def __init__(self, assigment):
-        self.assigment = assigment
+class CallAssignment(Exp5):
+    def __init__(self, assignment):
+        self.assignment = assignment
     
     def accept(self, Visitor):
-        Visitor.visitCallAssigment(self)
+        Visitor.visitCallAssignment(self)
 
 class CallNumber(Exp5):
     def __init__(self, NUMBER):
@@ -1408,191 +1314,6 @@ class CallExp(Arguments):
     
     def accept(self, Visitor):
         Visitor.visitCallExp(self)
-
-
-# ##ABSTRATA##
-# class arguments(metaclass=ABCMeta):
-#     @abstractclassmethod
-#     def accept(self, Visitor):
-#         pass
-
-# ##CONCRETA##
-# class DefinirArguments(Arguments):
-#     def __init__(self, Parameters):
-#         self.Parameters = Parameters
-    
-#     def accept(self, Visitor):
-#         Visitor.visitDefinirArguments(self)
-
-# ##ABSTRATA##
-# class UnaryExpr(metaclass=ABCMeta):
-#     @abstractclassmethod
-#     def accept(self, Visitor):
-# 	    pass
-
-# ##CONCRETA##
-# class UnaryExprNumber(UnaryExpr):
-#     def __init__(self, NUMBER):
-#         self.NUMBER = NUMBER
-
-#     def accept(self, Visitor):
-#         Visitor.visitUnaryExprNumber(self)
-
-# class UnaryExprID(UnaryExpr):
-#     def __init__(self, ID):
-#         self.ID = ID
-
-#     def accept(self, Visitor):
-#         Visitor.visitUnaryExprID(self)
-
-# class UnaryExprParen(UnaryExpr):
-#     def __init__(self, LPAREN, Expression, RPAREN):
-#         self.LPAREN = LPAREN
-#         self.Expression = Expression
-#         self.RPAREN = RPAREN
-
-#     def accept(self, Visitor):
-#         Visitor.visitUnaryExprParen(self)
-
-# ##ABSTRATA##
-# class Binary_op(metaclass=ABCMeta):
-#     @abstractclassmethod
-#     def accept(self, Visitor):
-#         pass
-
-# ##CONCRETA##
-# class OpOr(Binary_op):
-# 	def __init__(self, OR):
-# 		self.OR = OR
-
-# 	def accept(self, Visitor):
-# 		Visitor.visitOpOr(self)
-
-# class OpAnd(Binary_op):
-# 	def __init__(self, AND):
-# 		self.AND = AND
-
-# 	def accept(self, Visitor):
-# 		Visitor.visitOpAnd(self)
-
-# class OpRel(Binary_op):
-# 	def __init__(self, rel_op):
-# 		self.rel_op = rel_op
-
-# 	def accept(self, Visitor):
-# 		Visitor.visitOpRel(self)
-
-# class OpAdd(Binary_op):
-# 	def __init__(self, add_op):
-# 		self.add_op = add_op
-
-# 	def accept(self, Visitor):
-# 		Visitor.visitOpAdd(self)
-
-# class OpMul(Binary_op):
-# 	def __init__(self, mul_op):
-# 		self.mul_op = mul_op
-
-# 	def accept(self, Visitor):
-# 		Visitor.visitOpMul(self)
-
-# ##ABSTRATA##
-# class Rel_op(metaclass=ABCMeta):
-#     @abstractclassmethod
-#     def accept(self, Visitor):
-#         pass
-
-# ##CONCRETA##
-# class IqualsOp(Rel_op):
-# 	def __init__(self, EQUALS):
-# 		self.EQUALS = EQUALS
-
-# 	def accept(self, Visitor):
-# 		Visitor.visitEqualsOp(self)
-
-# class DifereOp(Rel_op):
-#     def __init__(self, DIFERENTE):
-#         self.DIFERENTE = DIFERENTE
-        
-#     def accept(self, Visitor):
-#         Visitor.visitDifereOp(self)
-
-# class MenorOp(Rel_op):
-#     def __init__(self, LESS):
-#         self.LESS = LESS
-        
-#     def accept(self, Visitor):
-#         Visitor.visitMenorOp(self)
-
-# class MenorIgualOp(Rel_op):
-#     def __init__(self, LESS_EQUAL):
-#         self.LESS_EQUAL = LESS_EQUAL
-        
-#     def accept(self, Visitor):
-#         Visitor.visitMenorIgualOp(self)
-
-# class MaiorOp(Rel_op):
-#     def __init__(self, GREATER):
-#         self.GREATER = GREATER
-        
-#     def accept(self, Visitor):
-#         Visitor.visitMaiorOp(self)  
-
-# class MaiorIgual(Rel_op):
-#     def __init__(self, GREATER_EQUAL):
-#         self.GREATER_EQUAL = GREATER_EQUAL
-        
-#     def accept(self, Visitor):
-#         Visitor.visitMaiorIgualOp(self)
-
-# ##ABSTRATA##
-# class Add_op(metaclass=ABCMeta):
-#     @abstractclassmethod
-#     def accept(self, Visitor):
-#         pass
-
-# ##CONCRETA##
-# class MaisOp(Add_op):
-# 	def __init__(self,PLUS):
-# 		self.PLUS = PLUS
-
-# 	def accept(self, Visitor):
-# 		Visitor.visitMaisOp(self)
-
-# class MenosOp(Add_op):
-#     def __init__(self,MINUS):
-#         self.MINUS = MINUS
-        
-#     def accept(self, Visitor):
-#         Visitor.visitMenosOp(self)
-    
-# ##ABSTRATA##
-# class Mul_op(metaclass=ABCMeta):
-#     @abstractclassmethod
-#     def accept(self, Visitor):
-#         pass
-
-# ##CONCRETA##
-# class VezesOp(Mul_op):
-# 	def __init__(self,TIMES):
-# 		self.TIMES =  TIMES
-
-# 	def accept(self, Visitor):
-# 		Visitor.visitVezesOp(self)
-
-# class DivideOp(Mul_op):
-#     def __init__(self,DIVIDE):
-#         self.DIVIDE = DIVIDE
-        
-#     def accept(self, Visitor):
-#         Visitor.visitDivideOp(self)
-
-# class ModOp(Mul_op):
-#     def __init__(self,MOD):
-#         self.MOD = MOD
-    
-#     def accept(self, Visitor):
-#         Visitor.visitModOp(self)
 
 ##ABSTRATA##
 class IncDec(metaclass=ABCMeta):
