@@ -490,6 +490,62 @@ class Visitor():
     def visitCallExp3(self, callExp3):
         callExp3.exp3.accept(self)
     
+    def visitOperadorMais(self, operadorMais):
+        operadorMais.exp3.accept(self)
+        print(operadorMais.PLUS, end = ' ')
+        operadorMais.exp4.accept(self)
+    
+    def visitOperadorMenos(self, operadorMenos):
+        operadorMenos.exp3.accept(self)
+        print(operadorMenos.MINUS, end = ' ')
+        operadorMenos.exp4.accept(self)
+    
+    def visitOperadorPot(self, operadorPot):
+        operadorPot.exp3.accept(self)
+        print(operadorPot.POT, end = ' ')
+        operadorPot.exp4.accept(self)
+    
+    def visitCallExp4(self, callExp4):
+        callExp4.exp4.accept(self)
+    
+    def visitOperadorVezes(self, operadorVezes):
+        operadorVezes.exp4.accept(self)
+        print(operadorVezes.TIMES, end = ' ')
+        operadorVezes.exp5.accept(self)
+    
+    def visitOperadorDividir(self, operadorDividir):
+        operadorDividir.exp4.accept(self)
+        print(operadorDividir.DIVIDE, end = ' ')
+        operadorDividir.exp5.accept(self)
+    
+    def visitOperadorMod(self, operadorMod):
+        operadorMod.exp4.accept(self)
+        print(operadorMod.MOD, end = ' ')
+        operadorMod.exp5.accept(self)
+    
+    def visitCallExp5(self, callExp5):
+        callExp5.exp5.accept(self)
+    
+    def visitCallArguments(self, callArguments):
+        callArguments.arguments.accept(self)
+    
+    def visitCallAssigment(self, callAssigment):
+        callAssigment.assigment.accept(self)
+    
+    def visitCallNumber(self, callNumber):
+        print(callNumber.NUMBER, end = ' ')
+    
+    def visitMostrarID(self, mostrarID):
+        print(mostrarID.ID, end = ' ')
+    
+    def visitCompoundExp(self, compoundExp):
+        print(compoundExp.ID, end = ' ')
+        compoundExp.ExpressionList.accept(self)
+    
+    def visitCallExp(self, callExp):
+        callExp.exp.accept(self)
+
+        
     def visitExprUnary(self, exprUnary):
         exprUnary.UnaryExpr.accept(self)
 
