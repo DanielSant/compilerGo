@@ -327,10 +327,15 @@ def p_compIDList2(p):
 
 def p_expressionList(p):
     '''expressionList : expression listExpr'''
+    p[0] = abstract.CallExpList(p[1], p[2])
 
 def p_listExpr(p):
     '''listExpr : COMMA expression listExpr
                 | empty'''
+    if(len(p) == 4):
+        p[0] = abstract.CompoundExpList(p[1], p[2], p[3])
+    else:
+        p[0] = p[1]
 
 def p_typeDecl(p):
     '''typeDecl : TYPE typeSpec
@@ -343,6 +348,10 @@ def p_typeDecl(p):
 def p_typeSpecList(p):
     '''typeSpecList : typeSpec SEMICOLON typeSpecList
                     | empty'''
+    if(len(p) == 4):
+        p[0] = abstract.CompTypeSpecList(p[1], p[2], p[3])
+    else:
+        p[0] = p[1]
     
 
 def p_typeSpec(p):
@@ -360,6 +369,10 @@ def p_varDecl(p):
 def p_varSpecList(p):
     '''varSpecList : varSpec SEMICOLON varSpecList
                    | empty'''
+    if(len(p) == 4):
+        p[0] = abstract.CompoundVarSpec(p[1], p[2], p[3])
+    else:
+        p[0] = p[1]
     
 
 def p_varSpec(p):
@@ -378,10 +391,18 @@ def p_varSpec(p):
 def p_exp(p):
     '''exp : exp OR exp1
            | exp1'''
+    if(len(p) == 4):
+        p[0] = abstract.OperadorOr(p[1], p[2], p[3])
+    else:
+        p[0] = p[1]
 
 def p_exp1(p):
     '''exp1 : exp1 AND exp2
             | exp2'''
+    if(len(p) == 4):
+        p[0] = abstract.OperadorAnd(p[1], p[2], p[3])
+    else:
+        p[0] = p[1]
 
 def p_exp2(p):
     '''exp2 : exp2 EQUALS exp3
