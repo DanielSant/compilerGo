@@ -579,15 +579,6 @@ class CompoundCaseClause(ExprCaseClauseList):
     def accept(self, Visitor):
         Visitor.visitCompoundCaseClase(self)
 
-
-# class EmptyCaseClause(ExprCaseClauseList):
-#     def __init__(self, None)
-#         self = None
-#         pass
-
-#     def accept(self, Visitor):
-#         Visitor.visitEmptyCaseClause(self)
-
 ##ABSTRATA##
 class ExprCaseClause(metaclass=ABCMeta):
 	@abstractclassmethod
@@ -842,14 +833,6 @@ class ConstSpecList(metaclass=ABCMeta):
     def accept(self, Visitor):
         pass
 
-##CONCRETA##
-# class CallConstSpec(ConstSpecList):
-#     def __init__(self, ConstSpec, SEMICOLON):
-#         self.ConstSpec = ConstSpec
-#         self.SEMICOLON = SEMICOLON
-
-#     def accept(self, Visitor):
-#         Visitor.visitCallConstSpec(self)
 
 class CompoundConstSpec(ConstSpecList):
     def __init__(self, ConstSpec, SEMICOLON, ConstSpecList):
