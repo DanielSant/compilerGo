@@ -363,15 +363,14 @@ def p_typeDecl(p):
         p[0] = abstract.CallTypeSpecList(p[1], p[2], p[3], p[4])
 
 def p_typeSpecList(p):
-    '''typeSpecList : typeSpec SEMICOLON
-                    | typeSpec SEMICOLON typeSpecList
+    '''typeSpecList : typeSpec SEMICOLON typeSpecList
                     | empty'''
-    if (len(p) == 3):
-        p[0] = abstract.TypeSpecDouble(p[1], p[2])
-    elif (len(p) == 4):
-        p[0] = abstract.CompTypeSpecList(p[1], p[2], p[3])
-    else:
-        p[0] = p[1]
+    # if (len(p) == 3):
+    #     p[0] = abstract.TypeSpecDouble(p[1], p[2])
+    # elif (len(p) == 4):
+    #     p[0] = abstract.CompTypeSpecList(p[1], p[2], p[3])
+    # else:
+    #     p[0] = p[1]
 
 def p_typeSpec(p):
     '''typeSpec : ID type'''
@@ -386,15 +385,14 @@ def p_varDecl(p):
         p[0] = abstract.CompVar(p[1], p[2], p[3], p[4])
 
 def p_varSpecList(p):
-    '''varSpecList : varSpec SEMICOLON
-                   | varSpec SEMICOLON varSpecList
+    '''varSpecList : varSpec SEMICOLON varSpecList
                    | empty'''
-    if (len(p) == 3):
-        p[0] = abstract.VarDef(p[1], p[2])
-    elif (len(p) == 4):
-        p[0] = abstract.CompoundVarSpec(p[1], p[2], p[3])
-    else:
-        p[0] = p[1]
+    # if (len(p) == 3):
+    #     p[0] = abstract.VarDef(p[1], p[2])
+    # elif (len(p) == 4):
+    #     p[0] = abstract.CompoundVarSpec(p[1], p[2], p[3])
+    # else:
+    #     p[0] = p[1]
 
 def p_varSpec(p):
     '''varSpec : identifierList type
@@ -454,7 +452,6 @@ def p_exp5(p):
 def p_arguments(p): # Implementar
     '''arguments : ID ExpressionList
                  | exp'''
-    p[0] = p[1]
 
 # def p_unaryExpr(p):
 #     '''unaryExpr : NUMBER
@@ -532,7 +529,7 @@ def p_inc(p):
         p[0] = abstract.DecOp(p[1], p[2], p[3])
 
 def p_assignment(p):
-    '''assignment : expressionList ASSIGN exp''' ##Alterar no abstract e Visitor
+    '''assignment : expressionList ASSIGN exp'''
     p[0] = abstract.AssignOp(p[1], p[2], p[3])
 
 def p_shortVarDec(p):
