@@ -55,11 +55,6 @@ def p_parameterList(p):
     '''parameterList : parameterDecl parameterList2'''
     p[0] = abstract.DefinirParamDecl(p[1], p[2])
 
-    # if (len(p) == 2):
-    #     p[0] = abstract.DefinirParamDecl(p[1])
-    # else:
-    #     p[0] = abstract.CompoundParamDecl(p[1], p[2])
-
 def p_parameterList2(p):
     '''parameterList2 : parameterDecl parameterDecList'''
     p[0] = abstract.CompoundParamDecl(p[1], p[2])
@@ -68,14 +63,9 @@ def p_parameterDecList(p):
     '''parameterDecList : COMMA parameterList2
                         | empty'''
     if (len(p) == 3):
-        p[0] = abastract.DecParamComp(p[1], p[2])
+        p[0] = abstract.DecParamComp(p[1], p[2])
     else:
         p[0] = p[1]
-
-    # if (len(p) == 3):
-    #     p[0] = abstract.DecParamComp(p[1], p[2])
-    # else:
-    #     p[0] = abstract.DecListCompound(p[1], p[2], p[3])
 
 def p_parameterDecl(p):
     '''parameterDecl : identifierList TYPE
@@ -206,16 +196,16 @@ def p_switchStmt(p):
         p[0] = abstract.ExprSwitchExp(p[1], p[2], p[3], p[4], p[5])
 
 def p_exprCaseClauseList(p):
-    '''exprCaseClauseList : exprCaseClause
-                          | exprCaseClause exprCaseClauseList
+    '''exprCaseClauseList : exprCaseClause exprCaseClauseList
                           | empty'''
-    if (isinstance(p[1], abstract.ExprCaseClause)):
-        p[0] = abstract.CallExprCaseClause(p[1])
-    elif (len(p) == 3):
-        p[0] = abstract.CompoundCaseClause(p[1])
-    else:
-        #p[0] = abstract.EmptyCaseClause(p[1])
-        p[0] = p[1]
+
+    # if (isinstance(p[1], abstract.ExprCaseClause)):
+    #     p[0] = abstract.CallExprCaseClause(p[1])
+    # elif (len(p) == 3):
+    #     p[0] = abstract.CompoundCaseClause(p[1])
+    # else:
+    #     #p[0] = abstract.EmptyCaseClause(p[1])
+    #     p[0] = p[1]
 
 def p_empty(p): # Big observação
     '''empty :'''
@@ -302,14 +292,15 @@ def p_constDecl(p):
         p[0] = abstract.CompConst(p[1], p[2], p[3], p[4])
 
 def p_constSpecList(p):
-    '''constSpecList : constSpec SEMICOLON
-                     | constSpec SEMICOLON constSpecList'''
-    if (len(p) == 2):
-        p[0] = abstract.CallConstSpec(p[1], p[2])
-    else:
-        p[0] = abstract.CompoundConstSpec(p[1], p[2], p[3])
+    '''constSpecList : constSpec SEMICOLON constSpecList
+                     | empty'''
 
-def p_constSpec(p): # Cabe mudanças
+    # if (len(p) == 2):
+    #     p[0] = abstract.CallConstSpec(p[1], p[2])
+    # else:
+    #     p[0] = abstract.CompoundConstSpec(p[1], p[2], p[3])
+
+def p_constSpec(p): # Cabe mudanças para melhorar
     '''constSpec : identifierList
                  | identifierList ASSIGN expressionList
                  | identifierList type ASSIGN expressionList''' ###Verificar ser estar correta 
@@ -331,32 +322,37 @@ def p_identifierList(p):
 def p_compIDList(p):
     '''compIDList : COMMA ID compIDList2'''
     p[0] = abstract.CompoundIDList(p[1], p[2], p[3])
-    # if (len(p) == 3):
-    #     p[0] = abstract.DoubleID(p[1], p[2])
-    # if (len(p) == 4):
-    #     p[0] = abstract.CompoundIDList(p[1], p[2], p[3])
-    # else:
-    #     p[0] = p[1] #observar
 
 def p_compIDList2(p):
     '''compIDList2 : compIDList
                    | empty'''
-
-def p_expressionList(p): # Alterar a construção.
-    '''expressionList : expression 
-                      | expression listExpr'''
-    if (len(p) == 2):
-        p[0] = abstract.DefinirExpList(p[1])
+    if (isinstance(p[1], abstract.CompIDList)):
+        p[0] = abstract.CallBackCompID(p[1])
     else:
-        p[0] = abstract.CallExpList(p[1], p[2])
+        p[0] = p[1]
+
+def p_expressionList(p):
+    '''expressionList : expression listExpr'''
 
 def p_listExpr(p):
-    '''listExpr : COMMA expression
-                | COMMA expression listExpr'''
-    if (len(p) == 3):
-        p[0] = abstract.SimpleExpList(p[1], p[2])
-    else:
-        p[0] = abstract.CompoundExpList(p[1], p[2], p[3])
+    '''listExpr : COMMA expression listExpr
+                | empty'''
+
+# def p_expressionList(p): # Alterar a construção.
+#     '''expressionList : expression 
+#                       | expression listExpr'''
+#     if (len(p) == 2):
+#         p[0] = abstract.DefinirExpList(p[1])
+#     else:
+#         p[0] = abstract.CallExpList(p[1], p[2])
+
+# def p_listExpr(p):
+#     '''listExpr : COMMA expression
+#                 | COMMA expression listExpr'''
+#     if (len(p) == 3):
+#         p[0] = abstract.SimpleExpList(p[1], p[2])
+#     else:
+#         p[0] = abstract.CompoundExpList(p[1], p[2], p[3])
 
 def p_typeDecl(p):
     '''typeDecl : TYPE typeSpec
