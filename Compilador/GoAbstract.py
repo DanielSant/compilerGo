@@ -148,13 +148,21 @@ class ParameterList(metaclass=ABCMeta):
 
 ##CONCRETA##
 class DefinirParamDecl(ParameterList):
-    def __init__(self, ParameterDecl):
+    def __init__(self, ParameterDecl, ParameterList2):
         self.ParameterDecl = ParameterDecl
+        self.ParameterList2 = ParameterList2
     
     def accept(self, Visitor):
         Visitor.visitDefinirParamDecl(self)
 
-class CompoundParamDecl(ParameterList): ##PRECISA OBSERVAR ISSO
+##ABSTRATA##
+class ParameterList2(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class CompoundParamDecl(ParameterList2): ##PRECISA OBSERVAR ISSO
     def __init__(self, ParameterDecl, ParameterDecList):
         self.ParameterDecl = ParameterDecl
         self.ParameterDecList = ParameterDecList
@@ -170,21 +178,21 @@ class ParameterDecList(metaclass=ABCMeta):
 
 ##CONCREATA##
 class DecParamComp(ParameterDecList):
-    def __init__(self, COMMA, ParameterDecl):
+    def __init__(self, COMMA, ParameterList2):
         self.COMMA = COMMA
-        self.ParameterDecl = ParameterDecl
+        self.ParameterList2 = ParameterList2
 
     def accept(self, Visitor):
         Visitor.visitDecParamComp(self)
 
-class DecListCompound(ParameterDecList):
-    def __init__(self, COMMA, ParameterDecl, ParameterDecList):
-        self.COMMA = COMMA
-        self.ParameterDecl = ParameterDecl
-        self.ParameterDecList = ParameterDecList
+# class DecListCompound(ParameterDecList):
+#     def __init__(self, COMMA, ParameterDecl, ParameterDecList):
+#         self.COMMA = COMMA
+#         self.ParameterDecl = ParameterDecl
+#         self.ParameterDecList = ParameterDecList
 
-    def accept(self, Visitor):
-        Visitor.visitDecListCompound(self)
+#     def accept(self, Visitor):
+#         Visitor.visitDecListCompound(self)
 
 ##ABSTRATA##
 class ParameterDecl(metaclass=ABCMeta):
@@ -245,22 +253,36 @@ class StatementList(metaclass=ABCMeta):
 		pass
 
 ##CONCRETA##
-class DefinirStatement(StatementList): ##PRECISA OBSERVAR ISSO
-    def __init__ (self, Statement, SEMICOLON):
-        self.Statement = Statement
-        self.SEMICOLON = SEMICOLON
+# class DefinirStatement(StatementList): ##PRECISA OBSERVAR ISSO
+#     def __init__ (self, Statement, SEMICOLON):
+#         self.Statement = Statement
+#         self.SEMICOLON = SEMICOLON
 
-    def accept(self, Visitor):
-        Visitor.visitDefinirStatement(self)
+#     def accept(self, Visitor):
+#         Visitor.visitDefinirStatement(self)
 
 class CompoundStatementList(StatementList):
-    def _init_(self, statement, SEMICOLON, statementList):
+    def _init_(self, statement, SEMICOLON, statementList2):
         self.statement = statement
         self.SEMICOLON = SEMICOLON
-        self.statementList = statmentList
+        self.statementList = statmentList2
 
     def accept(self, Visitor):
         Visitor.visitCompoundStatmenteList(self)
+
+##ABSTRATA##
+class StatementList2(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class CallBackStatementList(StatementList2):
+    def __init__(self, StatementList):
+        self.StatementList = StatementList
+
+    def accept(self, Visitor):
+        Visitor.visitCallBackStatementList(self)
 
 ##ABSTRATA##       
 class Statement(metaclass=ABCMeta):
@@ -884,6 +906,13 @@ class IdentifierList(metaclass=ABCMeta):
         pass
 
 ##CONCRETA##
+class DefinirID(IdentifierList):
+    def __init__(self, ID):
+        self.ID = ID
+
+    def accept(self, Visitor):
+        Visitor.visitDefinirID(self)
+
 class DefinirIDList(IdentifierList):
     def __init__(self, ID, CompIDList):
         self.ID = ID
@@ -899,19 +928,19 @@ class CompIDList(metaclass=ABCMeta):
         pass
 
 ##CONCRETA##
-class DoubleID(CompIDList):
-    def __init__(self, COMMA, ID):
-        self.COMMA = COMMA
-        self.ID
+# class DoubleID(CompIDList):
+#     def __init__(self, COMMA, ID):
+#         self.COMMA = COMMA
+#         self.ID
 
-    def accept(self, Visitor):
-        Visitor.visitDoubleID(self)
+#     def accept(self, Visitor):
+#         Visitor.visitDoubleID(self)
 
 class CompoundIDList(CompIDList):
-    def __init__(self, COMMA, ID, CompIDList):
+    def __init__(self, COMMA, ID, CompIDList2):
         self.COMMA = COMMA
         self.ID = ID
-        self.CompIDList = CompIDList
+        self.CompIDList2 = CompIDList2
 
     def accept(self, Visitor):
         Visitor.visitCompoundIDList(self)
@@ -923,6 +952,20 @@ class CompoundIDList(CompIDList):
 
 #     def accept(self, Visitor):
 #         Visitor.visitSimpleID(self)
+
+##ABSTRATA##
+class CompIDList(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##ABSTRATA##
+class callBackCompID(CompIDList):
+    def __init__(self, CompIDList):
+        self.CompIDList = CompIDList
+
+    def accept(self, Visitor):
+        Visitor.visitCallBackCompID(self)
 
 ##ABSTRATA##
 class ExpressionList(metaclass=ABCMeta):
@@ -1155,6 +1198,20 @@ class ExprUnary(Expression):
 
 	def accept(self, Visitor):
 		Visitor.visitExprUnary(self)
+
+##ABSTRATA##
+class Arguments(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class DefinirArguments(Arguments):
+    def __init__(self, Parameters):
+        self.Parameters = Parameters
+    
+    def accept(self, Visitor):
+        Visitor.visitDefinirArguments(self)
 
 ##ABSTRATA##
 class UnaryExpr(metaclass=ABCMeta):

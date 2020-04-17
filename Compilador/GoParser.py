@@ -52,20 +52,30 @@ def p_parameters(p):
         p[0] = abstract.DefinirParamsParameters(p[1], p[2])
 
 def p_parameterList(p):
-    '''parameterList : parameterDecl
-                     | parameterDecl parameterDecList'''
-    if (len(p) == 2):
-        p[0] = abstract.DefinirParamDecl(p[1])
-    else:
-        p[0] = abstract.CompoundParamDecl(p[1], p[2])
+    '''parameterList : parameterDecl parameterList2'''
+    p[0] = abstract.DefinirParamDecl(p[1], p[2])
 
-def p_paramterDecList(p):
-    '''parameterDecList : COMMA parameterDecl
-                        | COMMA parameterDecl parameterDecList'''
+    # if (len(p) == 2):
+    #     p[0] = abstract.DefinirParamDecl(p[1])
+    # else:
+    #     p[0] = abstract.CompoundParamDecl(p[1], p[2])
+
+def p_parameterList2(p):
+    '''parameterList2 : parameterDecl parameterDecList'''
+    p[0] = abstract.CompoundParamDecl(p[1], p[2])
+
+def p_parameterDecList(p):
+    '''parameterDecList : COMMA parameterList2
+                        | empty'''
     if (len(p) == 3):
-        p[0] = abstract.DecParamComp(p[1], p[2])
+        p[0] = abastract.DecParamComp(p[1], p[2])
     else:
-        p[0] = abstract.DecListCompound(p[1], p[2], p[3])
+        p[0] = p[1]
+
+    # if (len(p) == 3):
+    #     p[0] = abstract.DecParamComp(p[1], p[2])
+    # else:
+    #     p[0] = abstract.DecListCompound(p[1], p[2], p[3])
 
 def p_parameterDecl(p):
     '''parameterDecl : identifierList TYPE
@@ -84,12 +94,17 @@ def p_block(p):
     p[0] = abstract.DefinirStatementL(p[1], p[2], p[3])
 
 def p_statementList(p):
-    '''statementList : statement SEMICOLON
-                     | statement SEMICOLON statementList'''
-    if (len(p) == 3):
-        p[0] = abstract.DefinirStatement(p[1], p[2])
+    '''statementList : statement SEMICOLON statementList2'''
+    p[0] = abstract.CompoundStatementList(p[1], p[2], p[3])
+
+def p_statementList2(p):
+    '''statementList2 : statementList
+                      | empty'''
+
+    if (isinstance(p[1], abstract.StatementList)):
+        p[0] = abstract.CallBackStatementList(p[1])
     else:
-        p[0] = abstract.CompoundStatementList(p[1], p[2], p[3])
+        p[0] = p[1]
 
 def p_statement(p):
     '''statement : declaration
@@ -131,7 +146,7 @@ def p_declaration(p):
     elif (isinstance(p[1], abstract.VarDecl)):
         p[0] = abstract.DeclVar(p[1])
 
-def p_simpleStmt(p): #Ajustar
+def p_simpleStmt(p): # Verificar mudançar no arguments
     '''simpleStmt : empty
                   | ID arguments
                   | inc
@@ -275,7 +290,7 @@ def p_rangeClause(p):
         p[0] = abstract.DefinirRange(p[1], p[2])
     elif (isinstance(p[1], abstract.ExpressionList)):
         p[0] = abstract.RangeExpList(p[1], p[2], p[3], p[4])
-    elif (isinstance(p[1], abstract.IdentfierList)):
+    elif (isinstance(p[1], abstract.IdentifierList)):
         p[0] = abstract.visitRangIDList(p[1], p[2], p[3], p[4])
 
 def p_constDecl(p):
@@ -294,7 +309,7 @@ def p_constSpecList(p):
     else:
         p[0] = abstract.CompoundConstSpec(p[1], p[2], p[3])
 
-def p_constSpec(p):
+def p_constSpec(p): # Cabe mudanças
     '''constSpec : identifierList
                  | identifierList ASSIGN expressionList
                  | identifierList type ASSIGN expressionList''' ###Verificar ser estar correta 
@@ -306,21 +321,28 @@ def p_constSpec(p):
         p[0] = abstract.ListIdTypeExp(p[1], p[2], p[3], p[4])
 
 def p_identifierList(p):
-    '''identifierList : ID compIDList'''
-    p[0] = abstract.DefinirIDList(p[1], p[2])
+    '''identifierList : ID
+                      | ID compIDList'''
+    if (len(p) == 2):
+        p[0] = p[1]
+    else:
+        p[0] = abstract.DefinirIDList(p[1], p[2])
 
 def p_compIDList(p):
-    '''compIDList : COMMA ID
-                  | COMMA ID compIDList
-                  | empty'''
-    if (len(p) == 3):
-        p[0] = abstract.DoubleID(p[1], p[2])
-    elif (len(p) == 4):
-        p[0] = abstract.CompoundIDList(p[1], p[2], p[3])
-    else:
-        p[0] = p[1] #observar
+    '''compIDList : COMMA ID compIDList2'''
+    p[0] = abstract.CompoundIDList(p[1], p[2], p[3])
+    # if (len(p) == 3):
+    #     p[0] = abstract.DoubleID(p[1], p[2])
+    # if (len(p) == 4):
+    #     p[0] = abstract.CompoundIDList(p[1], p[2], p[3])
+    # else:
+    #     p[0] = p[1] #observar
 
-def p_expressionList(p):
+def p_compIDList2(p):
+    '''compIDList2 : compIDList
+                   | empty'''
+
+def p_expressionList(p): # Alterar a construção.
     '''expressionList : expression 
                       | expression listExpr'''
     if (len(p) == 2):
@@ -389,85 +411,121 @@ def p_varSpec(p):
     else:
         p[0] = abstract.SimpleVarSpec(p[1], p[2], p[3])
 
-def p_expression(p):
-    '''expression : unaryExpr
-                  | expression binary_op expression
-                  | ID arguments'''
-    if (len(p) == 2):
-        p[0] = abstract.ExprUnary(p[1])
-    else:
-        p[0] = abstract.DefinirExp(p[1], p[2], p[3])
+# def p_expression(p):
+#     '''expression : unaryExpr
+#                   | expression binary_op expression
+#                   | ID arguments'''
+#     if (len(p) == 2):
+#         p[0] = abstract.ExprUnary(p[1])
+#     else:
+#         p[0] = abstract.DefinirExp(p[1], p[2], p[3])
+
+def p_exp(p):
+    '''exp : exp OR exp1
+           | exp1'''
+
+def p_exp1(p):
+    '''exp1 : exp1 AND exp2
+            | exp2'''
+
+def p_exp2(p):
+    '''exp2 : exp2 EQUALS exp3
+            | exp2 DIFERENTE exp3
+            | exp2 LESS exp3
+            | exp2 LESS_EQUAL exp3
+            | exp2 GREATER exp3
+            | exp2 GREATER_EQUAL exp3
+            | exp3'''
+
+def p_exp3(p):
+    '''exp3 : exp3 PLUS exp4
+            | exp3 MINUS exp4
+            | exp3 POT exp4
+            | exp4'''
+
+def p_exp4(p):
+    '''exp4 : exp4 TIMES exp5
+            | exp4 DIVIDE exp5
+            | exp4 MOD exp5
+            | exp5'''
+
+def p_exp5(p):
+    '''exp5 : arguments
+            | assigment
+            | Number
+            | ID'''
 
 def p_arguments(p): # Implementar
-    '''arguments : LPAREN RPAREN'''
+    '''arguments : ID ExpressionList
+                 | exp'''
     p[0] = p[1]
 
-def p_unaryExpr(p):
-    '''unaryExpr : NUMBER
-                 | ID
-                 | LPAREN expression RPAREN''' #Talvez teremos que modificar
-    if ('NUMBER'):
-        p[0] = abstract.UnaryExprNumber(p[1])
-    elif ('ID'):
-        p[0] = abstract.UnaryExprID(p[1])
-    else:
-        p[0] = abstract.UnaryExprParen(p[1], p[2], p[3])
+# def p_unaryExpr(p):
+#     '''unaryExpr : NUMBER
+#                  | ID
+#                  | LPAREN expression RPAREN''' #Talvez teremos que modificar
+#     if ('NUMBER'):
+#         p[0] = abstract.UnaryExprNumber(p[1])
+#     elif ('ID'):
+#         p[0] = abstract.UnaryExprID(p[1])
+#     else:
+#         p[0] = abstract.UnaryExprParen(p[1], p[2], p[3])
 
-def p_binary_op(p):
-    '''binary_op : OR
-                 | AND
-                 | rel_op  
-                 | add_op
-                 | mul_op'''
-    if ('OR'):
-        p[0] = abstract.OpOr(p[1])
-    elif ('AND'):
-        p[0] = abstract.OpAnd(p[1])
-    elif (isinstance(p[1], abstract.Rel_op)):
-        p[0] = abstract.OpRel(p[1])
-    elif (isinstance(p[1], abstract.Add_op)):
-        p[0] = abstract.OpAdd(p[1])
-    elif (isinstance(p[1], abstract.Mul_op)):
-        p[0] = abstract.OpMul(p[1])
+# def p_binary_op(p):
+#     '''binary_op : OR
+#                  | AND
+#                  | rel_op  
+#                  | add_op
+#                  | mul_op'''
+#     if ('OR'):
+#         p[0] = abstract.OpOr(p[1])
+#     elif ('AND'):
+#         p[0] = abstract.OpAnd(p[1])
+#     elif (isinstance(p[1], abstract.Rel_op)):
+#         p[0] = abstract.OpRel(p[1])
+#     elif (isinstance(p[1], abstract.Add_op)):
+#         p[0] = abstract.OpAdd(p[1])
+#     elif (isinstance(p[1], abstract.Mul_op)):
+#         p[0] = abstract.OpMul(p[1])
 
-def p_rel_op(p):
-    '''rel_op : EQUALS
-              | DIFERENTE
-              | LESS
-              | LESS_EQUAL
-              | GREATER
-              | GREATER_EQUAL'''
-    if ('EQUALS'):
-        p[0] = abstract.IqualsOp(p[1])
-    elif ('DIFERENTE'):
-        p[0] = abstract.DifereOp(p[1])
-    elif ('LESS'):
-        p[0] = abstract.MenorOp(p[1])
-    elif ('LESS_EQUAL'):
-        p[0] = abstract.MenorIgualOp(p[1])
-    elif ('GREATER'):
-        p[0] = abstract.MaiorOp(p[1])
-    elif ('GREATER_EQUAL'):
-        p[0] = abstract.MaiorIgual(p[1])
+# def p_rel_op(p):
+#     '''rel_op : EQUALS
+#               | DIFERENTE
+#               | LESS
+#               | LESS_EQUAL
+#               | GREATER
+#               | GREATER_EQUAL'''
+#     if ('EQUALS'):
+#         p[0] = abstract.IqualsOp(p[1])
+#     elif ('DIFERENTE'):
+#         p[0] = abstract.DifereOp(p[1])
+#     elif ('LESS'):
+#         p[0] = abstract.MenorOp(p[1])
+#     elif ('LESS_EQUAL'):
+#         p[0] = abstract.MenorIgualOp(p[1])
+#     elif ('GREATER'):
+#         p[0] = abstract.MaiorOp(p[1])
+#     elif ('GREATER_EQUAL'):
+        # p[0] = abstract.MaiorIgual(p[1])
 
-def p_add_op(p):
-    '''add_op : PLUS
-              | MINUS'''
-    if ('PLUS'):
-        p[0] = abstract.MaisOp(p[1])
-    else:
-        p[0] = abstract.MenosOp(p[1])
+# def p_add_op(p):
+#     '''add_op : PLUS
+#               | MINUS'''
+#     if ('PLUS'):
+#         p[0] = abstract.MaisOp(p[1])
+#     else:
+#         p[0] = abstract.MenosOp(p[1])
 
-def p_mul_op(p):
-    '''mul_op : TIMES
-              | DIVIDE
-              | MOD'''
-    if ('TIMES'):
-        p[0] = abstract.VezesOp(p[1])
-    elif ('DIVIDE'):
-        p[0] = abstract.DivideOp(p[1])
-    else:
-        p[0] = abstract.ModOp(p[1])
+# def p_mul_op(p):
+#     '''mul_op : TIMES
+#               | DIVIDE
+#               | MOD'''
+#     if ('TIMES'):
+#         p[0] = abstract.VezesOp(p[1])
+#     elif ('DIVIDE'):
+#         p[0] = abstract.DivideOp(p[1])
+#     else:
+#         p[0] = abstract.ModOp(p[1])
 
 def p_inc(p):
     '''inc : expression PLUS PLUS
@@ -478,7 +536,7 @@ def p_inc(p):
         p[0] = abstract.DecOp(p[1], p[2], p[3])
 
 def p_assignment(p):
-    '''assignment : expressionList ASSIGN expressionList'''
+    '''assignment : expressionList ASSIGN exp''' ##Alterar no abstract e Visitor
     p[0] = abstract.AssignOp(p[1], p[2], p[3])
 
 def p_shortVarDec(p):
