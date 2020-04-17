@@ -413,17 +413,48 @@ def p_exp2(p):
             | exp2 GREATER_EQUAL exp3
             | exp3'''
 
+    if(p[2] == 'EQUALS'):
+        p[0] = abstract.OperadorIgual(p[1], p[2], p[3])
+    elif(p[2] == 'DIFERENTE'):
+        p[0] = abstract.OperadorDiferente(p[1], p[2], p[3])
+    elif(p[2] == 'LESS'):
+        p[0] = abstract.OperadorMenor(p[1], p[2], p[3])
+    elif(p[2] == 'LESS_EQUAL'):
+        p[0] = abstract.OperadorMenorIgual(p[1], p[2], p[3])
+    elif(p[2] == 'GREATER'):
+        p[0] = abstract.OperadorMaior(p[1], p[2], p[3])
+    elif(p[2] == 'GREATER_EQUAL'):
+        p[0] = abstract.OperadorMaiorIgual(p[1], p[2], p[3])
+    else:
+        p[0] = p[1]
+
 def p_exp3(p):
     '''exp3 : exp3 PLUS exp4
             | exp3 MINUS exp4
             | exp3 POT exp4
             | exp4'''
+    if(p[2] == 'PLUS'):
+        p[0] = abstract.OperadorMais(p[1], p[2], p[3])
+    elif(p[2] == 'MINUS'):
+        p[0] = abstract.OperadorMenos(p[1], p[2], p[3])
+    elif(p[2] == 'POT'):
+        p[0] = abstract.OperadorPot(p[1], p[2], p[3])
+    else:
+        p[0] = p[1]
 
 def p_exp4(p):
     '''exp4 : exp4 TIMES exp5
             | exp4 DIVIDE exp5
             | exp4 MOD exp5
             | exp5'''
+    if(p[2] == 'TIMES'):
+        p[0] = abstract.OperadorVezes(p[1], p[2], p[3])
+    elif(p[2] == 'DIVIDE'):
+        p[0] = abstract.OperadorDividir(p[1], p[2], p[3])
+    elif(p[2] == 'MOD'):
+        p[0] = abstract.OperadorMod(p[1], p[2], p[3])
+    else:
+        p[0] = p[1]
 
 def p_exp5(p):
     '''exp5 : arguments
