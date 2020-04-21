@@ -56,6 +56,10 @@ class Visitor():
     def visitCompParamsDecl(self, compParamsDecl):
         compParamsDecl.ParameterDecl.accept(self)
         compParamsDecl.ParameterDecList.accept(self)
+
+    def visitCallBackParameterList(self, callBackParameterList):
+        print(',', end = ' ')
+        callBackParameterList.ParameterList.accept(self)
     
     def visitDecParamComp(self, decParamComp):
         print(',', end = ' ')
@@ -439,6 +443,7 @@ class Visitor():
 
     def visitUnaryExprID(self, unaryExprID):
         print(unaryExprID.ID, end = ' ')
+        unaryExprID.Arguments.accept(self)
 
     def visitUnaryExprParen(self, unaryExprParen):
         print('(', end = ' ')
@@ -508,7 +513,7 @@ class Visitor():
         print('=', end = ' ')
         assignOp.ExpressionList1.accept(self)
 
-    def visitDeclShortVar(self, declShortVar):
+    def visitDeclShortVarDef(self, declShortVar):
         declShortVar.IdentifierList.accept(self)
         print('=', end = ' ')
         declShortVar.ExpressionList.accept(self)

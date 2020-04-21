@@ -149,7 +149,9 @@ def t_error(t):
 lexer = lex.lex()
     
 data = '''
-func main()
+func principal() int {
+    a = 5 + 5;
+}
 // Isto é comentário
 '''
 

@@ -147,12 +147,12 @@ class ParameterList(metaclass=ABCMeta):
 		pass
 
 ##CONCRETA##
-class DefinirParamDecl(ParameterList):
-    def __init__(self, ParameterDecl):
-        self.ParameterDecl = ParameterDecl
+# class DefinirParamDecl(ParameterList):
+#     def __init__(self, ParameterDecl):
+#         self.ParameterDecl = ParameterDecl
     
-    def accept(self, Visitor):
-        Visitor.visitDefinirParamDecl(self)
+#     def accept(self, Visitor):
+#         Visitor.visitDefinirParamDecl(self)
 
 class CompoundParamDecl(ParameterList): ##PRECISA OBSERVAR ISSO
     def __init__(self, ParameterDecl, ParameterDecList):
@@ -161,6 +161,14 @@ class CompoundParamDecl(ParameterList): ##PRECISA OBSERVAR ISSO
 
     def accept(self, Visitor):
         Visitor.visitCompParamsDecl(self)
+
+class callBackParameterList(ParameterList):
+    def __init__(self, COMMA, ParameterList):
+        self.COMMA = COMMA
+        self.ParameterList = ParameterList
+
+    def accept(self, Visitor):
+        Visitor.visitCallBackParameterList(self)
 
 ##ABSTRATA##
 class ParameterDecList(metaclass=ABCMeta):
@@ -887,7 +895,7 @@ class IdentifierList(metaclass=ABCMeta):
 class DefinirIDList(IdentifierList):
     def __init__(self, ID, CompIDList):
         self.ID = ID
-        self.CompIDList
+        self.CompIDList = CompIDList
 
     def accept(self, Visitor):
         Visitor.visitDefinirIDList(self)
@@ -1171,8 +1179,9 @@ class UnaryExprNumber(UnaryExpr):
         Visitor.visitUnaryExprNumber(self)
 
 class UnaryExprID(UnaryExpr):
-    def __init__(self, ID):
+    def __init__(self, ID, Arguments):
         self.ID = ID
+        self.Arguments = Arguments
 
     def accept(self, Visitor):
         Visitor.visitUnaryExprID(self)
@@ -1374,12 +1383,12 @@ class ShortVarDecl(metaclass=ABCMeta):
         pass
 
 ##CONCRETA##
-class DeclShortVar(ShortVarDecl):
+class DeclShortVarDef(ShortVarDecl):
     def __init__(self, IdentifierList, ASSIGN, ExpressionList):
         self.IdentifierList = IdentifierList
         self.ASSIGN = ASSIGN
         self.ExpressionList = ExpressionList    ##observar
         
     def accept(self, Visitor):
-        Visitor.visitDeclShortVar(self)
+        Visitor.visitDeclShortVarDef(self)
 

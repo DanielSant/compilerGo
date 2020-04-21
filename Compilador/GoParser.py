@@ -3,6 +3,14 @@ import ply.lex as lex
 from GoLex import tokens
 import GoAbstract as abstract
 
+precedence = (
+    ('left', 'AND', 'OR'),
+    ('nonassoc', 'COMMA', 'EQUALS', 'DIFERENTE', 'LESS', 'LESS_EQUAL', 'GREATER', 'GREATER_EQUAL'),
+    ('left', 'PLUS', 'MINUS'),
+    ('left', 'TIMES', 'DIVIDE'),
+    ('left', 'MOD')
+)
+
 def p_functionDecl(p):
     '''functionDecl : FUNC ID signature
                     | FUNC ID signature functionBody'''
@@ -51,21 +59,33 @@ def p_parameters(p):
     elif (len(p) == 3):
         p[0] = abstract.DefinirParamsParameters(p[1], p[2])
 
-def p_parameterList(p):
-    '''parameterList : parameterDecl
-                     | parameterDecl parameterDecList'''
-    if (len(p) == 2):
-        p[0] = abstract.DefinirParamDecl(p[1])
-    else:
-        p[0] = abstract.CompoundParamDecl(p[1], p[2])
+# def p_parameterList(p):
+#     '''parameterList : parameterDecl
+#                      | parameterDecl parameterDecList'''
+#     if (len(p) == 2):
+#         p[0] = abstract.DefinirParamDecl(p[1])
+#     else:
+#         p[0] = abstract.CompoundParamDecl(p[1], p[2])
 
-def p_paramterDecList(p):
-    '''parameterDecList : COMMA parameterDecl
-                        | COMMA parameterDecl parameterDecList'''
+# def p_paramterDecList(p):
+#     '''parameterDecList : COMMA parameterDecl
+#                         | COMMA parameterDecl parameterDecList'''
+#     if (len(p) == 3):
+#         p[0] = abstract.DecParamComp(p[1], p[2])
+#     else:
+#         p[0] = abstract.DecListCompound(p[1], p[2], p[3])
+
+def p_parameterList(p):
+    '''parameterList : parameterDecl parameterDecList'''
+    p[0] = abstract.CompoundParamDecl(p[1], p[2])
+
+def p_parameterDecList(p):
+    '''parameterDecList : COMMA parameterList
+                        | empty'''
     if (len(p) == 3):
-        p[0] = abstract.DecParamComp(p[1], p[2])
+        p[0] = abstract.callBackParameterList(p[1], p[2])
     else:
-        p[0] = abstract.DecListCompound(p[1], p[2], p[3])
+        p[0] = p[1]
 
 def p_parameterDecl(p):
     '''parameterDecl : identifierList TYPE
@@ -107,7 +127,7 @@ def p_statement(p):
         p[0] = abstract.StmtSimple(p[1])
     elif (isinstance(p[1], abstract.ReturnStmt)):
         p[0] = abstract.StmtReturn(p[1])
-    elif (isinstance(p[1], abstract.BreakStm)):
+    elif (isinstance(p[1], abstract.BreakStmt)):
         p[0] = abstract.StmtBreak(p[1])
     elif (isinstance(p[1], abstract.ContinueStmt)):
         p[0] = abstract.StmtContinue(p[1])
@@ -131,9 +151,9 @@ def p_declaration(p):
     elif (isinstance(p[1], abstract.VarDecl)):
         p[0] = abstract.DeclVar(p[1])
 
-def p_simpleStmt(p):
+def p_simpleStmt(p): #condition vai para expression
     '''simpleStmt : empty
-                  | expression
+                  | condition
                   | inc
                   | assignment
                   | shortVarDec'''
@@ -190,12 +210,9 @@ def p_switchStmt(p):
         p[0] = abstract.ExprSwitchExp(p[1], p[2], p[3], p[4], p[5])
 
 def p_exprCaseClauseList(p):
-    '''exprCaseClauseList : exprCaseClause
-                          | exprCaseClause exprCaseClauseList
+    '''exprCaseClauseList : exprCaseClause exprCaseClauseList
                           | empty'''
-    if (isinstance(p[1], abstract.ExprCaseClause)):
-        p[0] = abstract.CallExprCaseClause(p[1])
-    elif (len(p) == 3):
+    if (len(p) == 3):
         p[0] = abstract.CompoundCaseClause(p[1])
     else:
         p[0] = abstract.EmptyCaseClause(p[1])
@@ -236,12 +253,8 @@ def p_condition(p):
 
 def p_forClause(p):
     '''forClause : initStmt SEMICOLON condition SEMICOLON postStmt
-                 | initStmt SEMICOLON condition
                  | initStmt
-                 | condition SEMICOLON postStmt
-                 | condition
-                 | initStmt SEMICOLON postStmt
-                 | postStmt''' ###OBSERVA A CONSTRUÇÃO
+                 | initStmt SEMICOLON postStmt''' ###OBSERVA A CONSTRUÇÃO
     if (len(p) == 6):
         p[0] = abstract.ClassicFor(p[1], p[2], p[3], p[4], p[5])
     elif (isinstance(p[3], abstract.Condition) and len(p) == 4):
@@ -254,12 +267,10 @@ def p_forClause(p):
         p[0] = abstract.ConditionFor(p[1])
     elif (isinstance(p[3], abstract.PostStmt) and len(p) == 4):
         p[0] = abstract.InPoFor(p[1], p[2], p[3])
-    elif (isinstance(p[1], abstract.PostStmt)):
-        p[0] = abstract.PostFor(p[1])
 
 def p_initStmt(p):
-    '''initStmt : simpleStmt'''
-    p[0] = abstract.StmtInit(p[1])
+    '''initStmt : postStmt'''
+    p[0] = p[1]
 
 def p_postStmt(p):
     '''postStmt : simpleStmt'''
@@ -276,7 +287,7 @@ def p_rangeClause(p):
     elif (isinstance(p[1], abstract.IdentfierList)):
         p[0] = abstract.visitRangIDList(p[1], p[2], p[3], p[4])
 
-def p_constDecl(p):
+def p_constDecl(p): #modificar constDecl : CONST constDecl2, constDecl2 : constSpec | LPAREN constSpeclist RPAREN 
     '''constDecl : CONST constSpec
                  | CONST LPAREN constSpecList RPAREN'''
     if (len(p) == 3):
@@ -284,7 +295,7 @@ def p_constDecl(p):
     else:
         p[0] = abstract.CompConst(p[1], p[2], p[3], p[4])
 
-def p_constSpecList(p):
+def p_constSpecList(p): #modificar constSpecList : constSpec SEMICOLON constSpeclist | empty
     '''constSpecList : constSpec SEMICOLON
                      | constSpec SEMICOLON constSpecList'''
     if (len(p) == 2):
@@ -308,17 +319,14 @@ def p_identifierList(p):
     p[0] = abstract.DefinirIDList(p[1], p[2])
 
 def p_compIDList(p):
-    '''compIDList : COMMA ID
-                  | COMMA ID compIDList
+    '''compIDList : COMMA ID compIDList
                   | empty'''
-    if (len(p) == 3):
-        p[0] = abstract.DoubleID(p[1], p[2])
-    elif (len(p) == 4):
+    if (len(p) == 4):
         p[0] = abstract.CompoundIDList(p[1], p[2], p[3])
     else:
-        p[0] = p[1] #observar
+        p[0] = p[1] 
 
-def p_expressionList(p):
+def p_expressionList(p): #modificar expression : expression listExpr
     '''expressionList : expression 
                       | expression listExpr'''
     if (len(p) == 2):
@@ -326,7 +334,7 @@ def p_expressionList(p):
     else:
         p[0] = abstract.CallExpList(p[1], p[2])
 
-def p_listExpr(p):
+def p_listExpr(p): #modificar listExpr : COMMA expression listExpr | empty
     '''listExpr : COMMA expression
                 | COMMA expression listExpr'''
     if (len(p) == 3):
@@ -343,12 +351,9 @@ def p_typeDecl(p):
         p[0] = abstract.CallTypeSpecList(p[1], p[2], p[3], p[4])
 
 def p_typeSpecList(p):
-    '''typeSpecList : typeSpec SEMICOLON
-                    | typeSpec SEMICOLON typeSpecList
+    '''typeSpecList : typeSpec SEMICOLON typeSpecList
                     | empty'''
-    if (len(p) == 3):
-        p[0] = abstract.TypeSpecDouble(p[1], p[2])
-    elif (len(p) == 4):
+    if (len(p) == 4):
         p[0] = abstract.CompTypeSpecList(p[1], p[2], p[3])
     else:
         p[0] = p[1]
@@ -366,12 +371,9 @@ def p_varDecl(p):
         p[0] = abstract.CompVar(p[1], p[2], p[3], p[4])
 
 def p_varSpecList(p):
-    '''varSpecList : varSpec SEMICOLON
-                   | varSpec SEMICOLON varSpecList
+    '''varSpecList : varSpec SEMICOLON varSpecList
                    | empty'''
-    if (len(p) == 3):
-        p[0] = abstract.VarDef(p[1], p[2])
-    elif (len(p) == 4):
+    if (len(p) == 4):
         p[0] = abstract.CompoundVarSpec(p[1], p[2], p[3])
     else:
         p[0] = p[1]
@@ -397,14 +399,18 @@ def p_expression(p):
 
 def p_unaryExpr(p):
     '''unaryExpr : NUMBER
-                 | ID
+                 | ID arguments
                  | LPAREN expression RPAREN''' #Talvez teremos que modificar
     if ('NUMBER'):
         p[0] = abstract.UnaryExprNumber(p[1])
     elif ('ID'):
-        p[0] = abstract.UnaryExprID(p[1])
+        p[0] = abstract.UnaryExprID(p[1], p[2])
     else:
         p[0] = abstract.UnaryExprParen(p[1], p[2], p[3])
+
+def p_arguments(p):
+    '''arguments : parameters'''
+    p[0] = p[1]
 
 def p_binary_op(p):
     '''binary_op : OR
@@ -476,7 +482,7 @@ def p_assignment(p):
 
 def p_shortVarDec(p):
     '''shortVarDec : identifierList ASSIGN expressionList'''#Era para ser :=
-    p[0] = abstract.DeclShortVar(p[1], p[2], p[3])
+    p[0] = abstract.DeclShortVarDef(p[1], p[2], p[3])
 
 # Error rule for syntax errors
 def p_error(p):
