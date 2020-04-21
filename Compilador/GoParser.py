@@ -418,9 +418,9 @@ def p_binary_op(p):
                  | rel_op  
                  | add_op
                  | mul_op'''
-    if ('OR'):
+    if (p[1] == 'OR'):
         p[0] = abstract.OpOr(p[1])
-    elif ('AND'):
+    elif (p[1] == 'AND'):
         p[0] = abstract.OpAnd(p[1])
     elif (isinstance(p[1], abstract.Rel_op)):
         p[0] = abstract.OpRel(p[1])
