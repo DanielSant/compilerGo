@@ -436,23 +436,23 @@ def p_rel_op(p):
               | LESS_EQUAL
               | GREATER
               | GREATER_EQUAL'''
-    if ('EQUALS'):
+    if (p[1] == 'EQUALS'):
         p[0] = abstract.IqualsOp(p[1])
-    elif ('DIFERENTE'):
+    elif (p[1] == 'DIFERENTE'):
         p[0] = abstract.DifereOp(p[1])
-    elif ('LESS'):
+    elif (p[1] == 'LESS'):
         p[0] = abstract.MenorOp(p[1])
-    elif ('LESS_EQUAL'):
+    elif (p[1] == 'LESS_EQUAL'):
         p[0] = abstract.MenorIgualOp(p[1])
-    elif ('GREATER'):
+    elif (p[1] == 'GREATER'):
         p[0] = abstract.MaiorOp(p[1])
-    elif ('GREATER_EQUAL'):
+    elif (p[1] == 'GREATER_EQUAL'):
         p[0] = abstract.MaiorIgual(p[1])
 
 def p_add_op(p):
     '''add_op : PLUS
               | MINUS'''
-    if ('PLUS'):
+    if (p[1] == 'PLUS'):
         p[0] = abstract.MaisOp(p[1])
     else:
         p[0] = abstract.MenosOp(p[1])
@@ -461,9 +461,9 @@ def p_mul_op(p):
     '''mul_op : TIMES
               | DIVIDE
               | MOD'''
-    if ('TIMES'):
+    if (p[1] == 'TIMES'):
         p[0] = abstract.VezesOp(p[1])
-    elif ('DIVIDE'):
+    elif (p[1] == 'DIVIDE'):
         p[0] = abstract.DivideOp(p[1])
     else:
         p[0] = abstract.ModOp(p[1])
