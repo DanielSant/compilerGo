@@ -337,7 +337,7 @@ class Visitor():
 
     def visitDefinirIDList(self, definirIDList):
         print(definirIDList.ID, end = ' ')
-        definirIDList.CompIDList.accept(self)
+        #definirIDList.CompIDList.accept(self)
 
     def visitDoubleID(self, doubleID):
         print(',', end = ' ')
