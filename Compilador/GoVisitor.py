@@ -1,4 +1,5 @@
 class Visitor():
+    # FunctionDecl
     def visitDefinirFunc(self, definirFunc):
         print('func', end =' ')
         print(definirFunc.ID, end = ' ')
@@ -10,6 +11,7 @@ class Visitor():
         definirFuncBody.Signature.accept(self)
         definirFuncBody.FunctionBody.accept(self)
 
+    # Signature
     def visitDefinirParams(self, definirParams):
         definirParams.Parameters.accept(self)
     
@@ -17,9 +19,12 @@ class Visitor():
         definirParamsT.Params.accept(self)
         definirParamsT.Result.accept(self)
     
+    # Result
     def visitDefinirTipo(self, definirTipo):
-        definirTipo.Type.accept(self)
+        #definirTipo.Type.accept(self)
+        pass
     
+    # Type
     def visitTint(self, Tint):
         print('int', end = ' ')
 
@@ -35,56 +40,51 @@ class Visitor():
     def visitTfloat(self, Tfloat):
         print('float', end = ' ')
     
-    def visitDefinirParamsParameters(self, definirParams):
-        print('(', end = ' ')
-        print(')', end = ' ')
-    
+    # Parameters
     def visitParams(self, params):
         print('(', end = ' ')
         params.ParameterList.accept(self)
         print(')', end = ' ')
-    
+
     def visitParamsList(self, paramsList):
         print('(', end = ' ')
         paramsList.ParameterList.accept(self)
         print(',', end = ' ')
         print(')', end = ' ')
+
+    def visitDefinirParamsParameters(self, definirParams):
+        print('(', end = ' ')
+        print(')', end = ' ')
     
-    def visitDefinirParamDecl(self, definirParamDecl):
-        definirParamDecl.ParameterDecl.accept(self)
-    
+    # ParameterList
     def visitCompParamsDecl(self, compParamsDecl):
         compParamsDecl.ParameterDecl.accept(self)
         compParamsDecl.ParameterDecList.accept(self)
 
+    # ParameterDecList
     def visitCallBackParameterList(self, callBackParameterList):
         print(',', end = ' ')
         callBackParameterList.ParameterList.accept(self)
-    
-    def visitDecParamComp(self, decParamComp):
-        print(',', end = ' ')
-        decParamComp.ParameterDecl.accept(self)
-    
-    def visitDecListCompound(self, decListCompound):
-        print(',', end = ' ')
-        decListCompound.ParameterDecl.accept(self)
-        decListCompound.ParameterDecList.accept(self)
-    
-    def visitParamDecl(self, paramDecl):
-        paramDecl.Type.accept(self)
-    
+
+    # ParameterDecl
     def visitParamIdDecl(self, paramIdDecl):
         paramIdDecl.IdentifierList.accept(self)
         paramIdDecl.Type.accept(self)
-    
+
+    def visitParamDecl(self, paramDecl):
+        paramDecl.Type.accept(self)
+
+    # FunctionBody
     def visitDefinirBlock(self, definirBlock):
         definirBlock.Block.accept(self)
     
+    # Block
     def visitDefinirStatementL(self, definirStatementL):
         print('{', end = ' ')
         definirStatementL.StatmentList.accept(self)
         print('}', end = ' ')
     
+    # StatementList
     def visitDefinirStatement(self, definirStatement):
         definirStatement.Statement.accept(self)
         print(';', end = ' ')
@@ -94,6 +94,7 @@ class Visitor():
         print(';', end = ' ')
         compoundStatmenteList.StatementList.accept(self)
     
+    # Statement
     def visitStmtDeclaration(self, stmtDeclaration):
         stmtDeclaration.Declaration.accept(self)
     
@@ -121,6 +122,7 @@ class Visitor():
     def visitStmtFor(self, stmtFor):
         stmtFor.ForStmt.accept(self)
 
+    # Declaration
     def visitDeclConst(self, declConst):
         declConst.ConstDecl.accept(self)
     
@@ -130,12 +132,10 @@ class Visitor():
     def visitDeclVar(self, declVar):
         declVar.ConstVar.accept(self)
     
-    def visitStmtEmpty(self, stmtEmpty):
-        print('', end = ' ')
-        
-    def visitStmtExpression(self, stmtExpression):
-        stmtExpression.Expression.accept(self)
-    
+    # SimpleStmt
+    def visitStmtCondition(self, stmtCondition):
+        stmtConditio.Condition.accept(self)
+
     def visitStmtIncDec(self, stmtIncDec):
         stmtIncDec.IncDec.accept(self)
     
@@ -145,38 +145,43 @@ class Visitor():
     def visitDeclShortVar(self, declShortVar):
         declShortVar.ShortVarDecl.accept(self)
     
-    def visitSimpleReturn(self, simpleReturn):
-       print('return', end =' ')
-    
+    # ReturnStmt
     def visitExpReturn(self, expReturn):
         print('return', end =' ')
         expReturn.ExpressionList.accept(self)
+
+    def visitSimpleReturn(self, simpleReturn):
+       print('return', end =' ')
     
+    # BreakStmt
     def visitStmtBreack(self, stmtBreack):
         print('break', end =' ')
 
+    # ContinueStmt
     def visitStmtContinue(self, stmtContinue):
         print('continue', end = ' ')
     
+    # Ifstmt
     def visitSimpleIf(self, simpleIf):
         print('if', end = ' ')
         simpleIf.Expression.accept(self)
         simpleIf.Block.accept(self)
-    
-    def visitIfElse(self, ifElse):
-        print('if', end = ' ')
-        ifElse.Expression.accept(self)
-        ifElse.Block.accept(self)
-        print('else', end = ' ')         #OBSERVAÇÃO -  Verificar linha 458 da GoAbstract
-        ifElse.Block1.accept(self)
-        
+
     def visitCompIfElse(self, compIfElse):
         print('if', end = ' ')
         compIfElse.Expression.accept(self)
         compIfElse.Block.accept(self)
         print('else', end = ' ')
         compIfElse.IfStmt.accept(self)
-
+    
+    def visitIfElse(self, ifElse):
+        print('if', end = ' ')
+        ifElse.Expression.accept(self)
+        ifElse.Block.accept(self)
+        print('else', end = ' ')         
+        ifElse.Block1.accept(self)
+        
+    # SwitchStmt
     def visitExprSwitch(self, exprSwitch):
         exprSwitch.SimpleStmt.accept(self)
         print(';', end = ' ')
@@ -205,21 +210,18 @@ class Visitor():
         exprSwitchExp.ExprCaseClause.accept(self)
         print('}', end = ' ')
 
-    def visitCallExprCaseClause(self, callExprCaseClause):
-        callExprCaseClause.ExprCaseClause.accept(self)
-
+    # ExprCaseClauseList
     def visitCompoundCaseClase(self, compoundCaseClase):
         compoundCaseClase.ExprCaseClause.accept(self)
         compoundCaseClase.ExprCaseClauseList.accept(self)
 
-    def visitEmptyCaseClause(self, emptyCaseClause):
-        print('', end = ' ')
-
+    # ExprCaseClause
     def visitExprCase(self, exprCase):
         exprCase.exprSwitchCase.accept(self)
         print(':', end = ' ')
         exprCase.StatmentList.accept(self)
 
+    # ExprSwitchCase
     def visitCaseClauseExp(self, caseClauseExp):
         print('CASE', end = ' ')
         caseClauseExp.ExpressionList.accept(self)
@@ -227,6 +229,7 @@ class Visitor():
     def visitCaseClause(self, caseClause):
         print('DEFAULT', end = ' ')
 
+    # ForStmt
     def visitStmtFor(self, stmtFor):
         print('for', end = ' ')
         stmtFor.Condition.accept(self)
@@ -246,9 +249,11 @@ class Visitor():
         print('for', end = ' ')
         stmtForBlock.Block.accept(self)
 
+    # Condition
     def visitDefinirCondition(self, definirCondition):
         definirCondition.Expression.accept(self)
 
+    # ForClause
     def visitClassicFor(self, classicFor):
         classicFor.InitStmt.accept(self)
         print(';', end = ' ')
@@ -256,36 +261,23 @@ class Visitor():
         print(';', end = ' ')
         classicFor.PostStmt.accept(self)
 
-    def visitInCoFor(self, inCoFor):
-        inCoFor.InitStmt.accept(self)
-        print(';', end = ' ')
-        inCoFor.Condition.accept(self)
-
     def visitInitFor(self, initFor):
         initFor.InitStmt.accept(self)
-
-    def visitCoPoFor(self, coPoFor):
-        coPoFor.Condition.accept(self)
-        print(';', end = ' ')
-        coPoFor.PostStmt.accept(self)
-
-    def visitConditionFor(self, conditionFor):
-        conditionFor.Condition.accept(self)
 
     def visitInPoFor(self, inPoFor):
         inPoFor.InitStmt.accept(self)
         print(';', end = ' ')
         inPoFor.PostStmt.accept(self)
 
-    def visitPostFor(self, postFor):
-        postFor.PostStmt.accept(self)
-
+    # InitStmt
     def visitStmtInit(self, stmtInit):
-        stmtInit.SimpleStmt.accept(self)
+        stmtInit.PostStmt.accept(self)
 
+    # PostStmt
     def visitStmtPost(self, stmtPost):
         stmtPost.SimpleStmt.accept(self)
 
+    # RangeClause
     def visitDefinirRange(self, definirRange):
         print('range', end = ' ')
         definirRange.Expression.accept(self)
@@ -302,6 +294,7 @@ class Visitor():
         print('range', end = ' ')
         visitRangIDList.Expression.accept(self)
 
+    # ConstDecl
     def visitSimpleConst(self, simpleConst):
         print('const', end = ' ')
         simpleConst.ConstSpec.accept(self)
@@ -309,9 +302,20 @@ class Visitor():
     def visitCompConst(self, compConst):
         print('const', end = ' ')
         print('(', end = ' ')
-        compConst.ConstSpec.accept(self)
+        compConst.constSpecList.accept(self)
         print(')', end = ' ')
 
+    # ConstSpecList
+    def visitCallConstSpec(self, callConstSpec):
+        callConstSpec.ConstSpec.accept(self)
+        print(';', end = ' ')
+
+    def visitCompoundConstSpec(self, compoundConstSpec):
+        compoundConstSpec.ConstSpec.accept(self)
+        print(';', end = ' ')
+        compoundConstSpec.ConstSpecList.accept(self)
+
+    # ConstSpec
     def visitSimpleIdList(self, simpleIdList):
         simpleIdList.IdentifierList.accept(self)
 
@@ -326,31 +330,18 @@ class Visitor():
         print('=', end = ' ')
         listTypeExp.ExpressionList.accept(self)
     
-    def visitCallConstSpec(self, callConstSpec):
-        callConstSpec.ConstSpec.accept(self)
-        print(';', end = ' ')
-
-    def visitCompoundConstSpec(self, compoundConstSpec):
-        compoundConstSpec.ConstSpec.accept(self)
-        print(';', end = ' ')
-        compoundConstSpec.ConstSpecList.accept(self)
-
+    # IdentifierList
     def visitDefinirIDList(self, definirIDList):
         print(definirIDList.ID, end = ' ')
         #definirIDList.CompIDList.accept(self)
 
-    def visitDoubleID(self, doubleID):
-        print(',', end = ' ')
-        print(doubleID.ID, end = ' ')
-
+    # CompIDList
     def visitCompoundIDList(self, compoundIDList):
         print(',', end = ' ')
         print(compoundIDList.ID, end = ' ')
         compoundIDList.CompIDList.accept(self)
 
-    def visitSimpleID(self, simpleID):
-        print(' ', end = ' ')
-
+    # ExpressionList
     def visitDefinirExpList(self, definirExpList):
         definirExpList.Expression.accept(self)
 
@@ -358,6 +349,7 @@ class Visitor():
         callExpList.Expression.accept(self)
         callExpList.ListExpr.accept(self)
 
+    # ListExpr
     def visitSimpleExpList(self, simpleExpList):
         print(',', end = ' ')
         simpleExpList.Expression.accept(self)
@@ -367,6 +359,7 @@ class Visitor():
         compoundExpList.Expression.accept(self)
         compoundExpList.ListExpr.accept(self)
 
+    # TypeDecl
     def visitDefinirType(self, definirType):
         print('type', end = ' ')
         definirType.TypeSpec.accept(self)
@@ -377,22 +370,18 @@ class Visitor():
         callTypeSpecList.callTypeSpecList.accept(self)
         print(')', end = ' ')
 
-    def visitTypeSpecDouble(self, typeSpecDouble):
-        typeSpecDouble.TypeSpec.accept(self)
-        print(';', end = ' ')
-
+    # TypeSpecList
     def visitCompTypeSpecList(self, compTypeSpecList):
         compTypeSpecList.TypeSpec.accept(self)
         print(';', end = ' ')
         compTypeSpecList.TypeSpecList.accept(self)
 
-    def visitTypeSpecSimple(self, typeSpecSimple):
-        print(' ', end = ' ')
-
+    # TypeSpec
     def visitSpecType(self, specType):
         print('id', end = ' ')
         specType.Type.accept(self)
 
+    # VarDecl
     def visitDefinirVar(self, definirVar):
         print('var', end = ' ')
         definirVar.VarSpec.accept(self)
@@ -403,18 +392,13 @@ class Visitor():
         compVar.VarSpecList.accept(self)
         print(')', end = ' ')
 
-    def visitVarDef(self, varDef):
-        varDef.VarSpec.accept(self)
-        print(';', end = ' ')
-    
+    # VarSpecList
     def visitCompoundVarSpec(self, compoundVarSpec):
         compoundVarSpec.VarSpec.accept(self)
         print(';', end = ' ')
         compoundVarSpec.VarSpecList
 
-    def visitSimpleVar(self, simpleVar):
-        print(' ', end = ' ')
-
+    # VarSpec
     def visitSpecVar(self, specVar):
         specVar.IdentifierList.accept(self)
         specVar.Type.accept(self)
@@ -430,14 +414,16 @@ class Visitor():
         print('=', end = ' ')
         simpleVarSpec.ExpressionList.accept(self)
 
+    # Expression
+    def visitExprUnary(self, exprUnary):
+        exprUnary.UnaryExpr.accept(self)
+
     def visitDefinirExp(self, definirExp):
         definirExp.Expression.accept(self)
         definirExp.binary_op.accept(self)
         definirExp.Expression1.accept(self)
 
-    def visitExprUnary(self, exprUnary):
-        exprUnary.UnaryExpr.accept(self)
-
+    # UnaryExpr
     def visitUnaryExprNumber(self, unaryExprNumber):
         print(unaryExprNumber.NUMBER, end = ' ')
 
@@ -450,6 +436,9 @@ class Visitor():
         unaryExprParen.Expression.accept(self)
         print(')', end = ' ')
 
+    # Arguments
+
+    # BinaryOp
     def visitOpOr(self, opOr):
         print('||', end = ' ')
 
@@ -465,6 +454,7 @@ class Visitor():
     def visitOpMul(self, opMul):
         opMul.mul_op.accept(self)
 
+    # RelOp
     def visitEqualsOp(self, equalsOp):
         print('==', end = ' ')
 
@@ -483,12 +473,14 @@ class Visitor():
     def visitMaiorIgualOp(self, maiorIgualOp):
         print('>=', end = ' ')
 
+    # AddOp
     def visitMaisOp(self, maisOp):
         print('+', end = ' ')
 
     def visitMenosOp(self, menosOp):
         print('-', end = ' ')
 
+    #MulOp
     def visitVezesOp(self, vezesOp):
         print('*', end = ' ')
 
@@ -498,6 +490,7 @@ class Visitor():
     def visitModOp(self, modOp):
         print('%', end = ' ')
 
+    # IncDec
     def visitIncOp(self, incOp):
         incOp.Expression.accept(self)
         print('+', end = ' ')
@@ -508,19 +501,14 @@ class Visitor():
         print('-', end = ' ')
         print('-', end = ' ')
 
+    # Assignment
     def visitAssignOp(self, assignOp):
         assignOp.ExpressionList.accept(self)
         print('=', end = ' ')
         assignOp.ExpressionList1.accept(self)
 
+    # ShortVarDec
     def visitDeclShortVarDef(self, declShortVar):
         declShortVar.IdentifierList.accept(self)
         print('=', end = ' ')
         declShortVar.ExpressionList.accept(self)
-
-
-    
-
-    
-
-

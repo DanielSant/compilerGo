@@ -148,9 +148,15 @@ def t_error(t):
 # START A CLASSE LEXER
 lexer = lex.lex()
     
+# Tipo da funcao não esta sendo printado
 data = '''
-func principal() int {
-    a = 5 + 5;
+func principal(int, float) {
+    switch a = 5 - 5; a(x int, y int) {
+        case 1:
+            5 + 5;
+        case 2:
+            5 + 8;
+    };
 }
 // Isto é comentário
 '''
