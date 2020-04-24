@@ -60,7 +60,9 @@ tokens = [
     'SEMICOLON',
     'COLON',
     'COMMA',
-    'MOD'
+    'MOD',
+    'DPLUS',
+    'DMINUS'
 ] + list(reserved.values())
 
 # Regular expression rules for simple tokens
@@ -86,6 +88,8 @@ t_SEMICOLON     = r'\;'
 t_COLON         = r'\:'
 t_COMMA         = r'\,'
 t_MOD           = r'\%'
+t_DPLUS         = r'\+\+'
+t_DMINUS        = r'\-\-'
  
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
@@ -151,14 +155,31 @@ lexer = lex.lex()
 # Tipo da funcao não esta sendo printado
 data = '''
 func principal(int, float) {
-    switch a = 5 - 5; a(x int, y int) {
+
+    a = soma(x, y);
+
+    switch a = 5 - 5; {
         case 1:
             5 + 5;
         case 2:
             5 + 8;
     };
+
+    for a < 10 {
+        a = a + 1; 
+    };
+
+    for b = 1; b < 100; b++ {
+        b = b + 1;
+    };
 }
+func soma(x int, y int) int {
+    return x + y;
+}
+
 // Isto é comentário
 '''
+
+
 
 lexer.input(data)

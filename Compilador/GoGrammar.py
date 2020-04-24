@@ -50,7 +50,8 @@ def p_functionBody(p):
     '''functionBody : block'''
 
 def p_block(p):
-    '''block : LCHAVES statementList RCHAVES'''
+    '''block : LCHAVES statementList RCHAVES
+             | LCHAVES statementList RCHAVES functionDecl'''
 
 def p_statementList(p):
     '''statementList : statement SEMICOLON
@@ -95,21 +96,16 @@ def p_ifStmt(p):
 
 def p_switchStmt(p):
     '''switchStmt : SWITCH switchStmt_Head switchStmt_Body
-      | SWITCH switchStmt_Body
-    '''
+                  | SWITCH switchStmt_Body'''
 
 def p_switchStmt_Head(p):
-  '''
-    switchStmt_Head : simpleStmt SEMICOLON expression
-      | simpleStmt SEMICOLON
-      | expression
-  '''
+    '''switchStmt_Head : simpleStmt SEMICOLON expression
+                       | simpleStmt SEMICOLON
+                       | expression'''
     
 def p_switchStmt_Body(p):
-  '''
-    switchStmt_Body : LCHAVES exprCaseClauseList RCHAVES
-      | LCHAVES RCHAVES
-  '''
+    '''switchStmt_Body : LCHAVES exprCaseClauseList RCHAVES
+                       | LCHAVES RCHAVES'''
 
 def p_exprCaseClauseList(p):
     '''exprCaseClauseList : exprCaseClause exprCaseClauseList
@@ -132,15 +128,11 @@ def p_condition(p):
     '''condition : expression'''
 
 def p_forClause(p):
-    '''forClause : initStmt SEMICOLON condition SEMICOLON postStmt
-                 | initStmt
-                 | initStmt SEMICOLON postStmt'''
+    '''forClause : initPostStmt SEMICOLON condition SEMICOLON initPostStmt
+                 | SEMICOLON condition SEMICOLON'''
 
-def p_initStmt(p):
-    '''initStmt : postStmt'''
-
-def p_postStmt(p):
-    '''postStmt : simpleStmt'''
+def p_initPostStmt(p):
+    '''initPostStmt : simpleStmt'''
 
 def p_rangeClause(p):
     '''rangeClause : RANGE expression
@@ -162,8 +154,7 @@ def p_constSpec(p):
 
 def p_identifierList(p):
     '''identifierList : ID compIDList
-                      | ID
-    '''
+                      | ID'''
 
 def p_compIDList(p):
     '''compIDList : COMMA ID compIDList
@@ -201,53 +192,18 @@ def p_varSpec(p):
                | identifierList type ASSIGN expressionList
                | identifierList ASSIGN expressionList'''
 
-# def p_expression(p):
-#     '''expression : unaryExpr
-#                   | expression binary_op expression'''
-
-# def p_unaryExpr(p):
-#     '''unaryExpr : NUMBER
-#                  | ID arguments
-#                  | LPAREN expression RPAREN''' #Talvez teremos que modificar
-
-def p_arguments(p): # Não precisa de abstrata e concreta?
-    '''arguments : parameters'''
-
-# def p_binary_op(p):
-#     '''binary_op : OR
-#                  | AND
-#                  | rel_op  
-#                  | add_op
-#                  | mul_op'''
-
-# def p_rel_op(p):
-#     '''rel_op : EQUALS
-#               | DIFERENTE
-#               | LESS
-#               | LESS_EQUAL
-#               | GREATER
-#               | GREATER_EQUAL'''
-
-# def p_add_op(p):
-#     '''add_op : PLUS
-#               | MINUS'''
-
-# def p_mul_op(p):
-#     '''mul_op : TIMES
-#               | DIVIDE
-#               | MOD'''
+def p_callFunc(p): # Não precisa de abstrata e concreta?
+    '''callFunc : ID LPAREN expressionList RPAREN'''
 
 def p_incDec(p):
-    '''incDec : expression PLUS PLUS
-           | expression MINUS MINUS'''
+    '''incDec : expression DPLUS
+              | expression DMINUS'''
 
 def p_assignment(p):
     '''assignment : expressionList ASSIGN expressionList'''
+
 def p_shortVarDec(p):
     '''shortVarDec : identifierList ASSIGN expressionList'''#Era para ser :=
-# Error rule for syntax errors
-def p_error(p):
-    print("Syntax error in input!")
 
 def p_exp(p):
     '''expression : expression OR exp1
@@ -280,8 +236,13 @@ def p_exp4(p):
 
 def p_exp5(p):
     '''exp5 : NUMBER
-            | ID arguments
+            | callFunc
+            | ID
             | LPAREN expression RPAREN'''
+
+# Error rule for syntax errors
+def p_error(p):
+    print("Syntax error in input!")
 
 #Execute
 
