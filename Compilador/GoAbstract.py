@@ -122,16 +122,6 @@ class Params(Parameters):
     def accept(self, Visitor):
         Visitor.visitParams(self)
 
-class ParamsList(Parameters):
-    def __init__(self, LPAREN, ParameterList, COMMA, RPAREN):
-        self.LPAREN = LPAREN
-        self.ParameterList = ParameterList
-        self.COMMA = COMMA
-        self.RPAREN = RPAREN
-
-    def accept(self, Visitor):
-        Visitor.visitParamsList(self)
-
 class DefinirParamsParameters(Parameters):
     def __init__(self,LPAREN,RPAREN):
         self.LPAREN = LPAREN
@@ -147,27 +137,43 @@ class ParameterList(metaclass=ABCMeta):
 		pass
 
 class CompoundParamDecl(ParameterList): ##PRECISA OBSERVAR ISSO
-    def __init__(self, ParameterDecl, ParameterDecList):
+    def __init__(self, ParameterDecl, ParameterList_Mul):
         self.ParameterDecl = ParameterDecl
-        self.ParameterDecList = ParameterDecList
+        self.ParameterList_Mul = ParameterList_Mul
 
     def accept(self, Visitor):
         Visitor.visitCompParamsDecl(self)
 
+class CallParameterDecl(ParameterList):
+    def __init__(self, ParameterDecl):
+        self.ParameterDecl = ParameterDecl
+
+    def accept(self, Visitor):
+        Visitor.visitCallParameterDecl(self)
+
 ##ABSTRATA##
-class ParameterDecList(metaclass=ABCMeta):
+class ParameterList_Mul(metaclass=ABCMeta):
     @abstractclassmethod
     def accept(self, Visitor):
         pass
 
 ##CONCREATA##
-class callBackParameterList(ParameterDecList):
-    def __init__(self, COMMA, ParameterList):
+class CallBackParameterList_Mul(ParameterList_Mul):
+    def __init__(self, COMMA, ParameterDecl, ParameterList_Mul1):
         self.COMMA = COMMA
-        self.ParameterList = ParameterList
+        self.ParameterDecl = ParameterDecl
+        self.ParameterList_Mul1 = ParameterList_Mul1
 
     def accept(self, Visitor):
-        Visitor.visitCallBackParameterList(self)
+        Visitor.visitCallBackParameterList_Mul(self)
+
+class EndParameterList_Mul(ParameterList_Mul):
+    def __init__(self, COMMA, ParameterDecl):
+        self.COMMA = COMMA
+        self.ParameterDecl = ParameterDecl
+    
+    def accept(self, Visitor):
+        Visitor.visitEndParameterList_Mul(self)
 
 ##ABSTRATA##
 class ParameterDecl(metaclass=ABCMeta):
@@ -213,13 +219,23 @@ class Block(metaclass=ABCMeta):
 
 ##CONCRETA##
 class DefinirStatementL(Block):
-    def __init__(self,LCHAVES, StatmentList, RCHAVES):
+    def __init__(self, LCHAVES, StatementList, RCHAVES):
         self.LCHAVES = LCHAVES
-        self.StatmentList = StatmentList
+        self.StatementList = StatementList
         self.RCHAVES = RCHAVES
 
     def accept(self, Visitor):
         Visitor.visitDefinirStatementL(self)
+
+class MultFunc(Block):
+    def __init__(self, LCHAVES, StatementList, RCHAVES, FunctionDecl):
+        self.LCHAVES = LCHAVES
+        self.StatementList = StatementList
+        self.RCHAVES = RCHAVES
+        self.FunctionDecl = FunctionDecl
+
+    def accept(self, Visitor):
+        Visitor.visitMultFunc(self)
 
 ##ABSTRATA##
 class StatementList(metaclass=ABCMeta):
@@ -237,7 +253,7 @@ class DefinirStatement(StatementList): ##PRECISA OBSERVAR ISSO
         Visitor.visitDefinirStatement(self)
 
 class CompoundStatementList(StatementList):
-    def _init_(self, statement, SEMICOLON, statementList):
+    def __init__(self, statement, SEMICOLON, statementList):
         self.statement = statement
         self.SEMICOLON = SEMICOLON
         self.statementList = statementList

@@ -59,12 +59,20 @@ class Visitor():
     # ParameterList
     def visitCompParamsDecl(self, compParamsDecl):
         compParamsDecl.ParameterDecl.accept(self)
-        compParamsDecl.ParameterDecList.accept(self)
+        compParamsDecl.ParameterList_Mul.accept(self)
 
-    # ParameterDecList
-    def visitCallBackParameterList(self, callBackParameterList):
+    def visitCallParameterDecl(self, callParameterDecl):
+        callParameterDecl.ParameterDecl.accept(self)
+
+    # ParameterList_Mul
+    def visitCallBackParameterList_Mul(self, callBackParameterList_Mul):
         print(',', end = ' ')
-        callBackParameterList.ParameterList.accept(self)
+        callBackParameterList_Mul.ParameterDecl.accept(self)
+        callBackParameterList_Mul.ParameterList_Mul1.accept(self)
+
+    def visitEndParameterList_Mul(self, endParameterList_Mul):
+        print(',', end = ' ')
+        endParameterList_Mul.ParameterDecl.accept(self)
 
     # ParameterDecl
     def visitParamIdDecl(self, paramIdDecl):
@@ -81,8 +89,14 @@ class Visitor():
     # Block
     def visitDefinirStatementL(self, definirStatementL):
         print('{', end = ' ')
-        definirStatementL.StatmentList.accept(self)
+        definirStatementL.StatementList.accept(self)
         print('}', end = ' ')
+
+    def visitMultFunc(self, multFunc):
+        print('{', end = ' ')
+        multFunc.StatementList.accept(self)
+        print('}', end = ' ')
+        multFunc.FunctionDecl.accept(self)
     
     # StatementList
     def visitDefinirStatement(self, definirStatement):
