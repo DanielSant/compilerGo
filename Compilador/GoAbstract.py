@@ -489,49 +489,21 @@ class SwitchStmt(metaclass=ABCMeta):
 
 ##CONCRETA##
 class ExprSwitch(SwitchStmt):
-    def __init__(self, SWITCH, SwitchStmt, SEMICOLON, Expression, LCHAVES, ExprCaseClauseList, RCHAVES):
+    def __init__(self, SWITCH, switchStmt_Head, switchStmt_Body):
         self.SWITCH = SWITCH
-        self.SimpleStmt = SimpleStmt
-        self.SEMICOLON = SEMICOLON
-        self.Expression = Expression
-        self.LCHAVES = LCHAVES
-        self.ExprCasaClauseList = ExprCaseClauseList
-        self.RCHAVES = RCHAVES
+        self.switchStmt_Head = switchStmt_Head
+        self.switchStmt_Body = switchStmt_Body
 
     def accept(self, Visitor):
         Visitor.visitExprSwitch(self)
 
-class ExprSwitchNone(SwitchStmt):
-    def __init__(self, SWITCH, LCHAVES, ExprCaseClauseList, RCHAVES):
-        self.SWITCH = SWITCH
-        self.LCHAVES = LCHAVES
-        self.ExprCaseClauseList = ExprCaseClauseList
-        self.RCHAVES = RCHAVES
-
-    def accept(self, Visitor):
-        Visitor.visitExprSwitchNone(self)
-
 class ExprSwitchSimple(SwitchStmt):
-    def __init__(self, SWITCH, SimpleStmt, LCHAVES, ExprCaseClauseList, RCHAVES):
+    def __init__(self, SWITCH, switchStmt_Body):
         self.SWITCH = SWITCH
-        self.SimpleStmt = SimpleStmt
-        self.LCHAVES = LCHAVES
-        self.ExprCaseClauseList = ExprCaseClauseList
-        self.RCHAVES = RCHAVES
+        self.switchStmt_Body = switchStmt_Body
 
     def accept(self, Visitor):
         Visitor.visitExprSwitchSimple(self)
-
-class ExprSwitchExp(SwitchStmt):
-    def __init__(self, SWITCH, Expression, LCHAVES, ExprCaseClauseList, RCHAVES):
-        self.SWITCH = SWITCH
-        self.Expression = Expression
-        self.LCHAVES = LCHAVES
-        self.ExprCaseClause = ExprCaseClause
-        self.RCHAVES = RCHAVES
-
-    def accept(self, Visitor):
-        Visitor.visitExprSwitchExp(self)
 
 ##ABSTRATA
 class SwitchStmt_Head(metaclass=ABCMeta):
@@ -540,6 +512,29 @@ class SwitchStmt_Head(metaclass=ABCMeta):
         pass
 
 ##CONCRETA
+class ExprSwitchHead1(SwitchStmt_Head):
+    def __init__(self, simpleStmt, SEMICOLON, expression):
+        self.simpleStmt = simpleStmt
+        self.SEMICOLON = SEMICOLON
+        self.expression = expression
+
+    def accept(self, Visitor):
+        Visitor.visitExprSwitchHead1(self)
+
+class ExprSwitchHead2(SwitchStmt_Head):
+    def __init__(self, simpleStmt, SEMICOLON):
+        self.simpleStmt = simpleStmt
+        self.SEMICOLON = SEMICOLON
+
+    def accept(self, Visitor):
+        Visitor.visitExprSwitchHead2(self)
+
+class ExprSwitchHead3(SwitchStmt_Head):
+    def __init__(self, expression):
+        self.expression = expression
+
+    def accept(self, Visitor):
+        Visitor.visitExprSwitchHead3(self)
 
 ##ABSTRATA
 class SwitchStmt_Body(metaclass=ABCMeta):
@@ -548,6 +543,22 @@ class SwitchStmt_Body(metaclass=ABCMeta):
         pass
 
 ##CONCRETA
+class ExprSwitchBody1(SwitchStmt_Body):
+    def __init__(self, LCHAVES, exprCaseClauseList, RCHAVES):
+        self.LCHAVES = LCHAVES
+        self.exprCaseClauseList = exprCaseClauseList
+        self.RCHAVES = RCHAVES
+
+    def accept(self, Visitor):
+        Visitor.visitExprSwitchBody1(self)
+
+class ExprSwitchBody2(SwitchStmt_Body):
+    def __init__(self, LCHAVES, RCHAVES):
+        self.LCHAVES = LCHAVES
+        self.RCHAVES = RCHAVES
+
+    def accept(self, Visitor):
+        Visitor.visitExprSwitchBody2(self)
 
 ##ABSTRATA
 class ExprCaseClauseList(metaclass=ABCMeta):

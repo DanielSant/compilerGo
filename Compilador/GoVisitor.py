@@ -197,26 +197,49 @@ class Visitor():
         
     # SwitchStmt
     def visitExprSwitch(self, exprSwitch):
-        exprSwitch.SimpleStmt.accept(self)
-        print(';', end = ' ')
-        exprSwitch.Expression.accept(self)
-        print('{', end = ' ')
-        exprSwitch.ExprCasaClauseList.accept(self)
-        print('}', end = ' ')
-    
-    def visitExprSwitchNone(self, exprSwitchNone):
         print('switch', end = ' ')
-        print('{', end = ' ')
-        exprSwitchNone.ExprCaseClauseList.accept(self)
-        print('}', end = ' ')
+        exprSwitch.switchStmt_Head.accept(self)
+        exprSwitch.switchStmt_Body.accept(self)
     
+    # SwitchStmt_Head
+    def visitExprSwitchSimple(self, exprSwitchSimple):
+        print('switch', end = ' ')
+        exprSwitchSimple.switchStmt_Body.accept(self)
+    
+    # SwitchStmt_Body
     def visitExprSwitchSimple(self, exprSwitchSimple):
         print('switch', end = ' ')
         exprSwitchSimple.SimpleStmt.accept(self)
         print('{', end = ' ')
         exprSwitchSimple.ExprCaseClauseList.accept(self)
         print('}', end = ' ')
+
+    # ExprSwitchHead1
+    def visitExprSwitchHead1(self, exprSwitchHead1):
+        exprSwitchHead1.simpleStmt.accept(self)
+        print(';', end = ' ')
+        exprSwitchHead1.expression.accept(self)
     
+    # ExprSwitchHead2 
+    def visitExprSwitchHead2(self, exprSwitchHead2):
+        exprSwitchHead2.simpleStmt.accept(self)
+        print(';', end = ' ')
+
+    # ExprSwitchHead3
+    def visitExprSwitchHead3(self, exprSwitchHead3):
+        exprSwitchHead3.expression.accept(self)
+
+    # ExprSwitchBody1
+    def visitExprSwitchBody1(self, exprSwitchBody1):
+        print('(', end  = ' ')
+        exprSwitchBody1.exprCaseClauseList.accept(self)
+        print(')', end  = ' ')
+
+    # ExprSwitchBody2
+    def visitExprSwitchBody2(self, exprSwitchBody2):
+        print('(', end  = ' ')
+        print(')', end  = ' ')
+
     def visitExprSwitchExp(self, exprSwitchExp):
         print('switch', end = ' ')
         exprSwitchExp.Expression.accept(self)
