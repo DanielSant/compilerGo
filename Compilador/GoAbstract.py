@@ -353,8 +353,8 @@ class DeclType(Declaration):
         Visitor.visitDeclType(self)
 
 class DeclVar(Declaration):
-    def __init__(self, ConstVar):
-        self.ConstVar = ConstVar
+    def __init__(self, VarDecl):
+        self.VarDecl = VarDecl
 
     def accept(self, Visitor):
         Visitor.visitDeclVar(self)
@@ -366,7 +366,7 @@ class SimpleStmt(metaclass=ABCMeta):
         pass
 
 class StmtCondition(SimpleStmt):
-    def __init__(self, Expression):
+    def __init__(self, Condition):
         self.Condition = Condition
 
     def accept(self, Visitor):
@@ -489,13 +489,13 @@ class SwitchStmt(metaclass=ABCMeta):
 
 ##CONCRETA##
 class ExprSwitch(SwitchStmt):
-    def __init__(self, SWITCH, SimpleStmt, SEMICOLON, Expression, LCHAVES, ExprCaseClauseList, RCHAVES):
+    def __init__(self, SWITCH, SwitchStmt, SEMICOLON, Expression, LCHAVES, ExprCaseClauseList, RCHAVES):
         self.SWITCH = SWITCH
         self.SimpleStmt = SimpleStmt
         self.SEMICOLON = SEMICOLON
         self.Expression = Expression
         self.LCHAVES = LCHAVES
-        self.ExprCasaClauseList = ExprCasaClauseList
+        self.ExprCasaClauseList = ExprCaseClauseList
         self.RCHAVES = RCHAVES
 
     def accept(self, Visitor):
@@ -532,6 +532,22 @@ class ExprSwitchExp(SwitchStmt):
 
     def accept(self, Visitor):
         Visitor.visitExprSwitchExp(self)
+
+##ABSTRATA
+class SwitchStmt_Head(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA
+
+##ABSTRATA
+class SwitchStmt_Body(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA
 
 ##ABSTRATA
 class ExprCaseClauseList(metaclass=ABCMeta):

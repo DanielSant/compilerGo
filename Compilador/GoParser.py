@@ -125,27 +125,53 @@ def p_declaration(p):
     '''declaration : constDecl
                    | typeDecl
                    | varDecl'''
+    if(isinstance(p[1], abstract.ConstDecl)):
+        p[0] = abstract.DeclConst(p[1])
+    elif(isinstance(p[1], abstract.TypeDecl)):
+        p[0] = abstract.DeclType(p[1])
+    elif(isinstance(p[1], abstract.VarDecl)):
+        p[0] = abstract.DeclVar(p[1])
 
 def p_simpleStmt(p): #condition vai para expression
     '''simpleStmt : condition
                   | incDec
                   | assignment
                   | shortVarDec'''
+    if(isinstance(p[1], abstract.Condition)):
+        p[0] = abstract.StmtCondition(p[1])
+    elif(isinstance(p[1], abstract.IncDec)):
+        p[0] = abstract.StmtIncDec(p[1])
+    elif(isinstance(p[1], abstract.Assignment)):
+        p[0] = abstract.Assign(p[1])
+    elif(isinstance(p[1], abstract.ShortVarDecl)):
+        p[0] = abstract.DeclShortVar(p[1])
 
 def p_returnStmt(p):
     '''returnStmt : RETURN expressionList
                   | RETURN'''
+    if(len(p) == 3):
+        p[0] = abstract.ExpReturn(p[1], p[2])
+    else:
+        p[0] = abstract.SimpleReturn(p[1])
 
 def p_breakStmt(p):
     '''breakStmt : BREAK'''
+    p[0] = abstract.StmtBreak(p[1])
 
 def p_continueStmt(p):
     '''continueStmt : CONTINUE'''
+    p[0] = abstract.StmtContinue(p[1])
 
 def p_ifStmt(p):
     '''ifStmt : IF expression block
               | IF expression block ELSE ifStmt
               | IF expression block ELSE block'''
+    if(len(p) == 4):
+        p[0] = abstract.SimpleIf(p[1], p[2], p[3])
+    elif(isinstance(p[5], abstract.IfStmt)):
+        p[0] = abstract.CompIfElse(p[1], p[2], p[3], p[4], p[5])
+    elif(isinstance(p[5], abstract.Block)):
+        p[0] = abstract.IfElse(p[1], p[2], p[3], p[4], p[5])
 
 def p_switchStmt(p):
     '''switchStmt : SWITCH switchStmt_Head switchStmt_Body
