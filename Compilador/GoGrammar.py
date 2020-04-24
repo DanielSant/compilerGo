@@ -29,7 +29,6 @@ def p_type(p):
             | BYTE
             | FLOAT'''
 
-#| LPAREN parameterList COMMA RPAREN
 def p_parameters(p):
     '''parameters : LPAREN parameterList RPAREN
                   | LPAREN RPAREN'''
@@ -92,7 +91,7 @@ def p_continueStmt(p):
 def p_ifStmt(p):
     '''ifStmt : IF expression block
               | IF expression block ELSE ifStmt
-              | IF expression block ELSE block''' ###OBERVAÇÃO VERIFICAR SER ESTAR CORRETO A CONSTRUÇÃO
+              | IF expression block ELSE block'''
 
 def p_switchStmt(p):
     '''switchStmt : SWITCH switchStmt_Head switchStmt_Body
@@ -192,7 +191,7 @@ def p_varSpec(p):
                | identifierList type ASSIGN expressionList
                | identifierList ASSIGN expressionList'''
 
-def p_callFunc(p): # Não precisa de abstrata e concreta?
+def p_callFunc(p):
     '''callFunc : ID LPAREN expressionList RPAREN'''
 
 def p_incDec(p):
