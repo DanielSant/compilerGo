@@ -248,9 +248,12 @@ class Visitor():
         print('}', end = ' ')
 
     # ExprCaseClauseList
-    def visitCompoundCaseClase(self, compoundCaseClase):
-        compoundCaseClase.ExprCaseClause.accept(self)
-        compoundCaseClase.ExprCaseClauseList.accept(self)
+    def visitCompoundCaseClase1(self, compoundCaseClase1):
+        compoundCaseClase1.ExprCaseClause.accept(self)
+        compoundCaseClase1.ExprCaseClauseList.accept(self)
+
+    def visitCompoundCaseClase2(self, compoundCaseClase2):
+        compoundCaseClase2.ExprCaseClause.accept(self)
 
     # ExprCaseClause
     def visitExprCase(self, exprCase):

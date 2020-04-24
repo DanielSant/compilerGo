@@ -174,28 +174,51 @@ def p_ifStmt(p):
         p[0] = abstract.IfElse(p[1], p[2], p[3], p[4], p[5])
 
 def p_switchStmt(p):
-    '''switchStmt : SWITCH https://hangouts.google.com/call/wmG3YWo3tUrX742frUeJAEEE switchStmt_Body
+    '''switchStmt : SWITCH switchStmt_Head switchStmt_Body
                   | SWITCH switchStmt_Body'''
+    if(len(p) == 4):
+        p[0] = abstract.ExprSwitch(p[1], p[2], p[3])
+    else:
+        p[0] = abstract.ExprSwitchSimple(p[1], p[2])
 
 def p_switchStmt_Head(p):
     '''switchStmt_Head : simpleStmt SEMICOLON expression
                        | simpleStmt SEMICOLON
                        | expression'''
+    if(len(p) == 4):
+        p[0] = abstract.ExprSwitchHead1(p[1], p[2], p[3])
+    elif(len(p) == 3):
+        p[0] = abstract.ExprSwitchHead2(p[1], p[2])
+    else:
+        p[0] = abstract.ExprSwitchHead3(p[1])
     
 def p_switchStmt_Body(p):
     '''switchStmt_Body : LCHAVES exprCaseClauseList RCHAVES
                        | LCHAVES RCHAVES'''
+    if(len(p) == 4):
+        p[0] = abstract.ExprSwitchBody1(p[1], p[2], p[3])
+    else:
+        p[0] = abstract.ExprSwitchBody2(p[1])
 
 def p_exprCaseClauseList(p):
     '''exprCaseClauseList : exprCaseClause exprCaseClauseList
                           | exprCaseClause'''
+    if(len(p) == 3):
+        p[0] = abstract.CompoundCaseClause1(p[1], p[2])
+    else:
+        p[0] = abstract.CompoundCaseClause2(p[1])
 
 def p_exprCaseClause(p):
     '''exprCaseClause : exprSwitchCase COLON statementList'''
+    p[0] = abstract.visitExprCase(p[1], p[2], p[3])
 
 def p_exprSwitchCase(p):
     '''exprSwitchCase : CASE expressionList
                       | DEFAULT'''
+    if(len(p) == 3):
+        p[0] = abstract.CaseClauseExp(p[1], p[2])
+    else:
+        p[0] = abstract.CaseClause(p[1])
 
 def p_forStmt(p):
     '''forStmt : FOR condition block

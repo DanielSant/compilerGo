@@ -567,13 +567,20 @@ class ExprCaseClauseList(metaclass=ABCMeta):
         pass
 
 ##CONCRETA
-class CompoundCaseClause(ExprCaseClauseList):
+class CompoundCaseClause1(ExprCaseClauseList):
     def __init__(self, ExprCaseClause, ExprCaseClauseList):
         self.ExprCaseClause = ExprCaseClause
         self.ExprCaseClauseList = ExprCaseClauseList
 
     def accept(self, Visitor):
         Visitor.visitCompoundCaseClase(self)
+
+class CompoundCaseClause2(ExprCaseClauseList):
+    def __init__(self, ExprCaseClause):
+        self.ExprCaseClause = ExprCaseClause
+    
+    def accept(self, Visitor):
+        Visitor.visitCompoundCaseClause2(self)
 
 ##ABSTRATA##
 class ExprCaseClause(metaclass=ABCMeta):
