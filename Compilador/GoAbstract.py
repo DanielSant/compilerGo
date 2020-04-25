@@ -628,7 +628,7 @@ class ForStmt(metaclass=ABCMeta):
 
 ##CONCRETA##
 class StmtFor(ForStmt):
-    def __init__(FOR, Condition, Block):
+    def __init__(self, FOR, Condition, Block):
         self.FOR = FOR
         self.Condition = Condition
         self.Block = Block
@@ -684,59 +684,38 @@ class ForClause(metaclass=ABCMeta):
 
 ##CONCRETA##
 class ClassicFor(ForClause):
-    def __init__(self, InitStmt, SEMICOLON, Condition, SEMICOLON1, PostStmt):
-        self.InitStmt = InitStmt
+    def __init__(self, initPostStmt, SEMICOLON, Condition, SEMICOLON1, initPostStmt1):
+        self.initPostStmt = initPostStmt
         self.SEMICOLON = SEMICOLON
         self.Condition = Condition
         self.SEMICOLON1 = SEMICOLON1
-        self.PostStmt = PostStmt
+        self.initPostStmt1 = initPostStmt1
 
     def accept(self, Visitor):
         Visitor.visitClassicFor(self)
 
-class InitFor(ForClause):
-    def __init__(self, InitStmt):
-        self.InitStmt = InitStmt
-
-    def accept(self, Visitor):
-        Visitor.visitInitFor(self)
-
-class InPoFor(ForClause):
-    def __init__(self, InitStmt, SEMICOLON, PostStmt):
-        self.InitStmt = InitStmt
+class ClassicFor2(ForClause):
+    def __init__(self,SEMICOLON, Condition, SEMICOLON1):
         self.SEMICOLON = SEMICOLON
-        self.PostStmt = PostStmt
+        self.Condition = Condition
+        self.SEMICOLON1 = SEMICOLON1
 
     def accept(self, Visitor):
-        Visitor.visitInPoFor(self)
+        Visitor.visitclassicFor2(self)
 
 ##ABSTRATA##
-class InitStmt(metaclass=ABCMeta):
+class InitPostStmt(metaclass=ABCMeta):
     @abstractclassmethod
     def accept(self, Visitor):
         pass
 
 ##CONCRETA##
-class StmtInit(InitStmt):
-    def __init__(self, PostStmt):
-        self.PostStmt = PostStmt
-
-    def accept(self, Visitor):
-        Visitor.visitStmtInit(self)
-
-##ABSTRATA##
-class PostStmt(metaclass=ABCMeta):
-    @abstractclassmethod
-    def accept(self, Visitor):
-        pass
-
-##CONCRETA##
-class StmtPost(PostStmt):
+class StmtInitPost(InitPostStmt):
     def __init__(self, SimpleStmt):
         self.SimpleStmt = SimpleStmt
 
     def accept(self, Visitor):
-        Visitor.visitStmtPost(self)
+        Visitor.visitStmtInitPost(self)
 
 ##ABSTRATA##
 class RangeClause(metaclass=ABCMeta):
@@ -869,6 +848,13 @@ class DefinirIDList(IdentifierList):
 
     def accept(self, Visitor):
         Visitor.visitDefinirIDList(self)
+
+class DefinirID(IdentifierList):
+    def __init__(self, ID):
+        self.ID = ID
+        
+    def accept(self, Visitor):
+        Visitor.visitDefinirID(self)
 
 ##ABSTRATA
 class CompIDList(metaclass=ABCMeta):

@@ -295,27 +295,20 @@ class Visitor():
 
     # ForClause
     def visitClassicFor(self, classicFor):
-        classicFor.InitStmt.accept(self)
+        classicFor.initPostStmt.accept(self)
         print(';', end = ' ')
         classicFor.Condition.accept(self)
         print(';', end = ' ')
-        classicFor.PostStmt.accept(self)
+        classicFor.initPostStmt1.accept(self)
 
-    def visitInitFor(self, initFor):
-        initFor.InitStmt.accept(self)
-
-    def visitInPoFor(self, inPoFor):
-        inPoFor.InitStmt.accept(self)
+    def visitclassicFor2(self, classicFor2):
         print(';', end = ' ')
-        inPoFor.PostStmt.accept(self)
+        classicFor2.Condition.accept(self)
+        print(';', end = ' ')
 
-    # InitStmt
-    def visitStmtInit(self, stmtInit):
-        stmtInit.PostStmt.accept(self)
-
-    # PostStmt
-    def visitStmtPost(self, stmtPost):
-        stmtPost.SimpleStmt.accept(self)
+    #InitPostStmt
+    def visitStmtInitPost(self, stmtInitPost):
+        stmtInitPost.SimpleStmt.accept(self)
 
     # RangeClause
     def visitDefinirRange(self, definirRange):
@@ -374,7 +367,10 @@ class Visitor():
     def visitDefinirIDList(self, definirIDList):
         print(definirIDList.ID, end = ' ')
         #definirIDList.CompIDList.accept(self)
-
+    
+    def visitDefinirID(self, definirID):
+        print(definirID.ID, end = ' ')
+       
     # CompIDList
     def visitCompoundIDList(self, compoundIDList):
         print(',', end = ' ')

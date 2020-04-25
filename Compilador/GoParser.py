@@ -226,37 +226,81 @@ def p_forStmt(p):
                | FOR rangeClause block
                | FOR block'''
 
+    if(isinstance(p[2], abstract.Condition)):
+        p[0] = abstract.StmtFor(p[1], p[2], p[3])
+    elif(isinstance(p[2], abstract.ForClause)):
+        p[0] = abstract.StmtForClause(p[1], p[2], p[3])
+    elif(isinstance(p[2], abstract.RangeClause)):
+        p[0] = abstract.StmtForRange(p[1], p[2], p[3])
+    elif(isinstance(p[2], abstract.Block)):
+        p[0] = abstract.StmtForBlock(p[1], p[2])
+    
 def p_condition(p):
     '''condition : expression'''
+    p[0] = abstract.DefinirCondition(p[1])
 
 def p_forClause(p):
     '''forClause : initPostStmt SEMICOLON condition SEMICOLON initPostStmt
                  | SEMICOLON condition SEMICOLON'''
 
+    if(len(p) == 6):
+        p[0] = abstract.ClassicFor(p[1], p[2], p[3], p[4], p[5])
+    else:
+        p[0] = abstract.ClassicFor(p[1], p[2], p[3])    
+
 def p_initPostStmt(p):
     '''initPostStmt : simpleStmt'''
+    p[0] = abstract.StmtInitPost(p[1])
 
 def p_rangeClause(p):
     '''rangeClause : RANGE expression
-                  | expressionList ASSIGN RANGE expression
-                  | identifierList ASSIGN RANGE expression''' ### Mudei da original :=
-
+                   | expressionList ASSIGN RANGE expression
+                   | identifierList ASSIGN RANGE expression''' ### Mudei da original :=
+    if(len(p) == 3):
+        p[0] = abstract.DefinirRange(p[1], p[2])
+    elif(isinstance(p[1], abstract.ExpressionList)):
+        p[0] = abstract.RangeExpList(p[1], p[2], p[3], p[4])
+    elif(isinstance(p[1], abstract.IdentifierList)):
+        p[0] = abstract.RangeIDList(p[1], p[2], p[3], p[4])
+    
 def p_constDecl(p):
     '''constDecl : CONST constSpec
                  | CONST LPAREN constSpecList RPAREN'''
+    
+    if(len(p) == 3):
+        p[0] = abstract.SimpleConst(p[1], p[2])
+    else:
+        p[0] = abstract.CompConst(p[1], p[2], p[3], p[4])
 
 def p_constSpecList(p):
     '''constSpecList : constSpec SEMICOLON
                      | constSpec SEMICOLON constSpecList'''
+    
+    if(len(p) == 3):
+        p[0] = abstract.CallConstSpec(p[1], p[2])
+    else:
+        p[0] = abstract.CompoundConstSpec(p[1], p[2], p[3])
 
 def p_constSpec(p):
     '''constSpec : identifierList
                  | identifierList ASSIGN expressionList
                  | identifierList type ASSIGN expressionList''' 
 
+    if(len(p) == 2):
+        p[0] = abstract.SimpleIdList(p[1])
+    elif(len(p) == 4):
+        p[0] = abstract.ListIdExp(p[1], p[2], p[3])
+    else:
+        p[0] = abstract.ListIdTypeExp(p[1], p[2], p[3], p[4])
+
 def p_identifierList(p):
     '''identifierList : ID compIDList
                       | ID'''
+    
+    if(len(p) == 3):
+        p[0] = abstract.DefinirIDList(p[1], p[2])
+    else:
+        p[0] = abstract.DefinirID(p[1])
 
 def p_compIDList(p):
     '''compIDList : COMMA ID compIDList
