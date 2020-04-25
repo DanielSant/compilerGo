@@ -397,17 +397,17 @@ def p_exp(p):
     '''expression : expression OR exp1
                   | exp1'''
     if(len(p) == 4):
-        p[0] = abstract.OpOr(p[2])
+        p[0] = abstract.ExpressionOR(p[1], p[2], p[3])
     else:
-        p[0] = p[1]
+        p[0] = abstract.CallExp1(p[1])
 
 def p_exp1(p):
     '''exp1 : exp1 AND exp2
             | exp2'''
     if(len(p) == 4):
-        p[0] = abstract.OpAnd(p[2])
+        p[0] = abstract.ExpressionAND(p[1], p[2], p[3])
     else:
-        p[0] = p[1]
+        p[0] = abstract.CallExp2(p[1])
 
 def p_exp2(p):
     '''exp2 : exp2 EQUALS exp3
@@ -418,29 +418,41 @@ def p_exp2(p):
             | exp2 GREATER_EQUAL exp3
             | exp3'''
     if(p[2] == 'EQUALS'):
-        p[0] = abstract.EqualsOp(p[2])
+        p[0] = abstract.ExpressionEquals(p[1], p[2], p[3])
     elif(p[2] == 'DIFERENTE'):
-        p[0] = abstract.DifereOp(p[2])
+        p[0] = abstract.ExpressionDiferente(p[1], p[2], p[3])
     elif(p[2] == 'LESS'):
-        p[0] = abstract.MenorOp(p[2])
+        p[0] = abstract.ExpressionLess(p[1], p[2], p[3])
     elif(p[2] == 'LESS_EQUAL'):
-        p[0] = abstract.MenorIgualOp(p[2])
+        p[0] = abstract.ExpressionLessEqual(p[1], p[2], p[3])
     elif(p[2] == 'GREATER'):
-        p[0] = abstract.MaiorOp(p[2])
+        p[0] = abstract.ExpressionGreater(p[1], p[2], p[3])
     elif(p[2] == 'GREATER_EQUAL'):
-        p[0] = abstract.MaiorIgual(p[2])
+        p[0] = abstract.ExpressionGreaterEqual(p[1], p[2], p[3])
+    else:
+        p[0] = abstract.CallExp3(p[1])
 
 def p_exp3(p):
     '''exp3 : exp4 PLUS exp3
             | exp4 MINUS exp3
             | exp4 POT exp3
             | exp4'''
+    if(p[2] == 'PLUS'):
+        p[0] = abstract.ExpressionPlus(p[1], p[2], p[3])
+    elif(p[2] = 'MINUS'):
+        p[0] = abstract.ExpressionMinus(p[1], p[2], p[3])
+    elif(p[2] = 'POT'):
+        p[0] = abstract.ExpressionPot(p[1], p[2], p[3])
+    else:
+        p[0] = abstract.CallExp4(p[1])
 
 def p_exp4(p):
     '''exp4 : exp5 TIMES exp4
             | exp5 DIVIDE exp4
             | exp5 MOD exp4
             | exp5'''
+    if(p[2] == 'TIMES'):
+        p[0] = abstract.ExpressionTimes(p[1], p[2], p[3])
 
 def p_exp5(p):
     '''exp5 : NUMBER

@@ -469,82 +469,6 @@ class Visitor():
         simpleCallFunc.ExpressionList.accept(self)
         print(')', end = ' ')
 
-    # Expression
-    def visitExprUnary(self, exprUnary):
-        exprUnary.UnaryExpr.accept(self)
-
-    def visitDefinirExp(self, definirExp):
-        definirExp.Expression.accept(self)
-        definirExp.binary_op.accept(self)
-        definirExp.Expression1.accept(self)
-
-    # UnaryExpr
-    def visitUnaryExprNumber(self, unaryExprNumber):
-        print(unaryExprNumber.NUMBER, end = ' ')
-
-    def visitUnaryExprID(self, unaryExprID):
-        print(unaryExprID.ID, end = ' ')
-        unaryExprID.Arguments.accept(self)
-
-    def visitUnaryExprParen(self, unaryExprParen):
-        print('(', end = ' ')
-        unaryExprParen.Expression.accept(self)
-        print(')', end = ' ')
-
-    # Arguments
-
-    # BinaryOp
-    def visitOpOr(self, opOr):
-        print('||', end = ' ')
-
-    def visitOpAnd(self, opAnd):
-        print('&&', end = ' ')
-
-    def visitOpRel(self, opRel):
-        opRel.rel_op.accept(self)
-
-    def visitOpAdd(self, opAdd):
-        opAdd.add_op.accept(self)
-
-    def visitOpMul(self, opMul):
-        opMul.mul_op.accept(self)
-
-    # RelOp
-    def visitEqualsOp(self, equalsOp):
-        print('==', end = ' ')
-
-    def visitDifereOp(self, difereOp):
-        print('!=', end = ' ')
-
-    def visitMenorOp(self, menorOp):
-        print('<', end = ' ')
-
-    def visitMenorIgualOp(self, menorIgualOp):
-        print('<=', end = ' ')
-
-    def visitMaiorOp(self, maiorOp):
-        print('>', end = ' ')        
-
-    def visitMaiorIgualOp(self, maiorIgualOp):
-        print('>=', end = ' ')
-
-    # AddOp
-    def visitMaisOp(self, maisOp):
-        print('+', end = ' ')
-
-    def visitMenosOp(self, menosOp):
-        print('-', end = ' ')
-
-    #MulOp
-    def visitVezesOp(self, vezesOp):
-        print('*', end = ' ')
-
-    def visitDivideOp(self, divideOp):
-        print('/', end = ' ')
-
-    def visitModOp(self, modOp):
-        print('%', end = ' ')
-
     # IncDec
     def visitIncOp(self, incOp):
         incOp.Expression.accept(self)
@@ -565,3 +489,80 @@ class Visitor():
         declShortVar.IdentifierList.accept(self)
         print('=', end = ' ')
         declShortVar.ExpressionList.accept(self)
+    
+    # Expression
+    def visitExpressionOR(self, expressionOR):
+        expressionOR.Exp.accept(self)
+        print('||', end = ' ')
+        expressionOR.Exp1.accept(self)
+
+    def visitCallExp1(self, callExp1):
+        callExp1.Exp1.accept(self)
+
+    # Exp1
+    def visitExpressionAND(self, expressionAND):
+        expressionAND.Expr1.accept(self)
+        print('&&', end = ' ')
+        expressionAND.Expr2.accept(self)
+
+    def visitCallExp2(self, callExp2):
+        callExp2.Expr2.accept(self)
+
+    # Exp2
+    def visitExpressionEquals(self, expressionEquals):
+        expressionEquals.Expr2.accept(self)
+        print('==', end = ' ')
+        expressionEquals.Expr3.accept(self)
+
+    def visitExpressionDiferente(self, expressionDiferente):
+        expressionDiferente.Expr2.accept(self)
+        print('!=', end = ' ')
+        expressionDiferente.Expr3.accept(self)
+
+    def visitExpressionLess(self, expressionLess):
+        expressionLess.Expr2.accept(self)
+        print('<', end = ' ')
+        expressionLess.Expr3.accept(self)
+
+    def visitExpressionLessEqual(self, expressionLessEqual):
+        expressionLessEqual.Expr2.accept(self)
+        print('<=', end = ' ')
+        expressionLessEqual.Expr3.accept(self)
+
+    def visitExpressionGreater(self, expressionGreater):
+        expressionGreater.Expr2.accept(self)
+        print('>', end = ' ')
+        expressionGreater.Expr3.accept(self)
+
+    def visitExpressionGreaterEqual(self, expressionGreaterEqual):
+        expressionGreaterEqual.Expr2.accept(self)
+        print('>=', end = ' ')
+        expressionGreaterEqual.Expr3.accept(self)
+
+    def visitCallExp3(self, callExp3):
+        callExp3.Expr3.accept(self)
+
+    # Exp3
+    def visitExpressionPlus(self, expressionPlus):
+        expressionPlus.Expr4.accept(self)
+        print('+', end = ' ')
+        expressionPlus.Expr3.accept(self)
+
+    def visitExpressionMinus(self, expressionMinus):
+        expressionMinus.Expr4.accept(self)
+        print('-', end = ' ')
+        expressionMinus.Expr3.accept(self)
+
+    def visitExpressionPot(self, expressionPot):
+        expressionPot.Expr4.accept(self)
+        print('^', end = ' ')
+        expressionPot.Expr3.accept(self)
+
+    def visitCallExp4(self, callExp4):
+        callExp4.Expr4.accept(self)
+
+    # Exp4
+    def visitExpressionTimes(self, expressionTimes):
+        expressionTimes.Expr5.accept(self)
+        print('*', end = ' ')
+        expressionTimes.Expr4.accept(self)
