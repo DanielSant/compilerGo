@@ -539,7 +539,7 @@ class Visitor():
     def visitVezesOp(self, vezesOp):
         print('*', end = ' ')
 
-    def visitDivideOp(sel, divideOp):
+    def visitDivideOp(self, divideOp):
         print('/', end = ' ')
 
     def visitModOp(self, modOp):
