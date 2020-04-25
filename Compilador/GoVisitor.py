@@ -566,3 +566,31 @@ class Visitor():
         expressionTimes.Expr5.accept(self)
         print('*', end = ' ')
         expressionTimes.Expr4.accept(self)
+
+    def visitExpressionDivide(self, expressionDivide):
+        expressionDivide.Expr5.accept(self)
+        print('/', end = ' ')
+        expressionDivide.Expr4.accept(self)
+
+    def visitExpressionMod(self, expressionMod):
+        expressionMod.Expr5.accept(self)
+        print('%', end = ' ')
+        expressionMod.Expr4.accept(self)
+
+    def visitCallExp5(self, callExp5):
+        callExp5.Expr5.accept(self)
+
+    # Exp5
+    def visitExpressionNumber(self, expressionNumber):
+        print(expressionNumber.number, end = ' ')
+
+    def visitExpressionCallFunc(self, expressionCallFunc):
+        expressionCallFunc.callFunc.accept(self)
+
+    def visitExpressionID(self, expressionID):
+        print(expressionID.id, end = ' ')
+
+    def visitExpressionParens(self, expressionParens):
+        print('(', end = ' ')
+        expressionParens.expression.accept(self)
+        print(')', end = ' ')

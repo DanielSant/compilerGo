@@ -439,9 +439,9 @@ def p_exp3(p):
             | exp4'''
     if(p[2] == 'PLUS'):
         p[0] = abstract.ExpressionPlus(p[1], p[2], p[3])
-    elif(p[2] = 'MINUS'):
+    elif(p[2] == 'MINUS'):
         p[0] = abstract.ExpressionMinus(p[1], p[2], p[3])
-    elif(p[2] = 'POT'):
+    elif(p[2] == 'POT'):
         p[0] = abstract.ExpressionPot(p[1], p[2], p[3])
     else:
         p[0] = abstract.CallExp4(p[1])
@@ -453,12 +453,28 @@ def p_exp4(p):
             | exp5'''
     if(p[2] == 'TIMES'):
         p[0] = abstract.ExpressionTimes(p[1], p[2], p[3])
+    elif(p[2] == 'DIVIDE'):
+        p[0] = abstract.ExpressionDivide(p[1], p[2], p[3])
+    elif(p[2] == 'MOD'):
+        p[0] = abstract.ExpressionMod(p[1], p[2], p[3])
+    else:
+        p[0] = abstract.CallExp5(p[1])
 
 def p_exp5(p):
     '''exp5 : NUMBER
             | callFunc
             | ID
             | LPAREN expression RPAREN'''
+
+    if(p[1] == 'NUMBER'):
+        p[0] = abstract.ExpressionNumber(p[1])
+    elif(isinstance(p[1], abstract.CallFunc)):
+        p[0] = abstract.ExpressionCallFunc(p[1])
+    if(p[1] == 'ID'):
+        p[0] = abstract.ExpressionID(p[1])
+    else:
+        p[0] = abstract.ExpressionParens(p[1], p[2], p[3])
+    
 
 # Error rule for syntax errors
 def p_error(p):

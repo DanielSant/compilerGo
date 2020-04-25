@@ -1075,13 +1075,13 @@ class SimpleVarSpec(VarSpec):
 		Visitor.visitSimpleVarSpec(self)
 
 ##ABSTRATA##
-class CallFunction(metaclass=ABCMeta):
+class CallFunc(metaclass=ABCMeta):
     @abstractclassmethod
     def accept(self, Visitor):
         pass
 
 ##CONCRETA##
-class SimpleCallFunc(CallFunction):
+class SimpleCallFunc(CallFunc):
     def __init__(self, ID, LPAREN, ExpressionList, RPAREN):
         self.ID = ID
         self.LPAREN = LPAREN
@@ -1316,3 +1316,65 @@ class ExpressionTimes(Exp4):
 
     def accept(self, Visitor):
         Visitor.visitExpressionTimes(self)
+
+class ExpressionDivide(Exp4):
+    def __init__(self, Expr5, DIVIDE, Expr4):
+        self.Expr5 = Expr5
+        self.DIVIDE = DIVIDE
+        self.Expr4 = Expr4
+
+    def accept(self, Visitor):
+        Visitor.visitExpressionDivide(self)
+
+class ExpressionMod(Exp4):
+    def __init__(self, Expr5, MOD, Expr4):
+        self.Expr5 = Expr5
+        self.MOD = MOD
+        self.Expr4 = Expr4
+    
+    def accept(self, Visitor):
+        Visitor.visitExpressionMod(self)
+
+class CallExp5(Exp4):
+    def __init__(self, Expr5):
+        self.Expr5 = Expr5
+
+    def accept(self, Visitor):
+        Visitor.visitCallExp5(self)
+
+##ABSTRATA##
+class Exp5(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class ExpressionNumber(Exp5):
+    def __init__(self, number):
+        self.number = number
+
+    def accept(self, Visitor):
+        Visitor.visitExpressionNumber(self)
+
+class ExpressionCallFunc(Exp5):
+    def __init__(self, callFunc):
+        self.callFunc = callFunc
+
+    def accept(self, Visitor):
+        Visitor.visitExpressionCallFunc(self)
+
+class ExpressionID(Exp5):
+    def __init__(self, id):
+        self.id = id
+
+    def accept(self, Visitor):
+        Visitor.visitExpressionID(self)
+
+class ExpressionParens(Exp5):
+    def __init__(self, LPAREN, expression, RPAREN):
+        self.LPAREN = LPAREN
+        self.expression = expression
+        self.RPAREN = RPAREN
+
+    def accept(self, Visitor):
+        Visitor.visitExpressionParens(self)
