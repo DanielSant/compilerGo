@@ -377,6 +377,10 @@ class Visitor():
         print(compoundIDList.ID, end = ' ')
         compoundIDList.CompIDList.accept(self)
 
+    def visitEndCompID(self, compoundIDList):
+        print(',', end = ' ')
+        print(compoundIDList.ID, end = ' ')
+
     # ExpressionList
     def visitDefinirExpList(self, definirExpList):
         definirExpList.Expression.accept(self)
@@ -412,6 +416,10 @@ class Visitor():
         print(';', end = ' ')
         compTypeSpecList.TypeSpecList.accept(self)
 
+    def visitEndCompTypeSpec(self, endCompTypeSpec):
+        endCompTypeSpec.TypeSpec.accept(self)
+        print(';', end = ' ')
+
     # TypeSpec
     def visitSpecType(self, specType):
         print('id', end = ' ')
@@ -434,6 +442,10 @@ class Visitor():
         print(';', end = ' ')
         compoundVarSpec.VarSpecList
 
+    def visitEndCompVarSpec(self, endCompVarSpec):
+        endCompVarSpec.VarSpec.accept(self)
+        print(';', end = ' ')
+
     # VarSpec
     def visitSpecVar(self, specVar):
         specVar.IdentifierList.accept(self)
@@ -449,6 +461,13 @@ class Visitor():
         simpleVarSpec.IdentifierList.accept(self)
         print('=', end = ' ')
         simpleVarSpec.ExpressionList.accept(self)
+
+    # CallFunc
+    def visitSimpleCallFunc(self, simpleCallFunc):
+        print(simpleCallFunc.ID, end = ' ')
+        print('(', end = ' ')
+        simpleCallFunc.ExpressionList.accept(self)
+        print(')', end = ' ')
 
     # Expression
     def visitExprUnary(self, exprUnary):
@@ -529,13 +548,11 @@ class Visitor():
     # IncDec
     def visitIncOp(self, incOp):
         incOp.Expression.accept(self)
-        print('+', end = ' ')
-        print('+', end = ' ')
+        print('++', end = ' ')
 
     def visitDecOp(self, decOp):
         decOp.Expression.accept(self)
-        print('-', end = ' ')
-        print('-', end = ' ')
+        print('--', end = ' ')
 
     # Assignment
     def visitAssignOp(self, assignOp):

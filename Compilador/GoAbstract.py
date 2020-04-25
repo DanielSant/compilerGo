@@ -872,6 +872,14 @@ class CompoundIDList(CompIDList):
     def accept(self, Visitor):
         Visitor.visitCompoundIDList(self)
 
+class EndCompID(CompIDList):
+    def __init__(self, COMMA, ID):
+        self.COMMA = COMMA
+        self.ID = ID
+
+    def accept(self, Visitor):
+        Visitor.visitEndCompID(self)
+
 ##ABSTRATA##
 class ExpressionList(metaclass=ABCMeta):
     @abstractclassmethod
@@ -879,13 +887,6 @@ class ExpressionList(metaclass=ABCMeta):
         pass
 
 ##CONCRETA##
-class DefinirExpList(ExpressionList):
-    def __init__(self, Expression):
-        self.Expression = Expression
-
-    def accept(self, Visitor):
-        Visitor.visitDefinirExpList(self)
-
 class CallExpList(ExpressionList):
     def __init__(self, Expression, ListExpr):
         self.Expression = Expression
@@ -894,6 +895,14 @@ class CallExpList(ExpressionList):
     def accept(self, Visitor):
         Visitor.visitCallExpList(self)
 
+
+class DefinirExpList(ExpressionList):
+    def __init__(self, Expression):
+        self.Expression = Expression
+
+    def accept(self, Visitor):
+        Visitor.visitDefinirExpList(self)
+
 ##ABSTRATA##
 class ListExpr(metaclass=ABCMeta):
     @abstractclassmethod
@@ -901,14 +910,6 @@ class ListExpr(metaclass=ABCMeta):
         pass
 
 ##CONCRETA##
-class SimpleExpList(ListExpr):
-    def __init__(self, COMMA, Expression):
-        self.COMMA = COMMA
-        self.Expression = Expression
-
-    def accept(self, Visitor):
-        Visitor.visitSimpleExpList(self)
-
 class CompoundExpList(ListExpr):
     def __init__(self, COMMA, Expression, ListExpr):
         self.COMMA = COMMA
@@ -917,6 +918,14 @@ class CompoundExpList(ListExpr):
 
     def accept(self, Visitor):
         Visitor.visitCompoundExpList(self)
+
+class SimpleExpList(ListExpr):
+    def __init__(self, COMMA, Expression):
+        self.COMMA = COMMA
+        self.Expression = Expression
+
+    def accept(self, Visitor):
+        Visitor.visitSimpleExpList(self)
 
 ##ABSTRATA##
 class TypeDecl(metaclass=ABCMeta):
@@ -958,6 +967,14 @@ class CompTypeSpecList(TypeSpecList):
 
     def accept(self, Visitor):
         Visitor.visitCompTypeSpecList(self)
+
+class EndCompTypeSpec(TypeSpecList):
+    def __init__(self, TypeSpec, SEMICOLON):
+        self.TypeSpec = TypeSpec
+        self.SEMICOLON = SEMICOLON
+
+    def accept(self, Visitor):
+        Visitor.visitEndCompTypeSpec(self)
 
 ##ABSTRATA##
 class TypeSpec(metaclass=ABCMeta):
@@ -1015,6 +1032,14 @@ class CompoundVarSpec(VarSpecList):
     def accept(self, Visitor):
         Visitor.visitCompoundVarSpec(self)
 
+class EndCompVarSpec(VarSpecList):
+    def __init__(self, VarSpec, SEMICOLON):
+        self.VarSpec = VarSpec
+        self.SEMICOLON = SEMICOLON
+
+    def accept(self, Visitor):
+        Visitor.visitEndCompVarSpec(self)
+
 ##ABSTRATA##
 class VarSpec(metaclass=ABCMeta):
     @abstractclassmethod
@@ -1048,6 +1073,78 @@ class SimpleVarSpec(VarSpec):
 
 	def accept(self, Visitor):
 		Visitor.visitSimpleVarSpec(self)
+
+##ABSTRATA##
+class CallFunction(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class SimpleCallFunc(CallFunction):
+    def __init__(self, ID, LPAREN, ExpressionList, RPAREN):
+        self.ID = ID
+        self.LPAREN = LPAREN
+        self.ExpressionList = ExpressionList
+        self.RPAREN = RPAREN
+
+    def accept(self, Visitor):
+        Visitor.visitSimpleCallFunc(self)
+
+##ABSTRATA##
+class IncDec(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class IncOp(IncDec):
+    def __init__(self, Expression, DPLUS):
+        self.Expression = Expression
+        self.DPLUS = DPLUS
+        
+    def accept(self, Visitor):
+        Visitor.visitIncOp(self)
+
+class DecOp(IncDec):
+    def __init__(self, Expression, DMINUS):
+        self.Expression = Expression
+        self.DMINUS = DMINUS
+        
+    def accept(self, Visitor):
+        Visitor.visitDecOp(self)
+
+##ABSTRATA##
+class Assignment(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class AssignOp(Assignment):
+    def __init__(self, ExpressionList, ASSIGN, ExpressionList1):
+        self.Expression = ExpressionList
+        self.ASSIGN = ASSIGN
+        self.ExpressionList1 = ExpressionList1    ##observar
+        
+    def accept(self, Visitor):
+        Visitor.visitAssignOp(self)
+
+##ABSTRATA##
+class ShortVarDecl(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class DeclShortVarDef(ShortVarDecl):
+    def __init__(self, IdentifierList, ASSIGN, ExpressionList):
+        self.IdentifierList = IdentifierList
+        self.ASSIGN = ASSIGN
+        self.ExpressionList = ExpressionList    ##observar
+        
+    def accept(self, Visitor):
+        Visitor.visitDeclShortVarDef(self)
 
 ##ABSTRATA##
 class Expression(metaclass=ABCMeta):
@@ -1152,7 +1249,7 @@ class Rel_op(metaclass=ABCMeta):
         pass
 
 ##CONCRETA##
-class IqualsOp(Rel_op):
+class EqualsOp(Rel_op):
 	def __init__(self, EQUALS):
 		self.EQUALS = EQUALS
 
@@ -1242,60 +1339,3 @@ class ModOp(Mul_op):
     
     def accept(self, Visitor):
         Visitor.visitModOp(self)
-
-##ABSTRATA##
-class IncDec(metaclass=ABCMeta):
-    @abstractclassmethod
-    def accept(self, Visitor):
-        pass
-
-##CONCRETA##
-class IncOp(IncDec):
-    def __init__(self, Expression, PLUS, PLUS1):
-        self.Expression = Expression
-        self.PLUS = PLUS
-        self.PLUS1 = PLUS1                       ##observar
-        
-    def accept(self, Visitor):
-        Visitor.visitIncOp(self)
-
-class DecOp(IncDec):
-    def __init__(self, Expression, MINUS, MINUS1):
-        self.Expression = Expression
-        self.MINUS = MINUS
-        self.MINUS1 = MINUS1                     ##observar
-        
-    def accept(self, Visitor):
-        Visitor.visitDecOp(self)
-
-##ABSTRATA##
-class Assignment(metaclass=ABCMeta):
-    @abstractclassmethod
-    def accept(self, Visitor):
-        pass
-
-##CONCRETA##
-class AssignOp(Assignment):
-    def __init__(self, ExpressionList, ASSIGN, ExpressionList1):
-        self.Expression = ExpressionList
-        self.ASSIGN = ASSIGN
-        self.ExpressionList1 = ExpressionList1    ##observar
-        
-    def accept(self, Visitor):
-        Visitor.visitAssignOp(self)
-
-##ABSTRATA##
-class ShortVarDecl(metaclass=ABCMeta):
-    @abstractclassmethod
-    def accept(self, Visitor):
-        pass
-
-##CONCRETA##
-class DeclShortVarDef(ShortVarDecl):
-    def __init__(self, IdentifierList, ASSIGN, ExpressionList):
-        self.IdentifierList = IdentifierList
-        self.ASSIGN = ASSIGN
-        self.ExpressionList = ExpressionList    ##observar
-        
-    def accept(self, Visitor):
-        Visitor.visitDeclShortVarDef(self)
