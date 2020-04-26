@@ -114,7 +114,7 @@ class Parameters(metaclass=ABCMeta):
 
 ##CONCRETA##
 class Params(Parameters):
-    def __init__(self,LPAREN,ParameterList,RPAREN):
+    def __init__(self, LPAREN, ParameterList, RPAREN):
         self.LPAREN = LPAREN
         self.ParameterList = ParameterList
         self.RPAREN = RPAREN
@@ -136,7 +136,7 @@ class ParameterList(metaclass=ABCMeta):
 	def accept(self, Visitor):
 		pass
 
-class CompoundParamDecl(ParameterList): ##PRECISA OBSERVAR ISSO
+class CompoundParamDecl(ParameterList):
     def __init__(self, ParameterDecl, ParameterList_Mul):
         self.ParameterDecl = ParameterDecl
         self.ParameterList_Mul = ParameterList_Mul
@@ -324,12 +324,12 @@ class StmtSwitch(Statement):
     def accept(self, Visitor):
         Visitor.visitStmtSwitch(self)
 
-class StmtFor(Statement):
+class CallStmtFor(Statement):
     def __init__(self, ForStmt):
         self.ForStmt = ForStmt
 
     def accept(self, Visitor):
-        Visitor.visitStmtFor(self)
+        Visitor.visitCallStmtFor(self)
 
 ##ABSTRATA##
 class Declaration(metaclass=ABCMeta):
@@ -573,7 +573,7 @@ class CompoundCaseClause1(ExprCaseClauseList):
         self.ExprCaseClauseList = ExprCaseClauseList
 
     def accept(self, Visitor):
-        Visitor.visitCompoundCaseClase(self)
+        Visitor.visitCompoundCaseClause1(self)
 
 class CompoundCaseClause2(ExprCaseClauseList):
     def __init__(self, ExprCaseClause):
@@ -1254,7 +1254,7 @@ class ExpressionGreaterEqual(Exp2):
         Visitor.visitExpressionGreaterEqual(self)
 
 class CallExp3(Exp2):
-    def __init__(self, Exp3):
+    def __init__(self, Expr3):
         self.Expr3 = Expr3
 
     def accept(self, Visitor):

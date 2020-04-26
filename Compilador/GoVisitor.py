@@ -21,30 +21,29 @@ class Visitor():
     
     # Result
     def visitDefinirTipo(self, definirTipo):
-        #definirTipo.Type.accept(self)
-        pass
+        definirTipo.Type.accept(self)
     
     # Type
     def visitTint(self, Tint):
-        print('int', end = ' ')
+        print(Tint.INT, end = ' ')
 
     def visitTstring(self, Tstring):
-        print('string', end = ' ')                 #Observação Paramentro com Letra Maiúscula  #(Tint,Tstring,Tbool,Tfloat)
+        print(Tstring.STRING, end = ' ')
 
     def visitTbool(self, Tbool):
-        print('bool', end = ' ')
+        print(Tbool.BOOL, end = ' ')
 
     def visitTbyte(self, Tbyte):
-        print('byte', end = ' ')
+        print(Tbyte.BYTE, end = ' ')
     
     def visitTfloat(self, Tfloat):
-        print('float', end = ' ')
+        print(Tfloat.FLOAT, end = ' ')
     
     # Parameters
     def visitParams(self, params):
-        print('(', end = ' ')
+        print(params.LPAREN, end = ' ')
         params.ParameterList.accept(self)
-        print(')', end = ' ')
+        print(params.RPAREN, end = ' ')
 
     def visitParamsList(self, paramsList):
         print('(', end = ' ')
@@ -104,9 +103,9 @@ class Visitor():
         print(';', end = ' ')
 
     def visitCompoundStatmenteList(self, compoundStatmenteList):
-        compoundStatmenteList.Statement.accept(self)
+        compoundStatmenteList.statement.accept(self)
         print(';', end = ' ')
-        compoundStatmenteList.StatementList.accept(self)
+        compoundStatmenteList.statementList.accept(self)
     
     # Statement
     def visitStmtDeclaration(self, stmtDeclaration):
@@ -133,7 +132,7 @@ class Visitor():
     def visitStmtSwitch(self, stmtSwitch):
         stmtSwitch.SwitchStmt.accept(self)
     
-    def visitStmtFor(self, stmtFor):
+    def visitCallStmtFor(self, stmtFor):
         stmtFor.ForStmt.accept(self)
 
     # Declaration
@@ -148,7 +147,7 @@ class Visitor():
     
     # SimpleStmt
     def visitStmtCondition(self, stmtCondition):
-        stmtConditio.Condition.accept(self)
+        stmtCondition.Condition.accept(self)
 
     def visitStmtIncDec(self, stmtIncDec):
         stmtIncDec.IncDec.accept(self)
@@ -248,26 +247,26 @@ class Visitor():
         print('}', end = ' ')
 
     # ExprCaseClauseList
-    def visitCompoundCaseClase1(self, compoundCaseClase1):
+    def visitCompoundCaseClause1(self, compoundCaseClase1):
         compoundCaseClase1.ExprCaseClause.accept(self)
         compoundCaseClase1.ExprCaseClauseList.accept(self)
 
-    def visitCompoundCaseClase2(self, compoundCaseClase2):
+    def visitCompoundCaseClause2(self, compoundCaseClase2):
         compoundCaseClase2.ExprCaseClause.accept(self)
 
     # ExprCaseClause
     def visitExprCase(self, exprCase):
-        exprCase.exprSwitchCase.accept(self)
+        exprCase.ExprSwitchCase.accept(self)
         print(':', end = ' ')
-        exprCase.StatmentList.accept(self)
+        exprCase.StatementList.accept(self)
 
     # ExprSwitchCase
     def visitCaseClauseExp(self, caseClauseExp):
-        print('CASE', end = ' ')
+        print('case', end = ' ')
         caseClauseExp.ExpressionList.accept(self)
 
     def visitCaseClause(self, caseClause):
-        print('DEFAULT', end = ' ')
+        print('default', end = ' ')
 
     # ForStmt
     def visitStmtFor(self, stmtFor):
@@ -366,7 +365,7 @@ class Visitor():
     # IdentifierList
     def visitDefinirIDList(self, definirIDList):
         print(definirIDList.ID, end = ' ')
-        #definirIDList.CompIDList.accept(self)
+        definirIDList.CompIDList.accept(self)
     
     def visitDefinirID(self, definirID):
         print(definirID.ID, end = ' ')

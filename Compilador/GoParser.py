@@ -119,7 +119,7 @@ def p_statement(p):
     elif(isinstance(p[1], abstract.SwitchStmt)):
         p[0] = abstract.StmtSwitch(p[1])
     elif(isinstance(p[1], abstract.ForStmt)):
-        p[0] = abstract.StmtFor(p[1])
+        p[0] = abstract.CallStmtFor(p[1])
 
 def p_declaration(p):
     '''declaration : constDecl
@@ -417,7 +417,9 @@ def p_exp2(p):
             | exp2 GREATER exp3
             | exp2 GREATER_EQUAL exp3
             | exp3'''
-    if(p[2] == 'EQUALS'):
+    if(len(p) == 2):
+        p[0] = abstract.CallExp3(p[1])
+    elif(p[2] == 'EQUALS'):
         p[0] = abstract.ExpressionEquals(p[1], p[2], p[3])
     elif(p[2] == 'DIFERENTE'):
         p[0] = abstract.ExpressionDiferente(p[1], p[2], p[3])
@@ -429,36 +431,34 @@ def p_exp2(p):
         p[0] = abstract.ExpressionGreater(p[1], p[2], p[3])
     elif(p[2] == 'GREATER_EQUAL'):
         p[0] = abstract.ExpressionGreaterEqual(p[1], p[2], p[3])
-    else:
-        p[0] = abstract.CallExp3(p[1])
 
 def p_exp3(p):
     '''exp3 : exp4 PLUS exp3
             | exp4 MINUS exp3
             | exp4 POT exp3
             | exp4'''
-    if(p[2] == 'PLUS'):
+    if(len(p) == 2):
+        p[0] = abstract.CallExp4(p[1])
+    elif(p[2] == 'PLUS'):
         p[0] = abstract.ExpressionPlus(p[1], p[2], p[3])
     elif(p[2] == 'MINUS'):
         p[0] = abstract.ExpressionMinus(p[1], p[2], p[3])
     elif(p[2] == 'POT'):
         p[0] = abstract.ExpressionPot(p[1], p[2], p[3])
-    else:
-        p[0] = abstract.CallExp4(p[1])
 
 def p_exp4(p):
     '''exp4 : exp5 TIMES exp4
             | exp5 DIVIDE exp4
             | exp5 MOD exp4
             | exp5'''
-    if(p[2] == 'TIMES'):
+    if(len(p) == 2):
+        p[0] = abstract.CallExp5(p[1])
+    elif(p[2] == 'TIMES'):
         p[0] = abstract.ExpressionTimes(p[1], p[2], p[3])
     elif(p[2] == 'DIVIDE'):
         p[0] = abstract.ExpressionDivide(p[1], p[2], p[3])
     elif(p[2] == 'MOD'):
         p[0] = abstract.ExpressionMod(p[1], p[2], p[3])
-    else:
-        p[0] = abstract.CallExp5(p[1])
 
 def p_exp5(p):
     '''exp5 : NUMBER
@@ -470,12 +470,11 @@ def p_exp5(p):
         p[0] = abstract.ExpressionNumber(p[1])
     elif(isinstance(p[1], abstract.CallFunc)):
         p[0] = abstract.ExpressionCallFunc(p[1])
-    if(p[1] == 'ID'):
+    elif(p[1] == 'ID'):
         p[0] = abstract.ExpressionID(p[1])
-    else:
+    elif(len(p) == 4):
         p[0] = abstract.ExpressionParens(p[1], p[2], p[3])
     
-
 # Error rule for syntax errors
 def p_error(p):
     print("Syntax error in input!")
@@ -486,10 +485,10 @@ parser = yacc.yacc()
 
 result = parser.parse(debug=True)
 
-#visit = abstract.Visitor.Visitor()
+visit = abstract.Visitor.Visitor()
 
 print('\n')
 
-#result.accept(visit)
+result.accept(visit)
 
 print('\n')
