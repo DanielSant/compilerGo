@@ -35,12 +35,12 @@ class Signature(metaclass=ABCMeta):
         pass
 
 ##CONCRETA##
-class DefinirParams(Signature):
-    def __init__(self, Parameters):
-        self.Parameters = Parameters
+# class DefinirParams(Signature):
+#     def __init__(self, Parameters):
+#         self.Parameters = Parameters
 
-    def accept(self, Visitor):
-        Visitor.visitDefinirParams(self)
+#     def accept(self, Visitor):
+#         Visitor.visitDefinirParams(self)
 
 class DefinirParamsT(Signature):
 	def __init__(self, Params, Result):
@@ -144,12 +144,12 @@ class CompoundParamDecl(ParameterList):
     def accept(self, Visitor):
         Visitor.visitCompParamsDecl(self)
 
-class CallParameterDecl(ParameterList):
-    def __init__(self, ParameterDecl):
-        self.ParameterDecl = ParameterDecl
+# class CallParameterDecl(ParameterList):
+#     def __init__(self, ParameterDecl):
+#         self.ParameterDecl = ParameterDecl
 
-    def accept(self, Visitor):
-        Visitor.visitCallParameterDecl(self)
+#     def accept(self, Visitor):
+#         Visitor.visitCallParameterDecl(self)
 
 ##ABSTRATA##
 class ParameterList_Mul(metaclass=ABCMeta):
@@ -204,12 +204,12 @@ class FunctionBody(metaclass=ABCMeta):
         pass
 
 ##CONCRETA##
-class DefinirBlock(FunctionBody):
-    def __init__(self, Block):
-        self.Block = Block
+# class DefinirBlock(FunctionBody):
+#     def __init__(self, Block):
+#         self.Block = Block
     
-    def accept(self, Visitor):
-        Visitor.visitDefinirBlock(self)
+#     def accept(self, Visitor):
+#         Visitor.visitDefinirBlock(self)
 
 ##ABSTRATA##
 class Block(metaclass=ABCMeta):
@@ -529,12 +529,12 @@ class ExprSwitchHead2(SwitchStmt_Head):
     def accept(self, Visitor):
         Visitor.visitExprSwitchHead2(self)
 
-class ExprSwitchHead3(SwitchStmt_Head):
-    def __init__(self, expression):
-        self.expression = expression
+# class ExprSwitchHead3(SwitchStmt_Head):
+#     def __init__(self, expression):
+#         self.expression = expression
 
-    def accept(self, Visitor):
-        Visitor.visitExprSwitchHead3(self)
+#     def accept(self, Visitor):
+#         Visitor.visitExprSwitchHead3(self)
 
 ##ABSTRATA
 class SwitchStmt_Body(metaclass=ABCMeta):
@@ -575,12 +575,12 @@ class CompoundCaseClause1(ExprCaseClauseList):
     def accept(self, Visitor):
         Visitor.visitCompoundCaseClause1(self)
 
-class CompoundCaseClause2(ExprCaseClauseList):
-    def __init__(self, ExprCaseClause):
-        self.ExprCaseClause = ExprCaseClause
+# class CompoundCaseClause2(ExprCaseClauseList):
+#     def __init__(self, ExprCaseClause):
+#         self.ExprCaseClause = ExprCaseClause
     
-    def accept(self, Visitor):
-        Visitor.visitCompoundCaseClause2(self)
+#     def accept(self, Visitor):
+#         Visitor.visitCompoundCaseClause2(self)
 
 ##ABSTRATA##
 class ExprCaseClause(metaclass=ABCMeta):
@@ -669,12 +669,12 @@ class Condition(metaclass=ABCMeta):
         pass
 
 ##CONCRETA##
-class DefinirCondition(Condition):
-    def __init__(self, Expression):
-        self.Expression = Expression
+# class DefinirCondition(Condition):
+#     def __init__(self, Expression):
+#         self.Expression = Expression
 
-    def accept(self, Visitor):
-        Visitor.visitDefinirCondition(self)
+#     def accept(self, Visitor):
+#         Visitor.visitDefinirCondition(self)
 
 ##ABSTRATA##
 class ForClause(metaclass=ABCMeta):
@@ -710,12 +710,12 @@ class InitPostStmt(metaclass=ABCMeta):
         pass
 
 ##CONCRETA##
-class StmtInitPost(InitPostStmt):
-    def __init__(self, SimpleStmt):
-        self.SimpleStmt = SimpleStmt
+# class StmtInitPost(InitPostStmt):
+#     def __init__(self, SimpleStmt):
+#         self.SimpleStmt = SimpleStmt
 
-    def accept(self, Visitor):
-        Visitor.visitStmtInitPost(self)
+#     def accept(self, Visitor):
+#         Visitor.visitStmtInitPost(self)
 
 ##ABSTRATA##
 class RangeClause(metaclass=ABCMeta):
@@ -808,12 +808,12 @@ class ConstSpec(metaclass=ABCMeta):
         pass
 
 ##CONCRETA##
-class SimpleIdList(ConstSpec):
-    def __init__(self, IdentifierList):
-        self.IdentifierList = IdentifierList
+# class SimpleIdList(ConstSpec):
+#     def __init__(self, IdentifierList):
+#         self.IdentifierList = IdentifierList
 
-    def accept(self, Visitor):
-        Visitor.visitSimpleIdList(self)
+#     def accept(self, Visitor):
+#         Visitor.visitSimpleIdList(self)
 
 class ListIdExp(ConstSpec):
     def __init__(self, IdentifierList, ASSIGN, ExpressionList):
@@ -896,12 +896,12 @@ class CallExpList(ExpressionList):
         Visitor.visitCallExpList(self)
 
 
-class DefinirExpList(ExpressionList):
-    def __init__(self, Expression):
-        self.Expression = Expression
+# class DefinirExpList(ExpressionList):
+#     def __init__(self, Expression):
+#         self.Expression = Expression
 
-    def accept(self, Visitor):
-        Visitor.visitDefinirExpList(self)
+#     def accept(self, Visitor):
+#         Visitor.visitDefinirExpList(self)
 
 ##ABSTRATA##
 class ListExpr(metaclass=ABCMeta):
@@ -1123,9 +1123,9 @@ class Assignment(metaclass=ABCMeta):
 ##CONCRETA##
 class AssignOp(Assignment):
     def __init__(self, ExpressionList, ASSIGN, ExpressionList1):
-        self.Expression = ExpressionList
+        self.ExpressionList = ExpressionList
         self.ASSIGN = ASSIGN
-        self.ExpressionList1 = ExpressionList1    ##observar
+        self.ExpressionList1 = ExpressionList1
         
     def accept(self, Visitor):
         Visitor.visitAssignOp(self)
@@ -1162,12 +1162,12 @@ class ExpressionOR(Expression):
     def accept(self, Visitor):
         Visitor.visitExpressionOR(self)
 
-class CallExp1(Expression):
-    def __init__(self, Exp1):
-        self.Exp1 = Exp1
+# class CallExp1(Expression):
+#     def __init__(self, Exp1):
+#         self.Exp1 = Exp1
 
-    def accept(self, Visitor):
-        Visitor.visitCallExp1(self)
+#     def accept(self, Visitor):
+#         Visitor.visitCallExp1(self)
 
 ##ABSTRATA##
 class Exp1(metaclass=ABCMeta):
@@ -1185,12 +1185,12 @@ class ExpressionAND(Exp1):
     def accept(self, Visitor):
         Visitor.visitExpressionAND(self)
 
-class CallExp2(Exp1):
-    def __init__(self, Expr2):
-        self.Expr2 = Expr2
+# class CallExp2(Exp1):
+#     def __init__(self, Expr2):
+#         self.Expr2 = Expr2
 
-    def accept(self, Visitor):
-        Visitor.visitCallExp2(self)
+#     def accept(self, Visitor):
+#         Visitor.visitCallExp2(self)
 
 ##ABSTRATA##
 class Exp2(metaclass=ABCMeta):
@@ -1253,12 +1253,12 @@ class ExpressionGreaterEqual(Exp2):
     def accept(self, Visitor):
         Visitor.visitExpressionGreaterEqual(self)
 
-class CallExp3(Exp2):
-    def __init__(self, Expr3):
-        self.Expr3 = Expr3
+# class CallExp3(Exp2):
+#     def __init__(self, Expr3):
+#         self.Expr3 = Expr3
 
-    def accept(self, Visitor):
-        Visitor.visitCallExp3(self)
+#     def accept(self, Visitor):
+#         Visitor.visitCallExp3(self)
 
 ##ABSTRATA##
 class Exp3(metaclass=ABCMeta):
@@ -1294,12 +1294,12 @@ class ExpressionPot(Exp3):
     def accept(self, Visitor):
         Visitor.visitExpressionPot(self)
 
-class CallExp4(Exp3):
-    def __init__(self, Expr4):
-        self.Expr4 = Expr4
+# class CallExp4(Exp3):
+#     def __init__(self, Expr4):
+#         self.Expr4 = Expr4
 
-    def accept(self, Visitor):
-        Visitor.visitCallExp4(self)
+#     def accept(self, Visitor):
+#         Visitor.visitCallExp4(self)
 
 ##ABSTRATA##
 class Exp4(metaclass=ABCMeta):
@@ -1349,12 +1349,12 @@ class Exp5(metaclass=ABCMeta):
         pass
 
 ##CONCRETA##
-class ExpressionNumber(Exp5):
-    def __init__(self, number):
-        self.number = number
+# class ExpressionNumber(Exp5):
+#     def __init__(self, number):
+#         self.number = number
 
-    def accept(self, Visitor):
-        Visitor.visitExpressionNumber(self)
+#     def accept(self, Visitor):
+#         Visitor.visitExpressionNumber(self)
 
 class ExpressionCallFunc(Exp5):
     def __init__(self, callFunc):
@@ -1363,12 +1363,12 @@ class ExpressionCallFunc(Exp5):
     def accept(self, Visitor):
         Visitor.visitExpressionCallFunc(self)
 
-class ExpressionID(Exp5):
-    def __init__(self, id):
-        self.id = id
+# class ExpressionID(Exp5):
+#     def __init__(self, id):
+#         self.id = id
 
-    def accept(self, Visitor):
-        Visitor.visitExpressionID(self)
+#     def accept(self, Visitor):
+#         Visitor.visitExpressionID(self)
 
 class ExpressionParens(Exp5):
     def __init__(self, LPAREN, expression, RPAREN):
@@ -1378,3 +1378,10 @@ class ExpressionParens(Exp5):
 
     def accept(self, Visitor):
         Visitor.visitExpressionParens(self)
+
+class PrintNumberID(Exp5):
+    def __init__(self, numberOrId):
+        self.numberOrId = numberOrId
+
+    def accept(self, Visitor):
+        Visitor.visitPrintNumberID(self)

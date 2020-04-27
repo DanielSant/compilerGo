@@ -15,7 +15,7 @@ def p_signature(p):
     '''signature : parameters
                  | parameters result'''
     if(len(p) == 2):
-        p[0] = abstract.DefinirParams(p[1])
+        p[0] = p[1]
     else:
         p[0] =  abstract.DefinirParamsT(p[1], p[2])
 
@@ -29,16 +29,7 @@ def p_type(p):
             | BOOL
             | BYTE
             | FLOAT'''
-    if(p[1] == 'INT'):
-        p[0] = abstract.Tint(p[1])
-    elif(p[1] == 'STRING'):
-        p[0] = abstract.Tstring(p[1])
-    elif(p[1] == 'BOOL'):
-        p[0] = abstract.Tbool(p[1])
-    elif(p[1] == 'BYTE'):
-        p[0] = abstract.Tbyte(p[1])
-    elif(p[1] == 'FLOAT'):
-        p[0] = abstract.Tfloat(p[1])
+    p[0] = p[1]
 
 def p_parameters(p):
     '''parameters : LPAREN parameterList RPAREN
@@ -54,7 +45,7 @@ def p_parameterList(p):
     if(len(p) == 3):
         p[0] = abstract.CompoundParamDecl(p[1], p[2])
     else:
-        p[0] = abstract.CallParameterDecl(p[1])
+        p[0] = p[1]
 
 def p_parameterList_Mul(p):
     '''parameterList_Mul : COMMA parameterDecl parameterList_Mul
@@ -74,7 +65,7 @@ def p_parameterDecl(p):
 
 def p_functionBody(p):
     '''functionBody : block'''
-    p[0] = abstract.DefinirBlock(p[1])
+    p[0] = p[1]
 
 def p_block(p):
     '''block : LCHAVES statementList RCHAVES
@@ -102,49 +93,51 @@ def p_statement(p):
                  | ifStmt
                  | switchStmt
                  | forStmt'''
-    if(isinstance(p[1], abstract.Declaration)):
-        p[0] = abstract.StmtDeclaration(p[1])
-    elif(isinstance(p[1], abstract.SimpleStmt)):
-        p[0] = abstract.StmtSimple(p[1])
-    elif(isinstance(p[1], abstract.ReturnStmt)):
-        p[0] = abstract.StmtReturn(p[1])
-    elif(isinstance(p[1], abstract.BreakStmt)):
-        p[0] = abstract.StmtBreak(p[1])
-    elif(isinstance(p[1], abstract.ContinueStmt)):
-        p[0] = abstract.StmtContinue(p[1])
-    elif(isinstance(p[1], abstract.Block)):
-        p[0] = abstract.StmtBlock(p[1])
-    elif(isinstance(p[1], abstract.IfStmt)):
-        p[0] = abstract.StmtIf(p[1])
-    elif(isinstance(p[1], abstract.SwitchStmt)):
-        p[0] = abstract.StmtSwitch(p[1])
-    elif(isinstance(p[1], abstract.ForStmt)):
-        p[0] = abstract.CallStmtFor(p[1])
+    p[0] = p[1]
+    # if(isinstance(p[1], abstract.Declaration)):
+    #     p[0] = abstract.StmtDeclaration(p[1])
+    # elif(isinstance(p[1], abstract.SimpleStmt)):
+    #     p[0] = abstract.StmtSimple(p[1])
+    # elif(isinstance(p[1], abstract.ReturnStmt)):
+    #     p[0] = abstract.StmtReturn(p[1])
+    # elif(isinstance(p[1], abstract.BreakStmt)):
+    #     p[0] = abstract.StmtBreak(p[1])
+    # elif(isinstance(p[1], abstract.ContinueStmt)):
+    #     p[0] = abstract.StmtContinue(p[1])
+    # elif(isinstance(p[1], abstract.Block)):
+    #     p[0] = abstract.StmtBlock(p[1])
+    # elif(isinstance(p[1], abstract.IfStmt)):
+    #     p[0] = abstract.StmtIf(p[1])
+    # elif(isinstance(p[1], abstract.SwitchStmt)):
+    #     p[0] = abstract.StmtSwitch(p[1])
+    # elif(isinstance(p[1], abstract.ForStmt)):
+    #     p[0] = abstract.CallStmtFor(p[1])
 
 def p_declaration(p):
     '''declaration : constDecl
                    | typeDecl
                    | varDecl'''
-    if(isinstance(p[1], abstract.ConstDecl)):
-        p[0] = abstract.DeclConst(p[1])
-    elif(isinstance(p[1], abstract.TypeDecl)):
-        p[0] = abstract.DeclType(p[1])
-    elif(isinstance(p[1], abstract.VarDecl)):
-        p[0] = abstract.DeclVar(p[1])
+    p[0] = p[1]
+    # if(isinstance(p[1], abstract.ConstDecl)):
+    #     p[0] = abstract.DeclConst(p[1])
+    # elif(isinstance(p[1], abstract.TypeDecl)):
+    #     p[0] = abstract.DeclType(p[1])
+    # elif(isinstance(p[1], abstract.VarDecl)):
+    #     p[0] = abstract.DeclVar(p[1])
 
 def p_simpleStmt(p): #condition vai para expression
     '''simpleStmt : condition
                   | incDec
-                  | assignment
-                  | shortVarDec'''
-    if(isinstance(p[1], abstract.Condition)):
-        p[0] = abstract.StmtCondition(p[1])
-    elif(isinstance(p[1], abstract.IncDec)):
-        p[0] = abstract.StmtIncDec(p[1])
-    elif(isinstance(p[1], abstract.Assignment)):
-        p[0] = abstract.Assign(p[1])
-    elif(isinstance(p[1], abstract.ShortVarDecl)):
-        p[0] = abstract.DeclShortVar(p[1])
+                  | assignment'''
+    p[0] = p[1]
+    # if(isinstance(p[1], abstract.Condition)):
+    #     p[0] = abstract.StmtCondition(p[1])
+    # elif(isinstance(p[1], abstract.IncDec)):
+    #     p[0] = abstract.StmtIncDec(p[1])
+    # elif(isinstance(p[1], abstract.Assignment)):
+    #     p[0] = abstract.Assign(p[1])
+    # elif(isinstance(p[1], abstract.ShortVarDecl)):
+    #     p[0] = abstract.DeclShortVar(p[1])
 
 def p_returnStmt(p):
     '''returnStmt : RETURN expressionList
@@ -190,7 +183,7 @@ def p_switchStmt_Head(p):
     elif(len(p) == 3):
         p[0] = abstract.ExprSwitchHead2(p[1], p[2])
     else:
-        p[0] = abstract.ExprSwitchHead3(p[1])
+        p[0] = p[1]
     
 def p_switchStmt_Body(p):
     '''switchStmt_Body : LCHAVES exprCaseClauseList RCHAVES
@@ -206,7 +199,7 @@ def p_exprCaseClauseList(p):
     if(len(p) == 3):
         p[0] = abstract.CompoundCaseClause1(p[1], p[2])
     else:
-        p[0] = abstract.CompoundCaseClause2(p[1])
+        p[0] = p[1]
 
 def p_exprCaseClause(p):
     '''exprCaseClause : exprSwitchCase COLON statementList'''
@@ -237,7 +230,7 @@ def p_forStmt(p):
     
 def p_condition(p):
     '''condition : expression'''
-    p[0] = abstract.DefinirCondition(p[1])
+    p[0] = p[1]
 
 def p_forClause(p):
     '''forClause : initPostStmt SEMICOLON condition SEMICOLON initPostStmt
@@ -250,12 +243,11 @@ def p_forClause(p):
 
 def p_initPostStmt(p):
     '''initPostStmt : simpleStmt'''
-    p[0] = abstract.StmtInitPost(p[1])
+    p[0] = p[1]
 
 def p_rangeClause(p):
     '''rangeClause : RANGE expression
-                   | expressionList ASSIGN RANGE expression
-                   | identifierList ASSIGN RANGE expression''' ### Mudei da original :=
+                   | expressionList ASSIGN RANGE expression''' ### Mudei da original :=
     if(len(p) == 3):
         p[0] = abstract.DefinirRange(p[1], p[2])
     elif(isinstance(p[1], abstract.ExpressionList)):
@@ -287,7 +279,7 @@ def p_constSpec(p):
                  | identifierList type ASSIGN expressionList''' 
 
     if(len(p) == 2):
-        p[0] = abstract.SimpleIdList(p[1])
+        p[0] = p[1]
     elif(len(p) == 4):
         p[0] = abstract.ListIdExp(p[1], p[2], p[3])
     else:
@@ -316,7 +308,7 @@ def p_expressionList(p):
     if(len(p) == 3):
         p[0] = abstract.CallExpList(p[1], p[2])
     else:
-        p[0] = abstract.DefinirExpList(p[1])
+        p[0] = p[1]
 
 def p_listExpr(p):
     '''listExpr : COMMA expression listExpr
@@ -399,7 +391,7 @@ def p_exp(p):
     if(len(p) == 4):
         p[0] = abstract.ExpressionOR(p[1], p[2], p[3])
     else:
-        p[0] = abstract.CallExp1(p[1])
+        p[0] = p[1]
 
 def p_exp1(p):
     '''exp1 : exp1 AND exp2
@@ -407,7 +399,7 @@ def p_exp1(p):
     if(len(p) == 4):
         p[0] = abstract.ExpressionAND(p[1], p[2], p[3])
     else:
-        p[0] = abstract.CallExp2(p[1])
+        p[0] = p[1]
 
 def p_exp2(p):
     '''exp2 : exp2 EQUALS exp3
@@ -418,7 +410,7 @@ def p_exp2(p):
             | exp2 GREATER_EQUAL exp3
             | exp3'''
     if(len(p) == 2):
-        p[0] = abstract.CallExp3(p[1])
+        p[0] = p[1]
     elif(p[2] == 'EQUALS'):
         p[0] = abstract.ExpressionEquals(p[1], p[2], p[3])
     elif(p[2] == 'DIFERENTE'):
@@ -438,7 +430,7 @@ def p_exp3(p):
             | exp4 POT exp3
             | exp4'''
     if(len(p) == 2):
-        p[0] = abstract.CallExp4(p[1])
+        p[0] = p[1]
     elif(p[2] == 'PLUS'):
         p[0] = abstract.ExpressionPlus(p[1], p[2], p[3])
     elif(p[2] == 'MINUS'):
@@ -452,7 +444,7 @@ def p_exp4(p):
             | exp5 MOD exp4
             | exp5'''
     if(len(p) == 2):
-        p[0] = abstract.CallExp5(p[1])
+        p[0] = p[1]
     elif(p[2] == 'TIMES'):
         p[0] = abstract.ExpressionTimes(p[1], p[2], p[3])
     elif(p[2] == 'DIVIDE'):
@@ -465,16 +457,13 @@ def p_exp5(p):
             | callFunc
             | ID
             | LPAREN expression RPAREN'''
-
-    if(p[1] == 'NUMBER'):
-        p[0] = abstract.ExpressionNumber(p[1])
-    elif(isinstance(p[1], abstract.CallFunc)):
+    if(isinstance(p[1], abstract.CallFunc)):
         p[0] = abstract.ExpressionCallFunc(p[1])
-    elif(p[1] == 'ID'):
-        p[0] = abstract.ExpressionID(p[1])
     elif(len(p) == 4):
         p[0] = abstract.ExpressionParens(p[1], p[2], p[3])
-    
+    else:
+        p[0] = abstract.PrintNumberID(p[1])
+
 # Error rule for syntax errors
 def p_error(p):
     print("Syntax error in input!")

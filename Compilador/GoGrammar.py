@@ -75,8 +75,7 @@ def p_declaration(p):
 def p_simpleStmt(p): #condition vai para expression
     '''simpleStmt : condition
                   | incDec
-                  | assignment
-                  | shortVarDec'''
+                  | assignment'''
 
 def p_returnStmt(p):
     '''returnStmt : RETURN expressionList
@@ -135,8 +134,7 @@ def p_initPostStmt(p):
 
 def p_rangeClause(p):
     '''rangeClause : RANGE expression
-                  | expressionList ASSIGN RANGE expression
-                  | identifierList ASSIGN RANGE expression''' ### Mudei da original :=
+                  | expressionList ASSIGN RANGE expression''' ### Mudei da original :=
 
 def p_constDecl(p):
     '''constDecl : CONST constSpec

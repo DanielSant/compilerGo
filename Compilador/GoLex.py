@@ -99,7 +99,7 @@ def t_ID(t):
 # A regular expression rule with some action code
 def t_NUMBER(t):
     r'\d+'
-    t.value = int(t.value)    
+    t.value = int(t.value)
     return t
 
 # Indentacao # Wedson Help
@@ -158,6 +158,7 @@ func principal(int, float) {
 
     a = soma(x, y);
 
+    a = 5 - 5;
     switch a = 5 - 5; {
         case 1:
             5 + 5;

@@ -12,8 +12,8 @@ class Visitor():
         definirFuncBody.FunctionBody.accept(self)
 
     # Signature
-    def visitDefinirParams(self, definirParams):
-        definirParams.Parameters.accept(self)
+    # def visitDefinirParams(self, definirParams):
+    #     definirParams.Parameters.accept(self)
     
     def visitDefinirParamsT(self, definirParamsT):
         definirParamsT.Params.accept(self)
@@ -21,7 +21,8 @@ class Visitor():
     
     # Result
     def visitDefinirTipo(self, definirTipo):
-        definirTipo.Type.accept(self)
+        #definirTipo.Type.accept(self)
+        print(definirTipo.Type, end = ' ')
     
     # Type
     def visitTint(self, Tint):
@@ -60,8 +61,8 @@ class Visitor():
         compParamsDecl.ParameterDecl.accept(self)
         compParamsDecl.ParameterList_Mul.accept(self)
 
-    def visitCallParameterDecl(self, callParameterDecl):
-        callParameterDecl.ParameterDecl.accept(self)
+    # def visitCallParameterDecl(self, callParameterDecl):
+    #     callParameterDecl.ParameterDecl.accept(self)
 
     # ParameterList_Mul
     def visitCallBackParameterList_Mul(self, callBackParameterList_Mul):
@@ -79,11 +80,11 @@ class Visitor():
         paramIdDecl.Type.accept(self)
 
     def visitParamDecl(self, paramDecl):
-        paramDecl.Type.accept(self)
+        print(paramDecl.Type, end = ' ')
 
     # FunctionBody
-    def visitDefinirBlock(self, definirBlock):
-        definirBlock.Block.accept(self)
+    # def visitDefinirBlock(self, definirBlock):
+    #     definirBlock.Block.accept(self)
     
     # Block
     def visitDefinirStatementL(self, definirStatementL):
@@ -225,8 +226,8 @@ class Visitor():
         print(';', end = ' ')
 
     # ExprSwitchHead3
-    def visitExprSwitchHead3(self, exprSwitchHead3):
-        exprSwitchHead3.expression.accept(self)
+    # def visitExprSwitchHead3(self, exprSwitchHead3):
+    #     exprSwitchHead3.expression.accept(self)
 
     # ExprSwitchBody1
     def visitExprSwitchBody1(self, exprSwitchBody1):
@@ -251,8 +252,8 @@ class Visitor():
         compoundCaseClase1.ExprCaseClause.accept(self)
         compoundCaseClase1.ExprCaseClauseList.accept(self)
 
-    def visitCompoundCaseClause2(self, compoundCaseClase2):
-        compoundCaseClase2.ExprCaseClause.accept(self)
+    # def visitCompoundCaseClause2(self, compoundCaseClase2):
+    #     compoundCaseClase2.ExprCaseClause.accept(self)
 
     # ExprCaseClause
     def visitExprCase(self, exprCase):
@@ -289,8 +290,8 @@ class Visitor():
         stmtForBlock.Block.accept(self)
 
     # Condition
-    def visitDefinirCondition(self, definirCondition):
-        definirCondition.Expression.accept(self)
+    # def visitDefinirCondition(self, definirCondition):
+    #     definirCondition.Expression.accept(self)
 
     # ForClause
     def visitClassicFor(self, classicFor):
@@ -306,8 +307,8 @@ class Visitor():
         print(';', end = ' ')
 
     #InitPostStmt
-    def visitStmtInitPost(self, stmtInitPost):
-        stmtInitPost.SimpleStmt.accept(self)
+    # def visitStmtInitPost(self, stmtInitPost):
+    #     stmtInitPost.SimpleStmt.accept(self)
 
     # RangeClause
     def visitDefinirRange(self, definirRange):
@@ -348,8 +349,8 @@ class Visitor():
         compoundConstSpec.ConstSpecList.accept(self)
 
     # ConstSpec
-    def visitSimpleIdList(self, simpleIdList):
-        simpleIdList.IdentifierList.accept(self)
+    # def visitSimpleIdList(self, simpleIdList):
+    #     simpleIdList.IdentifierList.accept(self)
 
     def visitListIdExp(self, listIdExp):
         listIdExp.IdentifierList.accept(self)
@@ -478,7 +479,7 @@ class Visitor():
         print('--', end = ' ')
 
     # Assignment
-    def visitAssignOp(self, assignOp):
+    def visitAssignOp(self, assignOp): #observacao
         assignOp.ExpressionList.accept(self)
         print('=', end = ' ')
         assignOp.ExpressionList1.accept(self)
@@ -576,8 +577,12 @@ class Visitor():
         print('%', end = ' ')
         expressionMod.Expr4.accept(self)
 
-    def visitCallExp5(self, callExp5):
-        callExp5.Expr5.accept(self)
+    def visitPrintNumberID(self, printNumberID):
+        print(printNumberID.numberOrId, end = ' ')
+
+    # def visitCallExp5(self, callExp5):
+    #     print(callExp5.Expr5)
+    #     callExp5.Expr5.accept(self)
 
     # Exp5
     def visitExpressionNumber(self, expressionNumber):
