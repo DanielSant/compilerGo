@@ -322,10 +322,10 @@ class Visitor():
         rangeExpList.Expression.accept(self)
 
     def visitRangIDList(self, rangIDList):
-        visitRangIDList.IdentifierList.accept(self)
+        rangIDList.IdentifierList.accept(self)
         print('=', end = ' ')
         print('range', end = ' ')
-        visitRangIDList.Expression.accept(self)
+        rangIDList.Expression.accept(self)
 
     # ConstDecl
     def visitSimpleConst(self, simpleConst):
