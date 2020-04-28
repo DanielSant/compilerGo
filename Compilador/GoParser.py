@@ -321,7 +321,7 @@ def p_listExpr(p):
 def p_typeDecl(p):
     '''typeDecl : TYPE typeSpec
                 | TYPE LPAREN typeSpecList RPAREN'''
-    if(len(p) == 2):
+    if(len(p) == 3):
         p[0] = abstract.DefinirType(p[1], p[2])
     else:
         p[0] = abstract.CallTypeSpecList(p[1], p[2], p[3], p[4])
@@ -347,12 +347,12 @@ def p_varDecl(p):
         p[0] = abstract.CompVar(p[1], p[2], p[3], p[4])
 
 def p_varSpecList(p):
-    '''varSpecList : varSpec SEMICOLON varSpecList
-                   | varSpec SEMICOLON'''
-    if(len(p) == 4):
-        p[0] = abstract.CompoundVarSpec(p[1], p[2], p[3])
-    else:
+    '''varSpecList : varSpec SEMICOLON
+                   | varSpec SEMICOLON varSpecList'''
+    if(len(p) == 3):
         p[0] = abstract.EndCompVarSpec(p[1], p[2])
+    else:
+        p[0] = abstract.CompoundVarSpec(p[1], p[2], p[3])
 
 def p_varSpec(p):
     '''varSpec : identifierList type
@@ -366,8 +366,12 @@ def p_varSpec(p):
         p[0] = abstract.SimpleVarSpec(p[1], p[2], p[3])
 
 def p_callFunc(p):
-    '''callFunc : ID LPAREN expressionList RPAREN'''
-    p[0] = abstract.SimpleCallFunc(p[1], p[2], p[3], p[4])
+    '''callFunc : ID LPAREN expressionList RPAREN
+                | ID LPAREN RPAREN'''
+    if(len(p) == 5):
+        p[0] = abstract.SimpleCallFunc(p[1], p[2], p[3], p[4])
+    else:
+        p[0] = abstract.CallParenFunc(p[1], p[2], p[3]) 
 
 def p_incDec(p):
     '''incDec : expression DPLUS

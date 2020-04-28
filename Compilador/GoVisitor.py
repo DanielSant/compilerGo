@@ -422,7 +422,7 @@ class Visitor():
 
     # TypeSpec
     def visitSpecType(self, specType):
-        print('id', end = ' ')
+        print(specType.ID, end = ' ')
         print(specType.Type, end = ' ')
 
     # VarDecl
@@ -440,7 +440,7 @@ class Visitor():
     def visitCompoundVarSpec(self, compoundVarSpec):
         compoundVarSpec.VarSpec.accept(self)
         print(';', end = ' ')
-        compoundVarSpec.VarSpecList
+        compoundVarSpec.VarSpecList.accept(self)
 
     def visitEndCompVarSpec(self, endCompVarSpec):
         endCompVarSpec.VarSpec.accept(self)
@@ -449,11 +449,11 @@ class Visitor():
     # VarSpec
     def visitSpecVar(self, specVar):
         specVar.IdentifierList.accept(self)
-        specVar.Type.accept(self)
+        print(specVar.Type, end = ' ')
 
     def visitClassicVarSpec(self, classicVarSpec):
         classicVarSpec.IdentifierList.accept(self)
-        classicVarSpec.Type.accept(self)
+        print(classicVarSpec.Type, end = ' ')
         print('=', end = ' ')
         classicVarSpec.ExpressionList.accept(self)
 
@@ -467,6 +467,11 @@ class Visitor():
         print(simpleCallFunc.ID, end = ' ')
         print('(', end = ' ')
         simpleCallFunc.ExpressionList.accept(self)
+        print(')', end = ' ')
+
+    def visitCallParenFunc(self, callParenFunc):
+        print(callParenFunc.ID, end = ' ')
+        print('(', end = ' ')
         print(')', end = ' ')
 
     # IncDec

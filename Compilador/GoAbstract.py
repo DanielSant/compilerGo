@@ -1091,6 +1091,13 @@ class SimpleCallFunc(CallFunc):
     def accept(self, Visitor):
         Visitor.visitSimpleCallFunc(self)
 
+class CallParenFunc(CallFunc):
+    def __init__(self, ID, LPAREN, RPAREN):
+        self.ID = ID
+
+    def accept(self, Visitor):
+        Visitor.visitCallParenFunc(self)
+
 ##ABSTRATA##
 class IncDec(metaclass=ABCMeta):
     @abstractclassmethod

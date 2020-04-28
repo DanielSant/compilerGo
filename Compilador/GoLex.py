@@ -154,14 +154,28 @@ lexer = lex.lex()
     
 # Tipo da funcao não esta sendo printado
 data = '''
-func principal(x int, y float) {
+func principal(x int, y float) int {
+
+    var l int;
+
+    var d int = 42;
+
+    var w = 15;
+
+    var (
+        a = 13;
+        v bool;
+        k int;
+    );
 
     for a < 5 {
         n;
+        break;
     };
 
     for a, d = range c {
-        a = a + 1; 
+        a = a + 1;
+        continue;
     };
 
     for range a + 10 {
@@ -187,11 +201,14 @@ func principal(x int, y float) {
         d = 5 + 5;
     );
 
+    type variavel string;
+
     type (
         z int;
     );
 
     a = soma(x, y);
+    h = funcao();
 
     a = 3 + 2;
     switch a = 5 - 6; {
