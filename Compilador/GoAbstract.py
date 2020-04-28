@@ -289,12 +289,12 @@ class StmtReturn(Statement):
     def accept(self, Visitor):
         Visitor.visitStmtReturn(self)
 
-class StmtBreak(Statement):
-    def __init__(self, BreakStmt):
-        self.BreakStmt = BreakStmt
+#class StmtBreak(Statement):
+    #def __init__(self, BreakStmt):
+    #    self.BreakStmt = BreakStmt
 
-    def accept(self, Visitor):
-        Visitor.visitStmtBreak(self)
+    #def accept(self, Visitor):
+    #    Visitor.visitStmtBreak(self)
 
 class StmtContinue(Statement):
     def __init__(self, ContinueStmt):
@@ -422,7 +422,7 @@ class BreakStmt(metaclass=ABCMeta):
         pass
 
 ##CONCRETA## 
-class StmtBreak(BreakStmt) :
+class StmtBreak(BreakStmt):
     def __init__(self,BREAK):
         self.BREAK = BREAK
 
@@ -436,12 +436,12 @@ class ContinueStmt(metaclass=ABCMeta):
 		pass
 
 ##CONCRETA##
-class StmtContinue(ContinueStmt):
+class StmtContinuePrint(ContinueStmt):
     def __init__(self, CONTINUE):
         self.CONTINUE = CONTINUE
 
     def accept(self, Visitor):
-        Visitor.visitStmtContinue(self)
+        Visitor.visitStmtContinuePrint(self)
 
 ##ABSTRATA##
 class IfStmt(metaclass=ABCMeta):

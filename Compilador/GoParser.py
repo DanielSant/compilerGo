@@ -153,7 +153,7 @@ def p_breakStmt(p):
 
 def p_continueStmt(p):
     '''continueStmt : CONTINUE'''
-    p[0] = abstract.StmtContinue(p[1])
+    p[0] = abstract.StmtContinuePrint(p[1])
 
 def p_ifStmt(p):
     '''ifStmt : IF expression block

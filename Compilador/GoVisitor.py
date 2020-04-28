@@ -172,7 +172,7 @@ class Visitor():
         print('break', end =' ')
 
     # ContinueStmt
-    def visitStmtContinue(self, stmtContinue):
+    def visitStmtContinuePrint(self, stmtContinue):
         print('continue', end = ' ')
     
     # Ifstmt
@@ -207,12 +207,12 @@ class Visitor():
         exprSwitchSimple.switchStmt_Body.accept(self)
     
     # SwitchStmt_Body
-    def visitExprSwitchSimple(self, exprSwitchSimple):
-        print('switch', end = ' ')
-        exprSwitchSimple.SimpleStmt.accept(self)
-        print('{', end = ' ')
-        exprSwitchSimple.ExprCaseClauseList.accept(self)
-        print('}', end = ' ')
+    #def visitExprSwitchSimple(self, exprSwitchSimple):
+    #    print('switch', end = ' ')
+    #   exprSwitchSimple.SimpleStmt.accept(self)
+    #    print('{', end = ' ')
+    #   exprSwitchSimple.ExprCaseClauseList.accept(self)
+    #    print('}', end = ' ')
 
     # ExprSwitchHead1
     def visitExprSwitchHead1(self, exprSwitchHead1):
@@ -231,14 +231,14 @@ class Visitor():
 
     # ExprSwitchBody1
     def visitExprSwitchBody1(self, exprSwitchBody1):
-        print('(', end  = ' ')
+        print('{', end  = ' ')
         exprSwitchBody1.exprCaseClauseList.accept(self)
-        print(')', end  = ' ')
+        print('}', end  = ' ')
 
     # ExprSwitchBody2
     def visitExprSwitchBody2(self, exprSwitchBody2):
-        print('(', end  = ' ')
-        print(')', end  = ' ')
+        print('{', end  = ' ')
+        print('}', end  = ' ')
 
     def visitExprSwitchExp(self, exprSwitchExp):
         print('switch', end = ' ')
