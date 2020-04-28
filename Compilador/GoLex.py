@@ -158,8 +158,8 @@ func principal(int, float) {
 
     a = soma(x, y);
 
-    a = 3;
-    switch a = 5; {
+    a = 3 + 2;
+    switch a = 5 - 6; {
         case 1:
             5 + 5;
         case 2:

@@ -372,9 +372,9 @@ def p_callFunc(p):
 def p_incDec(p):
     '''incDec : expression DPLUS
               | expression DMINUS'''
-    if(p[2] == 'DPLUS'):
+    if(p[2] == '++'):
         p[0] = abstract.IncOp(p[1], p[2])
-    elif(p[2] == 'DMINUS'):
+    elif(p[2] == '--'):
         p[0] = abstract.DecOp(p[1], p[2])
 
 def p_assignment(p):
@@ -411,17 +411,17 @@ def p_exp2(p):
             | exp3'''
     if(len(p) == 2):
         p[0] = p[1]
-    elif(p[2] == 'EQUALS'):
+    elif(p[2] == '=='):
         p[0] = abstract.ExpressionEquals(p[1], p[2], p[3])
-    elif(p[2] == 'DIFERENTE'):
+    elif(p[2] == '!='):
         p[0] = abstract.ExpressionDiferente(p[1], p[2], p[3])
-    elif(p[2] == 'LESS'):
+    elif(p[2] == '<'):
         p[0] = abstract.ExpressionLess(p[1], p[2], p[3])
-    elif(p[2] == 'LESS_EQUAL'):
+    elif(p[2] == '<='):
         p[0] = abstract.ExpressionLessEqual(p[1], p[2], p[3])
-    elif(p[2] == 'GREATER'):
+    elif(p[2] == '>'):
         p[0] = abstract.ExpressionGreater(p[1], p[2], p[3])
-    elif(p[2] == 'GREATER_EQUAL'):
+    elif(p[2] == '>='):
         p[0] = abstract.ExpressionGreaterEqual(p[1], p[2], p[3])
 
 def p_exp3(p):
@@ -431,11 +431,11 @@ def p_exp3(p):
             | exp4'''
     if(len(p) == 2):
         p[0] = p[1]
-    elif(p[2] == 'PLUS'):
+    elif(p[2] == '+'):
         p[0] = abstract.ExpressionPlus(p[1], p[2], p[3])
-    elif(p[2] == 'MINUS'):
+    elif(p[2] == '-'):
         p[0] = abstract.ExpressionMinus(p[1], p[2], p[3])
-    elif(p[2] == 'POT'):
+    elif(p[2] == '^'):
         p[0] = abstract.ExpressionPot(p[1], p[2], p[3])
 
 def p_exp4(p):
@@ -445,11 +445,11 @@ def p_exp4(p):
             | exp5'''
     if(len(p) == 2):
         p[0] = p[1]
-    elif(p[2] == 'TIMES'):
+    elif(p[2] == '*'):
         p[0] = abstract.ExpressionTimes(p[1], p[2], p[3])
-    elif(p[2] == 'DIVIDE'):
+    elif(p[2] == '/'):
         p[0] = abstract.ExpressionDivide(p[1], p[2], p[3])
-    elif(p[2] == 'MOD'):
+    elif(p[2] == '%'):
         p[0] = abstract.ExpressionMod(p[1], p[2], p[3])
 
 def p_exp5(p):
