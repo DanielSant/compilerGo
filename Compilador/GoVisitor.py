@@ -77,7 +77,7 @@ class Visitor():
     # ParameterDecl
     def visitParamIdDecl(self, paramIdDecl):
         paramIdDecl.IdentifierList.accept(self)
-        paramIdDecl.Type.accept(self)
+        print(paramIdDecl.Type, end = ' ')
 
     def visitParamDecl(self, paramDecl):
         print(paramDecl.Type, end = ' ')
@@ -290,8 +290,8 @@ class Visitor():
         stmtForBlock.Block.accept(self)
 
     # Condition
-    # def visitDefinirCondition(self, definirCondition):
-    #     definirCondition.Expression.accept(self)
+    def visitDefinirCondition(self, definirCondition):
+        definirCondition.Expression.accept(self)
 
     # ForClause
     def visitClassicFor(self, classicFor):
@@ -359,7 +359,7 @@ class Visitor():
 
     def visitListTypeExp(self, listTypeExp):
         listTypeExp.IdentifierList.accept(self)
-        listTypeExp.Type.accept(self)
+        print(listTypeExp.Type, end = ' ')
         print('=', end = ' ')
         listTypeExp.ExpressionList.accept(self)
     
@@ -407,7 +407,7 @@ class Visitor():
     def visitCallTypeSpecList(self, callTypeSpecList):
         print('type', end = ' ')
         print('(', end = ' ')
-        callTypeSpecList.callTypeSpecList.accept(self)
+        callTypeSpecList.TypeSpecList.accept(self)
         print(')', end = ' ')
 
     # TypeSpecList
@@ -423,7 +423,7 @@ class Visitor():
     # TypeSpec
     def visitSpecType(self, specType):
         print('id', end = ' ')
-        specType.Type.accept(self)
+        print(specType.Type, end = ' ')
 
     # VarDecl
     def visitDefinirVar(self, definirVar):

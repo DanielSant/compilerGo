@@ -669,12 +669,12 @@ class Condition(metaclass=ABCMeta):
         pass
 
 ##CONCRETA##
-# class DefinirCondition(Condition):
-#     def __init__(self, Expression):
-#         self.Expression = Expression
+class DefinirCondition(Condition):
+    def __init__(self, Expression):
+        self.Expression = Expression
 
-#     def accept(self, Visitor):
-#         Visitor.visitDefinirCondition(self)
+    def accept(self, Visitor):
+        Visitor.visitDefinirCondition(self)
 
 ##ABSTRATA##
 class ForClause(metaclass=ABCMeta):

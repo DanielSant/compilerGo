@@ -230,7 +230,7 @@ def p_forStmt(p):
     
 def p_condition(p):
     '''condition : expression'''
-    p[0] = p[1]
+    p[0] = abstract.DefinirCondition(p[1])
 
 def p_forClause(p):
     '''forClause : initPostStmt SEMICOLON condition SEMICOLON initPostStmt

@@ -154,7 +154,42 @@ lexer = lex.lex()
     
 # Tipo da funcao não esta sendo printado
 data = '''
-func principal(int, float) {
+func principal(x int, y float) {
+
+    for a < 5 {
+        n;
+    };
+
+    for a, d = range c {
+        a = a + 1; 
+    };
+
+    for range a + 10 {
+        a = a + 1; 
+    };
+
+    for ;a < 10; {
+        a = a + 1;
+
+        if 5 + 3 < 8 {
+            a = 7;
+        };
+    };
+
+    const abc;
+    const abc = 5 + 5;
+    const abc int = 5 + 5;
+
+    const (
+        a;
+        b;
+        c;
+        d = 5 + 5;
+    );
+
+    type (
+        z int;
+    );
 
     a = soma(x, y);
 
@@ -166,15 +201,17 @@ func principal(int, float) {
             5 + 8;
     };
 
-    for a < 10 {
-        a = a + 1; 
+    if 5 + 3 == 8 {
+        a = 7;
+    } else {
+        a = 0;
     };
 
     for b = 1; b < 100; b++ {
         b = b + 1;
-    };
+    };    
 }
-func soma(x int, y int) int {
+func soma(int, int) int {
     return x + y;
 }
 
