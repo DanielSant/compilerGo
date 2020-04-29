@@ -12,16 +12,12 @@ class Visitor():
         definirFuncBody.FunctionBody.accept(self)
 
     # Signature
-    # def visitDefinirParams(self, definirParams):
-    #     definirParams.Parameters.accept(self)
-    
     def visitDefinirParamsT(self, definirParamsT):
         definirParamsT.Params.accept(self)
         definirParamsT.Result.accept(self)
     
     # Result
     def visitDefinirTipo(self, definirTipo):
-        #definirTipo.Type.accept(self)
         print(definirTipo.Type, end = ' ')
     
     # Type
@@ -61,9 +57,6 @@ class Visitor():
         compParamsDecl.ParameterDecl.accept(self)
         compParamsDecl.ParameterList_Mul.accept(self)
 
-    # def visitCallParameterDecl(self, callParameterDecl):
-    #     callParameterDecl.ParameterDecl.accept(self)
-
     # ParameterList_Mul
     def visitCallBackParameterList_Mul(self, callBackParameterList_Mul):
         print(',', end = ' ')
@@ -81,10 +74,6 @@ class Visitor():
 
     def visitParamDecl(self, paramDecl):
         print(paramDecl.Type, end = ' ')
-
-    # FunctionBody
-    # def visitDefinirBlock(self, definirBlock):
-    #     definirBlock.Block.accept(self)
     
     # Block
     def visitDefinirStatementL(self, definirStatementL):
@@ -205,14 +194,6 @@ class Visitor():
     def visitExprSwitchSimple(self, exprSwitchSimple):
         print('switch', end = ' ')
         exprSwitchSimple.switchStmt_Body.accept(self)
-    
-    # SwitchStmt_Body
-    #def visitExprSwitchSimple(self, exprSwitchSimple):
-    #    print('switch', end = ' ')
-    #   exprSwitchSimple.SimpleStmt.accept(self)
-    #    print('{', end = ' ')
-    #   exprSwitchSimple.ExprCaseClauseList.accept(self)
-    #    print('}', end = ' ')
 
     # ExprSwitchHead1
     def visitExprSwitchHead1(self, exprSwitchHead1):
@@ -224,10 +205,6 @@ class Visitor():
     def visitExprSwitchHead2(self, exprSwitchHead2):
         exprSwitchHead2.simpleStmt.accept(self)
         print(';', end = ' ')
-
-    # ExprSwitchHead3
-    # def visitExprSwitchHead3(self, exprSwitchHead3):
-    #     exprSwitchHead3.expression.accept(self)
 
     # ExprSwitchBody1
     def visitExprSwitchBody1(self, exprSwitchBody1):
@@ -251,9 +228,6 @@ class Visitor():
     def visitCompoundCaseClause1(self, compoundCaseClase1):
         compoundCaseClase1.ExprCaseClause.accept(self)
         compoundCaseClase1.ExprCaseClauseList.accept(self)
-
-    # def visitCompoundCaseClause2(self, compoundCaseClase2):
-    #     compoundCaseClase2.ExprCaseClause.accept(self)
 
     # ExprCaseClause
     def visitExprCase(self, exprCase):
@@ -306,10 +280,6 @@ class Visitor():
         classicFor2.Condition.accept(self)
         print(';', end = ' ')
 
-    #InitPostStmt
-    # def visitStmtInitPost(self, stmtInitPost):
-    #     stmtInitPost.SimpleStmt.accept(self)
-
     # RangeClause
     def visitDefinirRange(self, definirRange):
         print('range', end = ' ')
@@ -347,10 +317,6 @@ class Visitor():
         compoundConstSpec.ConstSpec.accept(self)
         print(';', end = ' ')
         compoundConstSpec.ConstSpecList.accept(self)
-
-    # ConstSpec
-    # def visitSimpleIdList(self, simpleIdList):
-    #     simpleIdList.IdentifierList.accept(self)
 
     def visitListIdExp(self, listIdExp):
         listIdExp.IdentifierList.accept(self)
@@ -584,10 +550,6 @@ class Visitor():
 
     def visitPrintNumberID(self, printNumberID):
         print(printNumberID.numberOrId, end = ' ')
-
-    # def visitCallExp5(self, callExp5):
-    #     print(callExp5.Expr5)
-    #     callExp5.Expr5.accept(self)
 
     # Exp5
     def visitExpressionNumber(self, expressionNumber):
