@@ -60,42 +60,6 @@ class Type(metaclass=ABCMeta):
 	def accept(self, Visitor):
 		pass
 
-# ##CONCRETA##
-# class Tint(Type):
-# 	def __init__(self, INT):
-# 		self.INT = INT
-
-# 	def accept(self, Visitor):
-# 		Visitor.visitTint(self)
-
-# class Tstring(Type):
-#     def __init__(self, STRING):
-#         self.STRING = STRING
-
-#     def accept(self, Visitor):
-#         Visitor.visitTstring(self)
-
-# class Tbool(Type):
-#     def __init__(self, BOOL):
-#         self.BOOL = BOOL
-
-#     def accept(self, Visitor):
-#         Visitor.visitTbool(self)
-
-# class Tbyte(Type):
-#     def __init__(self, BYTE):
-#         self.BYTE = BYTE
-
-#     def accept(self, Visitor):
-#         Visitor.visitTbyte(self)
-
-# class Tfloat(Type):
-#     def __init__(self, FLOAT):
-#         self.FLOAT = FLOAT
-
-#     def accept(self, Visitor):
-#         Visitor.visitTfloat(self)
-
 ##ABSTRATA##
 class Parameters(metaclass=ABCMeta):
     @abstractclassmethod
@@ -176,12 +140,6 @@ class ParamDecl(ParameterDecl):
         Visitor.visitParamDecl(self)
 
 ##ABSTRATA##
-# class FunctionBody(metaclass=ABCMeta):
-#     @abstractclassmethod
-#     def accept(self, Visitor):
-#         pass
-
-##ABSTRATA##
 class Block(metaclass=ABCMeta):
     @abstractclassmethod
     def accept(self, Visitor):
@@ -226,130 +184,22 @@ class CompoundStatementList(StatementList):
         Visitor.visitCompoundStatmenteList(self)
 
 ##ABSTRATA##
-# class Statement(metaclass=ABCMeta):
-#     @abstractclassmethod
-#     def accept(self, Visitor):
-#         pass
-
-##CONCRETA##
-# class StmtDeclaration(Statement):
-#     def __init__(self, Declaration):
-#         self.Declaration = Declaration
-
-#     def accept(self, Visitor):
-#         Visitor.visitStmtDeclaration(self)
-
-# class StmtSimple(Statement):
-#     def __init__(self, SimpleStmt):
-#         self.SimpleStmt = SimpleStmt
-
-#     def accept(self, Visitor):
-#         Visitor.visitStmtSimple(self)
-
-# class StmtReturn(Statement):
-#     def __init__(self, ReturnStmt):
-#         self.ReturnStmt = ReturnStmt
-
-#     def accept(self, Visitor):
-#         Visitor.visitStmtReturn(self)
-
-# class StmtContinue(Statement):
-#     def __init__(self, ContinueStmt):
-#         self.ContinueStmt = ContinueStmt
-
-#     def accept(self, Visitor):
-#         Visitor.visitStmtContinue(self)
-
-# class StmtBlock(Statement):
-#     def __init__(self, Block):
-#         self.Block = Block
-    
-#     def accept(self, Visitor):
-#         Visitor.visitStmtBlock(self)
-
-# class StmtIf(Statement):
-#     def __init__(self, IfStmt):
-#         self.IfStmt = IfStmt
-
-#     def accept(self, Visitor):
-#         Visitor.visitStmtIf(self)
-
-# class StmtSwitch(Statement):
-#     def __init__(self, SwitchStmt):
-#         self.SwitchStmt = SwitchStmt
-
-#     def accept(self, Visitor):
-#         Visitor.visitStmtSwitch(self)
-
-# class CallStmtFor(Statement):
-#     def __init__(self, ForStmt):
-#         self.ForStmt = ForStmt
-
-#     def accept(self, Visitor):
-#         Visitor.visitCallStmtFor(self)
+class Statement(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
 
 ##ABSTRATA##
-# class Declaration(metaclass=ABCMeta):
-#     @abstractclassmethod
-#     def accept(self, Visitor):
-#         pass
-
-##CONCRETA##
-# class DeclConst(Declaration):
-#     def __init__(self, ConstDecl):
-#         self.ConstDecl = ConstDecl
-
-#     def accept(self, Visitor):
-#         Visitor.visitDeclConst(self)
-
-# class DeclType(Declaration):
-#     def __init__(self, TypeDecl):
-#         self.TypeDecl = TypeDecl
-
-#     def accept(self, Visitor):
-#         Visitor.visitDeclType(self)
-
-# class DeclVar(Declaration):
-#     def __init__(self, VarDecl):
-#         self.VarDecl = VarDecl
-
-#     def accept(self, Visitor):
-#         Visitor.visitDeclVar(self)
+class Declaration(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
 
 ##ABSTRATA##
-# class SimpleStmt(metaclass=ABCMeta):
-#     @abstractclassmethod
-#     def accept(self, Visitor):
-#         pass
-
-##CONCRETA##
-# class StmtCondition(SimpleStmt):
-#     def __init__(self, Condition):
-#         self.Condition = Condition
-
-#     def accept(self, Visitor):
-#         Visitor.visitStmtCondition(self)
-
-# class StmtIncDec(SimpleStmt):
-#     def __init__(self, IncDec):
-#         self.IncDec = IncDec
-
-#     def accept(self, Visitor):
-#         Visitor.visitStmtIncDec(self)
-
-# class Assign(SimpleStmt):
-#     def __init__(self, Assignment):
-#         self.Assignment = Assignment
-
-#     def accept(self, Visitor):
-#         Visitor.visitAssign(self)
-
-# class DeclShortVar(SimpleStmt):
-#     def __init__(self, ShortVarDecl):
-#         self.ShortVarDecl = ShortVarDecl
-
-#     def accept(self, Visitor):
-#         Visitor.visitDeclShortVar(self)
+class SimpleStmt(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
 
 ##ABSTRATA##
 class ReturnStmt(metaclass=ABCMeta):

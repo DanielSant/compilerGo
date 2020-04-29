@@ -101,7 +101,7 @@ def p_declaration(p):
                    | varDecl'''
     p[0] = p[1]
 
-def p_simpleStmt(p): #condition vai para expression
+def p_simpleStmt(p):
     '''simpleStmt : condition
                   | incDec
                   | assignment'''

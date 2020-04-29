@@ -38,9 +38,9 @@ class Visitor():
     
     # Parameters
     def visitParams(self, params):
-        print(params.LPAREN, end = ' ')
+        print('(', end = ' ')
         params.ParameterList.accept(self)
-        print(params.RPAREN, end = ' ')
+        print(')', end = ' ')
 
     def visitParamsList(self, paramsList):
         print('(', end = ' ')
