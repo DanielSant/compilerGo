@@ -60,7 +60,9 @@ tokens = [
     'SEMICOLON',
     'COLON',
     'COMMA',
-    'MOD'
+    'MOD',
+    'DPLUS',
+    'DMINUS'
 ] + list(reserved.values())
 
 # Regular expression rules for simple tokens
@@ -86,6 +88,8 @@ t_SEMICOLON     = r'\;'
 t_COLON         = r'\:'
 t_COMMA         = r'\,'
 t_MOD           = r'\%'
+t_DPLUS         = r'\+\+'
+t_DMINUS        = r'\-\-'
  
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
@@ -95,7 +99,7 @@ def t_ID(t):
 # A regular expression rule with some action code
 def t_NUMBER(t):
     r'\d+'
-    t.value = int(t.value)    
+    t.value = int(t.value)
     return t
 
 # Indentacao # Wedson Help
@@ -148,9 +152,89 @@ def t_error(t):
 # START A CLASSE LEXER
 lexer = lex.lex()
     
+# Tipo da funcao não esta sendo printado
 data = '''
-func main()
+func principal(x int, y float) int {
+
+    var l int;
+
+    var d int = 42;
+
+    var w = 15;
+
+    var (
+        a = 13;
+        v bool;
+        k int;
+    );
+
+    for a < 5 {
+        n;
+        break;
+    };
+
+    for a, d = range c {
+        a = a + 1;
+        continue;
+    };
+
+    for range a + 10 {
+        a = a + 1; 
+    };
+
+    for ;a < 10; {
+        a = a + 1;
+
+        if 5 + 3 < 8 {
+            a = 7;
+        };
+    };
+
+    const abc;
+    const abc = 5 + 5;
+    const abc int = 5 + 5;
+
+    const (
+        a;
+        b;
+        c;
+        d = 5 + 5;
+    );
+
+    type variavel string;
+
+    type (
+        z int;
+    );
+
+    a = soma(x, y);
+    h = funcao();
+
+    a = 3 + 2;
+    switch a = 5 - 6; {
+        case 1:
+            5 + 5;
+        case 2:
+            5 + 8;
+    };
+
+    if 5 + 3 == 8 {
+        a = 7;
+    } else {
+        a = 0;
+    };
+
+    for b = 1; b < 100; b++ {
+        b = b + 1;
+    };    
+}
+func soma(int, int) int {
+    return x + y;
+}
+
 // Isto é comentário
 '''
+
+
 
 lexer.input(data)
