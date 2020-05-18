@@ -49,7 +49,7 @@ def p_parameterList_Mul(p):
                          | COMMA parameterDecl'''
 
 
-def p_parameterDecl(p):
+def p_parameterDecl(p): # type incorreto, eh um ID!
     '''parameterDecl : identifierList type
                      | type'''
 
