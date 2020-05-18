@@ -1,5 +1,5 @@
 #INICIO DA CONSTRUÇÃO SEMÂNTICO 
-#Objetivo dessa arquivo (CLASSE) criar uma molde parav todos visitantes.
+#Objetivo dessa arquivo (CLASSE) criar uma molde para todos visitantes.
 #SUA COMPOSIÇÃO
 #Metodos de visita para uma dos elemento concretos que possui na linguagem.
 #@ABSTRACTMETHOD: O uso desse decorador exige que a metaclasse da classe
