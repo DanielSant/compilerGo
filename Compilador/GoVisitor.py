@@ -476,7 +476,8 @@ class Visitor():
         print('&&', end = ' ')
         expressionAND.Expr2.accept(self)
 
-    def visitCallExp2(self, callExp2):
+    # Exp1
+    def visitExpressionAND(self, expressionAND):
         callExp2.Expr2.accept(self)
 
     # Exp2

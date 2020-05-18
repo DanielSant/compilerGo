@@ -1,7 +1,12 @@
 #INICIO DA CONSTRUÇÃO SEMÂNTICO 
 #Objetivo dessa arquivo (CLASSE) criar uma molde parav todos visitantes.
 #SUA COMPOSIÇÃO
-#Metodos de visita para uma dos elemento concretos que possui na linguagem. 
+#Metodos de visita para uma dos elemento concretos que possui na linguagem.
+#@ABSTRACTMETHOD: O uso desse decorador exige que a metaclasse da classe
+# seja ABCMeta ou seja derivada dela. Uma classe que possui
+# uma metaclasse derivada ABCMeta não pode ser instanciada,
+# a menos que todos os seus métodos e propriedades
+# abstratos sejam substituídos. 
 
 from abc import abstractmethod
 from abc import ABCMeta
@@ -324,7 +329,237 @@ class AbstractVisitor(metaclass=ABCMeta):
     def visitListTypeExp(self, listTypeExp):
         pass
 
-    #linha 332
+     # IdentifierLis
+     @abstractmethod
+    def visitDefinirIDList(self, definirIDList):
+        pass
+
+    @abstractmethod
+    def visitDefinirID(self, definirID):
+        pass
+
+    # CompIDList
+    @abstractmethod
+    def visitCompoundIDList(self, compoundIDList):
+        pass
+
+    @abstractmethod
+    def visitEndCompID(self, compoundIDList):
+        pass
+
+    # ExpressionList
+    @abstractmethod
+    def visitDefinirExpList(self, definirExpList):
+        pass
+
+    @abstractmethod
+    def visitCallExpList(self, callExpList):
+        pass
+
+     # ListExpr
+    @abstractmethod
+    def visitSimpleExpList(self, simpleExpList):
+        pass
+
+    @abstractmethod
+    def visitCompoundExpList(self, compoundExpList):
+        pass
+
+    # TypeDecl
+    @abstractmethod
+    def visitDefinirType(self, definirType):
+        pass
+
+    @abstractmethod
+    def visitCallTypeSpecList(self, callTypeSpecList):
+        pass
+
+    # TypeSpecList
+    @abstractmethod
+    def visitCompTypeSpecList(self, compTypeSpecList):
+        pass
+
+    @abstractmethod
+    def visitEndCompTypeSpec(self, endCompTypeSpec):
+        pass
+
+    # TypeSpec
+    @abstractmethod
+    def visitSpecType(self, specType):
+        pass
+
+    # VarDecl
+    @abstractmethod
+    def visitDefinirVar(self, definirVar):
+        pass
+
+    @abstractmethod
+    def visitCompVar(self, compVar):
+        pass
+
+    # VarSpecList
+    @abstractmethod
+    def visitCompoundVarSpec(self, compoundVarSpec):
+        pass
+
+    @abstractmethod
+    def visitEndCompVarSpec(self, endCompVarSpec):
+        pass
+
+    # VarSpec
+    @abstractmethod
+    def visitSpecVar(self, specVar):
+        pass
+
+    @abstractmethod
+    def visitClassicVarSpec(self, classicVarSpec):
+        pass
+
+    @abstractmethod
+    def visitSimpleVarSpec(self, simpleVarSpec):
+        pass
+
+    # CallFunc
+    @abstractmethod
+    def visitSimpleCallFunc(self, simpleCallFunc):
+        pass
+
+    @abstractmethod
+    def visitCallParenFunc(self, callParenFunc):
+        pass
+
+    # IncDec
+    @abstractmethod
+    def visitIncOp(self, incOp):
+        pass
+
+    @abstractmethod
+    def visitDecOp(self, decOp):
+        pass
+
+    # Assignment
+    @abstractmethod
+    def visitAssignOp(self, assignOp): #observacao
+        pass
+
+    # ShortVarDec
+    @abstractmethod
+    def visitDeclShortVarDef(self, declShortVar):
+        pass
+
+    # Expression
+    @abstractmethod
+    def visitExpressionOR(self, expressionOR):
+        pass
+
+    @abstractmethod
+    def visitCallExp1(self, callExp1):
+        pass
+
+    # Exp1
+    @abstractmethod
+    def visitExpressionAND(self, expressionAND):
+        pass
+
+    # Exp1
+    @abstractmethod
+    def visitExpressionAND(self, expressionAND):
+        pass
+    #ATENÇÃO -  DOIS METODOS IGUAIS -  EXP1 
+
+    # Exp2
+    @abstractmethod
+    def visitExpressionEquals(self, expressionEquals):
+        pass
+
+    @abstractmethod
+    def visitExpressionDiferente(self, expressionDiferente):
+        pass
+
+    @abstractmethod
+    def visitExpressionLess(self, expressionLess):
+        pass
+
+    @abstractmethod
+    def visitExpressionLessEqual(self, expressionLessEqual):
+        pass
+    
+    @abstractmethod
+    def visitExpressionGreater(self, expressionGreater):
+        pass
+
+    @abstractmethod
+    def visitExpressionGreaterEqual(self, expressionGreaterEqual):
+        pass
+
+    @abstractmethod
+    def visitCallExp3(self, callExp3):
+        pass
+
+    # Exp3
+    @abstractmethod
+    def visitExpressionPlus(self, expressionPlus):
+        pass
+    
+    @abstractmethod
+    def visitExpressionMinus(self, expressionMinus):
+        pass
+
+    @abstractmethod
+    def visitExpressionPot(self, expressionPot):
+        pass
+
+    @abstractmethod
+    def visitCallExp4(self, callExp4):
+        pass
+
+    # Exp4
+    @abstractmethod
+    def visitExpressionTimes(self, expressionTimes):
+        pass
+
+    @abstractmethod
+    def visitExpressionDivide(self, expressionDivide):
+        pass
+
+    @abstractmethod
+    def visitExpressionMod(self, expressionMod):
+        pass
+
+    @abstractmethod
+    def visitPrintNumberID(self, printNumberID):
+        pass
+
+    # Exp5
+    @abstractmethod
+    def visitExpressionNumber(self, expressionNumber):
+        pass
+
+    @abstractmethod
+    def visitExpressionCallFunc(self, expressionCallFunc):
+        pass
+
+    @abstractmethod
+    def visitExpressionID(self, expressionID):
+        pass
+
+    @abstractmethod
+    def visitExpressionParens(self, expressionParens):
+        pass
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
 
 
 
