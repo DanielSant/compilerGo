@@ -19,36 +19,50 @@ class SemanticVisitor(AbstractVisitor):
         st.beginScope('main')
 
     # FunctionDecl
-    def visitDefinirFunc(self, definirFunc)
+    def visitDefinirFunc(self, definirFunc):
+        parametrosRetorno = definirFunc.Signature.accept(self)
+        st.addFunction(definirFunc.ID, parametrosRetorno[0:-1], parametrosRetorno[-1])
 
-    def visitDefinirFuncBody(self, definirFuncBody)
+    def visitDefinirFuncBody(self, definirFuncBody):
+        parametrosRetorno = definirFuncBody.Signature.accept(self)
+        st.addFunction(definirFuncBody.ID, parametrosRetorno[0:-1], parametrosRetorno[-1])
+        definirFuncBody.FunctionBody.accept(self)
 
     # Signature
     def visitDefinirParamsT(self, definirParamsT)
+        parametros = {}
+        if (definirParamsT.Params != None):
+            parametros = definirParamsT.Params.accept(self)
+        
+        tipoRetorno = definirParamsT.Result.accept(self)
+        return [parametros] + tipoRetorno
 
     # Result
     def visitDefinirTipo(self, definirTipo)
+        return definirTipo.Type
 
     # Type
-    def visitTint()
+    # def visitTint()
 
-    def visitTstring()
+    # def visitTstring()
 
-    def visitTbool()
+    # def visitTbool()
 
-    def visitTbyte()
+    # def visitTbyte()
 
-    def visitTfloat()
+    # def visitTfloat()
 
     # Parameters
-    def visitParams(self, params)
+    def visitParams(self, params): # Unico parametro
+        params.ParameterList.accept(self)
 
-    def visitParamsList(self, paramsList)
-
-    def visitDefinirParamsParameters(self, definirParams)
+    def visitParamsList(self, paramsList): # Lista de parametros
+        paramsList.ParameterList.accept(self)
 
     # ParameterList
-    def visitCompParamsDecl(self, compParamsDecl)
+    def visitCompParamsDecl(self, compParamsDecl):
+        compParamsDecl.ParameterDecl.accept(self)
+        compParamsDecl.ParameterList_Mul.accept(self)
 
     # ParameterList_Mul
     def visitCallBackParameterList_Mul(self, callBackParameterList_Mul)
@@ -56,9 +70,12 @@ class SemanticVisitor(AbstractVisitor):
     def visitEndParameterList_Mul(self, endParameterList_Mul)
 
     # ParameterDecl
-    def visitParamIdDecl(self, paramIdDecl)
+    def visitParamIdDecl(self, paramIdDecl):
+        nomeFuncao = paramIdDecl.IdentifierList.accept(self)
+        # st.addVar(None, paramIdDecl.Type)
 
-    def visitParamDecl(self, paramDecl)
+    def visitParamDecl(self, paramDecl):
+        st.addVar(paramDecl.ID)
 
     # Block
     def visitDefinirStatementL(self, definirStatementL)
