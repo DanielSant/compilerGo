@@ -462,9 +462,9 @@ class AbstractVisitor(metaclass=ABCMeta):
         pass
 
     # Exp1
-    @abstractmethod
-    def visitExpressionAND(self, expressionAND):
-        pass
+    #@abstractmethod
+    #def visitExpressionAND(self, expressionAND):
+    #    pass
     #ATENÇÃO -  DOIS METODOS IGUAIS -  EXP1 
 
     # Exp2
