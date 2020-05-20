@@ -2,6 +2,7 @@ import ply.yacc as yacc
 import ply.lex as lex
 from GoLex import tokens
 import GoAbstract as abstract
+import GoSemanticVisitor as sv
 
 def p_functionDecl(p):
     '''functionDecl : FUNC ID signature
@@ -442,12 +443,17 @@ def p_error(p):
 
 parser = yacc.yacc()
 
-result = parser.parse(debug=True)
+result = parser.parse(debug=False)
 
-visit = abstract.Visitor.Visitor()
+visit = sv.GoSemanticVisitor()
 
-print('\n')
+for r in result:
+    r.accept(visit)
 
-result.accept(visit)
+#visit = abstract.Visitor.Visitor()
 
-print('\n')
+# print('\n')
+
+# result.accept(visit)
+
+# print('\n')

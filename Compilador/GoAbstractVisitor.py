@@ -11,7 +11,7 @@
 from abc import abstractmethod
 from abc import ABCMeta
 
-class AbstractVisitor(metaclass=ABCMeta):
+class GoAbstractVisitor(metaclass=ABCMeta):
     # FunctionDecl
     @abstractmethod
     def visitDefinirFunc(self, definirFunc):
@@ -24,7 +24,7 @@ class AbstractVisitor(metaclass=ABCMeta):
     # Signature
     @abstractmethod
     def visitDefinirParamsT(self, definirParamsT):
-    pass
+        pass
 
     # Result
     @abstractmethod
@@ -330,7 +330,7 @@ class AbstractVisitor(metaclass=ABCMeta):
         pass
 
      # IdentifierLis
-     @abstractmethod
+    @abstractmethod
     def visitDefinirIDList(self, definirIDList):
         pass
 

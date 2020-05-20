@@ -477,8 +477,8 @@ class Visitor():
         expressionAND.Expr2.accept(self)
 
     # Exp1
-    def visitExpressionAND(self, expressionAND):
-        callExp2.Expr2.accept(self)
+    # def visitExpressionAND(self, expressionAND):
+    #     callExp2.Expr2.accept(self)
 
     # Exp2
     def visitExpressionEquals(self, expressionEquals):
