@@ -47,6 +47,7 @@ FALSE = 'false'
 PRINT = 'print'
 PRINTLN = 'println'
 BINDABLE = 'bindable'
+SCOPE = 'scope'
 Number = [INT, FLOAT]
 
 #beginScope = criar um novo escopo

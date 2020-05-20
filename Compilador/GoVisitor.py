@@ -1,4 +1,6 @@
-class Visitor():
+from GoAbstractVisitor import GoAbstractVisitor
+
+class Visitor(GoAbstractVisitor):
     # FunctionDecl
     def visitDefinirFunc(self, definirFunc):
         print('func', end =' ')

@@ -226,7 +226,7 @@ func principal(x int, y float) int {
 
     for b = 1; b < 100; b++ {
         b = b + 1;
-    };    
+    };   
 }
 func soma(int, int) int {
     return x + y;

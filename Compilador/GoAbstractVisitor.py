@@ -32,25 +32,25 @@ class GoAbstractVisitor(metaclass=ABCMeta):
         pass
     
     # Type
-    @abstractmethod
-    def visitTint(self, Tint):
-        pass
+    # @abstractmethod
+    # def visitTint(self, Tint):
+    #     pass
 
-    @abstractmethod
-    def visitTstring(self, Tstring):
-        pass
+    # @abstractmethod
+    # def visitTstring(self, Tstring):
+    #     pass
 
-    @abstractmethod
-    def visitTbool(self, Tbool):
-        pass
+    # @abstractmethod
+    # def visitTbool(self, Tbool):
+    #     pass
 
-    @abstractmethod
-    def visitTbyte(self, Tbyte):
-        pass
+    # @abstractmethod
+    # def visitTbyte(self, Tbyte):
+    #     pass
 
-    @abstractmethod
-    def visitTfloat(self, Tfloat):
-        pass
+    # @abstractmethod
+    # def visitTfloat(self, Tfloat):
+    #     pass
 
     # Parameters
     @abstractmethod
@@ -61,9 +61,9 @@ class GoAbstractVisitor(metaclass=ABCMeta):
     def visitParamsList(self, paramsList):
         pass
 
-    @abstractmethod
-    def visitDefinirParamsParameters(self, definirParams):
-        pass
+    # @abstractmethod
+    # def visitDefinirParamsParameters(self, definirParams):
+    #     pass
 
     # ParameterList
     @abstractmethod

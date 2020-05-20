@@ -21,11 +21,14 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # FunctionDecl
     def visitDefinirFunc(self, definirFunc):
         parametrosRetorno = definirFunc.Signature.accept(self)
+        print(definirFunc.ID)
         st.addFunction(definirFunc.ID, parametrosRetorno[0:-1], parametrosRetorno[-1])
         # Tera codigo aqui
 
     def visitDefinirFuncBody(self, definirFuncBody):
         parametrosRetorno = definirFuncBody.Signature.accept(self)
+        print(definirFuncBody.ID)
+        print(parametrosRetorno)
         st.addFunction(definirFuncBody.ID, parametrosRetorno[0:-1], parametrosRetorno[-1])
         definirFuncBody.FunctionBody.accept(self)
         # Tera codigo aqui
@@ -37,7 +40,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
             parametros = definirParamsT.Params.accept(self)
         
         tipoRetorno = definirParamsT.Result.accept(self)
-        return [parametros] + tipoRetorno
+        return [parametros] + [tipoRetorno]
 
     # Result
     def visitDefinirTipo(self, definirTipo):
@@ -67,262 +70,367 @@ class GoSemanticVisitor(GoAbstractVisitor):
         compParamsDecl.ParameterList_Mul.accept(self)
 
     # ParameterList_Mul
-    # def visitCallBackParameterList_Mul(self, callBackParameterList_Mul)
+    def visitCallBackParameterList_Mul(self, callBackParameterList_Mul):
+        pass
 
-    # def visitEndParameterList_Mul(self, endParameterList_Mul)
+    def visitEndParameterList_Mul(self, endParameterList_Mul):
+        pass
 
-    # # ParameterDecl
-    # def visitParamIdDecl(self, paramIdDecl):
-    #     listaIDs = paramIdDecl.IdentifierList.accept(self)
-    #     return listaIDs
+    # ParameterDecl
+    def visitParamIdDecl(self, paramIdDecl):
+        listaIDs = paramIdDecl.IdentifierList.accept(self)
+        return listaIDs
 
-    # def visitParamDecl(self, paramDecl):
-    #     st.addVar(paramDecl.ID)
+    def visitParamDecl(self, paramDecl):
+        st.addVar(paramDecl.ID)
 
-    # # Block
-    # def visitDefinirStatementL(self, definirStatementL)
+    # Block
+    def visitDefinirStatementL(self, definirStatementL):
+        pass
 
-    # def visitMultFunc(self, multFunc)
+    def visitMultFunc(self, multFunc):
+        pass
 
-    # # StatementList
-    # def visitDefinirStatement(self, definirStatement)
+    # StatementList
+    def visitDefinirStatement(self, definirStatement):
+        pass
 
-    # def visitCompoundStatmenteList(self, compoundStatmenteList)
+    def visitCompoundStatmenteList(self, compoundStatmenteList):
+        pass
 
-    # # Statement
-    # def visitStmtDeclaration(self, stmtDeclaration)
+    # Statement
+    def visitStmtDeclaration(self, stmtDeclaration):
+        pass
 
-    # def visitStmtSimple(self, stmtSimple)
+    def visitStmtSimple(self, stmtSimple):
+        pass
 
-    # def visitStmtReturn(self, stmtReturn)
+    def visitStmtReturn(self, stmtReturn):
+        pass
     
-    # def visitStmtBreak(self, stmtBreak)
+    def visitStmtBreak(self, stmtBreak):
+        pass
     
-    # def visitStmtContinue(self, stmtContinue)
+    def visitStmtContinue(self, stmtContinue):
+        pass
     
-    # def visitStmtBlock(self, stmtBlock)
+    def visitStmtBlock(self, stmtBlock):
+        pass
     
-    # def visitStmtIf(self, stmtIf)
+    def visitStmtIf(self, stmtIf):
+        pass
     
-    # def visitStmtSwitch(self, stmtSwitch)
+    def visitStmtSwitch(self, stmtSwitch):
+        pass
     
-    # def visitCallStmtFor(self, stmtFor)
+    def visitCallStmtFor(self, stmtFor):
+        pass
 
-    # # Declaration
-    # def visitDeclConst(self, declConst)
+    # Declaration
+    def visitDeclConst(self, declConst):
+        pass
     
-    # def visitDeclType(self, declType)
+    def visitDeclType(self, declType):
+        pass
     
-    # def visitDeclVar(self, declVar)
+    def visitDeclVar(self, declVar):
+        pass
     
-    # # SimpleStmt
-    # def visitStmtCondition(self, stmtCondition)
+    # SimpleStmt
+    def visitStmtCondition(self, stmtCondition):
+        pass
 
-    # def visitStmtIncDec(self, stmtIncDec)
+    def visitStmtIncDec(self, stmtIncDec):
+        pass
     
-    # def visitAssign(self, assign)
+    def visitAssign(self, assign):
+        pass
     
-    # def visitDeclShortVar(self, declShortVar)
+    def visitDeclShortVar(self, declShortVar):
+        pass
     
-    # # ReturnStmt
-    # def visitExpReturn(self, expReturn)
+    # ReturnStmt
+    def visitExpReturn(self, expReturn):
+        pass
 
-    # def visitSimpleReturn(self, simpleReturn)
+    def visitSimpleReturn(self, simpleReturn):
+        pass
     
-    # # BreakStmt
-    # def visitStmtBreack(self, stmtBreack)
+    # BreakStmt
+    def visitStmtBreack(self, stmtBreack):
+        pass
 
-    # # ContinueStmt
-    # def visitStmtContinuePrint(self, stmtContinue)
+    # ContinueStmt
+    def visitStmtContinuePrint(self, stmtContinue):
+        pass
     
-    # # Ifstmt
-    # def visitSimpleIf(self, simpleIf)
+    # Ifstmt
+    def visitSimpleIf(self, simpleIf):
+        pass
 
-    # def visitCompIfElse(self, compIfElse)
+    def visitCompIfElse(self, compIfElse):
+        pass
     
-    # def visitIfElse(self, ifElse)
+    def visitIfElse(self, ifElse):
+        pass
         
-    # # SwitchStmt
-    # def visitExprSwitch(self, exprSwitch)
+    # SwitchStmt
+    def visitExprSwitch(self, exprSwitch):
+        pass
     
-    # # SwitchStmt_Head
-    # def visitExprSwitchSimple(self, exprSwitchSimple)
+    # SwitchStmt_Head
+    def visitExprSwitchSimple(self, exprSwitchSimple):
+        pass
 
-    # # ExprSwitchHead1
-    # def visitExprSwitchHead1(self, exprSwitchHead1)
+    # ExprSwitchHead1
+    def visitExprSwitchHead1(self, exprSwitchHead1):
+        pass
     
-    # # ExprSwitchHead2 
-    # def visitExprSwitchHead2(self, exprSwitchHead2)
+    # ExprSwitchHead2 
+    def visitExprSwitchHead2(self, exprSwitchHead2):
+        pass
 
-    # # ExprSwitchBody1
-    # def visitExprSwitchBody1(self, exprSwitchBody1)
+    # ExprSwitchBody1
+    def visitExprSwitchBody1(self, exprSwitchBody1):
+        pass
 
-    # # ExprSwitchBody2
-    # def visitExprSwitchBody2(self, exprSwitchBody2)
+    # ExprSwitchBody2
+    def visitExprSwitchBody2(self, exprSwitchBody2):
+        pass
 
-    # def visitExprSwitchExp(self, exprSwitchExp)
+    def visitExprSwitchExp(self, exprSwitchExp):
+        pass
 
-    # # ExprCaseClauseList
-    # def visitCompoundCaseClause1(self, compoundCaseClase1)
+    # ExprCaseClauseList
+    def visitCompoundCaseClause1(self, compoundCaseClase1):
+        pass
 
-    # # ExprCaseClause
-    # def visitExprCase(self, exprCase)
+    # ExprCaseClause
+    def visitExprCase(self, exprCase):
+        pass
 
-    # # ExprSwitchCase
-    # def visitCaseClauseExp(self, caseClauseExp)
+    # ExprSwitchCase
+    def visitCaseClauseExp(self, caseClauseExp):
+        pass
 
-    # def visitCaseClause(self, caseClause)
+    def visitCaseClause(self, caseClause):
+        pass
 
-    # # ForStmt
-    # def visitStmtFor(self, stmtFor)
+    # ForStmt
+    def visitStmtFor(self, stmtFor):
+        pass
 
-    # def visitStmtForClause(self, stmtForClause)
+    def visitStmtForClause(self, stmtForClause):
+        pass
 
-    # def visitStmtForRange(self, stmtForRange)
+    def visitStmtForRange(self, stmtForRange):
+        pass
 
-    # def visitStmtForBlock(self, stmtForBlock)
+    def visitStmtForBlock(self, stmtForBlock):
+        pass
 
-    # # Condition
-    # def visitDefinirCondition(self, definirCondition)
-    # # ForClause
-    # def visitClassicFor(self, classicFor)
+    # Condition
+    def visitDefinirCondition(self, definirCondition):
+        pass
+    # ForClause
+    def visitClassicFor(self, classicFor):
+        pass
 
-    # def visitclassicFor2(self, classicFor2)
+    def visitclassicFor2(self, classicFor2):
+        pass
 
-    # # RangeClause
-    # def visitDefinirRange(self, definirRange)
+    # RangeClause
+    def visitDefinirRange(self, definirRange):
+        pass
 
-    # def visitRangeExpList(self, rangeExpList)
+    def visitRangeExpList(self, rangeExpList):
+        pass
 
-    # def visitRangIDList(self, rangIDList)
+    def visitRangIDList(self, rangIDList):
+        pass
 
-    # # ConstDecl
-    # def visitSimpleConst(self, simpleConst)
+    # ConstDecl
+    def visitSimpleConst(self, simpleConst):
+        pass
 
-    # def visitCompConst(self, compConst)
+    def visitCompConst(self, compConst):
+        pass
 
-    # # ConstSpecList
-    # def visitCallConstSpec(self, callConstSpec)
+    # ConstSpecList
+    def visitCallConstSpec(self, callConstSpec):
+        pass
 
-    # def visitCompoundConstSpec(self, compoundConstSpec)
+    def visitCompoundConstSpec(self, compoundConstSpec):
+        pass
 
-    # def visitListIdExp(self, listIdExp)
+    def visitListIdExp(self, listIdExp):
+        pass
 
-    # def visitListTypeExp(self, listTypeExp)
+    def visitListTypeExp(self, listTypeExp):
+        pass
     
-    # # IdentifierList
-    # def visitDefinirIDList(self, definirIDList)
+    # IdentifierList
+    def visitDefinirIDList(self, definirIDList):
+        pass
     
-    # def visitDefinirID(self, definirID)
+    def visitDefinirID(self, definirID):
+        pass
 
-    # # CompIDList
-    # def visitCompoundIDList(self, compoundIDList)
+    # CompIDList
+    def visitCompoundIDList(self, compoundIDList):
+        pass
 
-    # def visitEndCompID(self, compoundIDList)
-    # # ExpressionList
-    # def visitDefinirExpList(self, definirExpList)
+    def visitEndCompID(self, compoundIDList):
+        pass
+    # ExpressionList
+    def visitDefinirExpList(self, definirExpList):
+        pass
 
-    # def visitCallExpList(self, callExpList)
+    def visitCallExpList(self, callExpList):
+        pass
 
-    # # ListExpr
-    # def visitSimpleExpList(self, simpleExpList)
+    # ListExpr
+    def visitSimpleExpList(self, simpleExpList):
+        pass
 
-    # def visitCompoundExpList(self, compoundExpList)
+    def visitCompoundExpList(self, compoundExpList):
+        pass
 
-    # # TypeDecl
-    # def visitDefinirType(self, definirType)
+    # TypeDecl
+    def visitDefinirType(self, definirType):
+        pass
 
-    # def visitCallTypeSpecList(self, callTypeSpecList)
+    def visitCallTypeSpecList(self, callTypeSpecList):
+        pass
 
-    # # TypeSpecList
-    # def visitCompTypeSpecList(self, compTypeSpecList)
+    # TypeSpecList
+    def visitCompTypeSpecList(self, compTypeSpecList):
+        pass
 
-    # def visitEndCompTypeSpec(self, endCompTypeSpec)
+    def visitEndCompTypeSpec(self, endCompTypeSpec):
+        pass
 
-    # # TypeSpec
-    # def visitSpecType(self, specType)
+    # TypeSpec
+    def visitSpecType(self, specType):
+        pass
 
-    # # VarDecl
-    # def visitDefinirVar(self, definirVar)
+    # VarDecl
+    def visitDefinirVar(self, definirVar):
+        pass
 
-    # def visitCompVar(self, compVar)
+    def visitCompVar(self, compVar):
+        pass
 
-    # # VarSpecList
-    # def visitCompoundVarSpec(self, compoundVarSpec)
+    # VarSpecList
+    def visitCompoundVarSpec(self, compoundVarSpec):
+        pass
 
-    # def visitEndCompVarSpec(self, endCompVarSpec)
+    def visitEndCompVarSpec(self, endCompVarSpec):
+        pass
 
-    # # VarSpec
-    # def visitSpecVar(self, specVar)
+    # VarSpec
+    def visitSpecVar(self, specVar):
+        pass
 
-    # def visitClassicVarSpec(self, classicVarSpec)
+    def visitClassicVarSpec(self, classicVarSpec):
+        pass
 
-    # def visitSimpleVarSpec(self, simpleVarSpec)
+    def visitSimpleVarSpec(self, simpleVarSpec):
+        pass
 
-    # # CallFunc
-    # def visitSimpleCallFunc(self, simpleCallFunc)
+    # CallFunc
+    def visitSimpleCallFunc(self, simpleCallFunc):
+        pass
 
-    # def visitCallParenFunc(self, callParenFunc)
+    def visitCallParenFunc(self, callParenFunc):
+        pass
 
-    # # IncDec
-    # def visitIncOp(self, incOp)
+    # IncDec
+    def visitIncOp(self, incOp):
+        pass
 
-    # def visitDecOp(self, decOp)
+    def visitDecOp(self, decOp):
+        pass
 
-    # # Assignment
-    # def visitAssignOp(self, assignOp)
+    # Assignment
+    def visitAssignOp(self, assignOp):
+        pass
 
-    # # ShortVarDec
-    # def visitDeclShortVarDef(self, declShortVar)
+    # ShortVarDec
+    def visitDeclShortVarDef(self, declShortVar):
+        pass
     
-    # # Expression
-    # def visitExpressionOR(self, expressionOR)
+    # Expression
+    def visitExpressionOR(self, expressionOR):
+        pass
 
-    # def visitCallExp1(self, callExp1)
+    def visitCallExp1(self, callExp1):
+        pass
 
-    # # Exp1
-    # def visitExpressionAND(self, expressionAND)
+    # Exp1
+    def visitExpressionAND(self, expressionAND):
+        pass
 
-    # def visitCallExp2(self, callExp2)
+    def visitCallExp2(self, callExp2):
+        pass
 
-    # # Exp2
-    # def visitExpressionEquals(self, expressionEquals)
+    # Exp2
+    def visitExpressionEquals(self, expressionEquals):
+        pass
 
-    # def visitExpressionDiferente(self, expressionDiferente)
+    def visitExpressionDiferente(self, expressionDiferente):
+        pass
 
-    # def visitExpressionLess(self, expressionLess)
+    def visitExpressionLess(self, expressionLess):
+        pass
 
-    # def visitExpressionLessEqual(self, expressionLessEqual)
+    def visitExpressionLessEqual(self, expressionLessEqual):
+        pass
 
-    # def visitExpressionGreater(self, expressionGreater)
+    def visitExpressionGreater(self, expressionGreater):
+        pass
 
-    # def visitExpressionGreaterEqual(self, expressionGreaterEqual)
+    def visitExpressionGreaterEqual(self, expressionGreaterEqual):
+        pass
 
-    # def visitCallExp3(self, callExp3)
+    def visitCallExp3(self, callExp3):
+        pass
 
-    # # Exp3
-    # def visitExpressionPlus(self, expressionPlus)
+    # Exp3
+    def visitExpressionPlus(self, expressionPlus):
+        pass
 
-    # def visitExpressionMinus(self, expressionMinus)
+    def visitExpressionMinus(self, expressionMinus):
+        pass
 
-    # def visitExpressionPot(self, expressionPot)
+    def visitExpressionPot(self, expressionPot):
+        pass
 
-    # def visitCallExp4(self, callExp4)
+    def visitCallExp4(self, callExp4):
+        pass
 
-    # # Exp4
-    # def visitExpressionTimes(self, expressionTimes)
+    # Exp4
+    def visitExpressionTimes(self, expressionTimes):
+        pass
 
-    # def visitExpressionDivide(self, expressionDivide)
+    def visitExpressionDivide(self, expressionDivide):
+        pass
 
-    # def visitExpressionMod(self, expressionMod)
+    def visitExpressionMod(self, expressionMod):
+        pass
 
-    # def visitPrintNumberID(self, printNumberID)
+    def visitPrintNumberID(self, printNumberID):
+        pass
 
-    # # Exp5
-    # def visitExpressionNumber(self, expressionNumber)
+    # Exp5
+    def visitExpressionNumber(self, expressionNumber):
+        pass
 
-    # def visitExpressionCallFunc(self, expressionCallFunc)
+    def visitExpressionCallFunc(self, expressionCallFunc):
+        pass
 
-    # def visitExpressionID(self, expressionID)
+    def visitExpressionID(self, expressionID):
+        pass
 
-    # def visitExpressionParens(self, expressionParens)
+    def visitExpressionParens(self, expressionParens):
+        pass

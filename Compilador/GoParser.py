@@ -447,13 +447,13 @@ result = parser.parse(debug=False)
 
 visit = sv.GoSemanticVisitor()
 
-for r in result:
-    r.accept(visit)
+# for r in result:
+#     r.accept(visit)
 
-#visit = abstract.Visitor.Visitor()
+# visit = abstract.Visitor.Visitor()
 
-# print('\n')
+print('\n')
 
-# result.accept(visit)
+result.accept(visit)
 
-# print('\n')
+print('\n')
