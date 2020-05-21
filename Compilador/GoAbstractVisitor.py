@@ -14,10 +14,6 @@ from abc import ABCMeta
 class GoAbstractVisitor(metaclass=ABCMeta):
     # FunctionDecl
     @abstractmethod
-    def visitDefinirFunc(self, definirFunc):
-        pass
-
-    @abstractmethod
     def visitDefinirFuncBody(self, definirFuncBody):
         pass
 

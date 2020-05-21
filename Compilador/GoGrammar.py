@@ -13,8 +13,7 @@ import GoAbstract as abstract
 # )
 
 def p_functionDecl(p):
-    '''functionDecl : FUNC ID signature
-                    | FUNC ID signature functionBody'''
+    '''functionDecl : FUNC ID signature functionBody'''
 
 
 def p_signature(p):
@@ -49,9 +48,8 @@ def p_parameterList_Mul(p):
                          | COMMA parameterDecl'''
 
 
-def p_parameterDecl(p): # type incorreto, eh um ID!
-    '''parameterDecl : identifierList type
-                     | type'''
+def p_parameterDecl(p):
+    '''parameterDecl : identifierList type'''
 
 
 def p_functionBody(p):
@@ -234,7 +232,8 @@ def p_varSpec(p):
 
 
 def p_callFunc(p):
-    '''callFunc : ID LPAREN expressionList RPAREN'''
+    '''callFunc : ID LPAREN expressionList RPAREN
+                | ID LPAREN RPAREN'''
 
 
 def p_incDec(p):

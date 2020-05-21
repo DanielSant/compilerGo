@@ -19,21 +19,19 @@ class GoSemanticVisitor(GoAbstractVisitor):
         st.beginScope('main')
 
     # FunctionDecl
-    def visitDefinirFunc(self, definirFunc):
-        parametrosRetorno = definirFunc.Signature.accept(self)
-        print(definirFunc.ID)
-        st.addFunction(definirFunc.ID, parametrosRetorno[0:-1], parametrosRetorno[-1])
-        # Tera codigo aqui
-
     def visitDefinirFuncBody(self, definirFuncBody):
         print(definirFuncBody.ID)
         parametrosRetorno = definirFuncBody.Signature.accept(self)
-        # st.addFunction(definirFuncBody.ID, parametrosRetorno[0:-1], parametrosRetorno[-1])
+        st.addFunction(definirFuncBody.ID, parametrosRetorno[0:-1], parametrosRetorno[-1])
+        st.beginScope(definirFuncBody.ID)
+        for k in range(0, len(parametrosRetorno[0:-1]), 2):
+            st.addVar(parametrosRetorno[0:-1][k], parametrosRetorno[0:-1][k+1])
+
+        print('SymbolTable----', st.symbolTable)
         definirFuncBody.FunctionBody.accept(self)
-        # Tera codigo aqui
 
     # Signature
-    def visitDefinirParamsT(self, definirParamsT):
+    def visitDefinirParamsT(self, definirParamsT): # ok
         print('visitDefinirParamsT')
         parametros = {}
         if (definirParamsT.Params != None):
@@ -41,7 +39,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
         
         tipoRetorno = definirParamsT.Result.accept(self)
         print(parametros, tipoRetorno)
-        return [parametros] + tipoRetorno
+        return parametros + tipoRetorno
 
     # Result
     def visitDefinirTipo(self, definirTipo):
@@ -89,13 +87,15 @@ class GoSemanticVisitor(GoAbstractVisitor):
     def visitParamIdDecl(self, paramIdDecl): # ok
         listaIDs = paramIdDecl.IdentifierList.accept(self)
         tipo = paramIdDecl.Type
-        print('tipo', tipo)
-        print('visitParamIdDecl', listaIDs, tipo)
-        return listaIDs + [tipo]
+        for k in range(len(listaIDs)+len(listaIDs)):
+            if(k%2 != 0):
+                listaIDs.insert(k, tipo)
+
+        return listaIDs
 
     def visitParamDecl(self, paramDecl):
         print("visitParamDecl")
-        st.addVar(paramDecl.ID)
+        #st.addVar(paramDecl.ID)
 
     # Block
     def visitDefinirStatementL(self, definirStatementL):

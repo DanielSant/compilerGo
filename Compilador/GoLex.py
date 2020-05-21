@@ -154,6 +154,9 @@ lexer = lex.lex()
     
 # Tipo da funcao não esta sendo printado
 data = '''
+func soma(x int, y int) int {
+    return x + y;
+}
 func principal(x, p, k, l float, y float, z string, t bool) int {
 
     var l int;
@@ -227,9 +230,6 @@ func principal(x, p, k, l float, y float, z string, t bool) int {
     for b = 1; b < 100; b++ {
         b = b + 1;
     };   
-}
-func soma(int, int) int {
-    return x + y;
 }
 
 // Isto é comentário

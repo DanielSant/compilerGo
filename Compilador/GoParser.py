@@ -5,12 +5,8 @@ import GoAbstract as abstract
 import GoSemanticVisitor as sv
 
 def p_functionDecl(p):
-    '''functionDecl : FUNC ID signature
-                    | FUNC ID signature functionBody'''
-    if(len(p) == 4):
-        p[0] = abstract.DefinirFunc(p[2], p[3])
-    else:
-        p[0] = abstract.DefinirFuncBody(p[2], p[3], p[4])
+    '''functionDecl : FUNC ID signature functionBody'''
+    p[0] = abstract.DefinirFuncBody(p[2], p[3], p[4])
 
 def p_signature(p):
     '''signature : parameters
@@ -57,12 +53,8 @@ def p_parameterList_Mul(p):
         p[0] = abstract.EndParameterList_Mul(p[2])
 
 def p_parameterDecl(p):
-    '''parameterDecl : identifierList type
-                     | type'''
-    if(len(p) == 3):
-        p[0] = abstract.ParamIdDecl(p[1], p[2])
-    else:
-        p[0] = abstract.ParamDecl(p[1])
+    '''parameterDecl : identifierList type'''
+    p[0] = abstract.ParamIdDecl(p[1], p[2])
 
 def p_functionBody(p):
     '''functionBody : block'''
