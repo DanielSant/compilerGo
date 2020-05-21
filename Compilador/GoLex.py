@@ -154,7 +154,7 @@ lexer = lex.lex()
     
 # Tipo da funcao não esta sendo printado
 data = '''
-func principal(x int, y float) int {
+func principal(x, p, k, l float, y float, z string, t bool) int {
 
     var l int;
 
