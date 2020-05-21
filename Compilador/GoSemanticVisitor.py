@@ -4,7 +4,7 @@ from GoVisitor import Visitor
 import GoAbstract as sa
 
 def coercion(type1, type2):
-    if (type in st.Number and type2 in st.Number):
+    if (type1 in st.Number and type2 in st.Number):
         if (type1 == st.FLOAT or type2 == st.FLOAT):
             return st.FLOAT
         else:
@@ -20,6 +20,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     # FunctionDecl
     def visitDefinirFuncBody(self, definirFuncBody):
+        print(definirFuncBody.ID)
         parametrosRetorno = definirFuncBody.Signature.accept(self)
         st.addFunction(definirFuncBody.ID, parametrosRetorno[0:-1], parametrosRetorno[-1])
         st.beginScope(definirFuncBody.ID)
@@ -173,8 +174,14 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # ReturnStmt
     def visitExpReturn(self, expReturn):
         print('visitExpReturn')
-        expReturn.ExpressionList.accept(self)
-        pass
+        tipoExp = expReturn.ExpressionList.accept(self)
+        scope = st.symbolTable[-1][st.SCOPE]
+        bindable = st.getBindable(scope)
+        if (tipoExp != bindable[st.TYPE]):
+            stmReturn.accept(self.printer)
+            print('\t[Erro] O retorno da funcao', scope, 'eh do tipo', bindable[st.TYPE],end='')
+            print(' no entanto, o retorno passado foi do tipo', typeExp, '\n')
+        st.endScope()
 
     def visitSimpleReturn(self, simpleReturn):
         print('visitSimpleReturn')
@@ -490,7 +497,17 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # Exp3
     def visitExpressionPlus(self, expressionPlus):
         print('visitExpressionPlus')
-        pass
+        tipoExp1 = expressionPlus.Expr4.accept(self)
+        tipoExp2 = expressionPlus.Expr3.accept(self)
+        c = coercion(tipoExp1, tipoExp2)
+        if (c == None):
+            expressionPlus.accept(self.printer)
+            print('\n\t[Erro] Soma invalida. A expressao ', end='')
+            somaExp.exp1.accept(self.printer)
+            print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
+            somaExp.exp2.accept(self.printer)
+            print(' eh do tipo', tipoExp2, '\n')
+        return c
 
     def visitExpressionMinus(self, expressionMinus):
         print('visitExpressionMinus')
@@ -519,8 +536,15 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     def visitPrintNumberID(self, printNumberID):
         print('visitPrintNumberID')
-        pass
-
+        if (printNumberID.numberOrId.isnumeric()):
+            print('Numero')
+            #print(isinstance(f, int))
+        else:
+            idName = st.getBindable(printNumberID.numberOrId)
+            if (idName != None):
+                return idName[st.TYPE]
+            return None
+        
     # Exp5
     def visitExpressionNumber(self, expressionNumber):
         print('visitExpressionNumber')
