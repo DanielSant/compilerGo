@@ -20,25 +20,22 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     # FunctionDecl
     def visitDefinirFuncBody(self, definirFuncBody):
-        print(definirFuncBody.ID)
         parametrosRetorno = definirFuncBody.Signature.accept(self)
         st.addFunction(definirFuncBody.ID, parametrosRetorno[0:-1], parametrosRetorno[-1])
         st.beginScope(definirFuncBody.ID)
         for k in range(0, len(parametrosRetorno[0:-1]), 2):
             st.addVar(parametrosRetorno[0:-1][k], parametrosRetorno[0:-1][k+1])
 
-        print('SymbolTable----', st.symbolTable)
+        # print('symbolTable', st.symbolTable)
         definirFuncBody.FunctionBody.accept(self)
 
     # Signature
     def visitDefinirParamsT(self, definirParamsT): # ok
-        print('visitDefinirParamsT')
         parametros = {}
         if (definirParamsT.Params != None):
             parametros = definirParamsT.Params.accept(self)
         
         tipoRetorno = definirParamsT.Result.accept(self)
-        print(parametros, tipoRetorno)
         return parametros + tipoRetorno
 
     # Result
@@ -58,29 +55,24 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     # Parameters
     def visitParams(self, params): # Unico parametro
-        print("visitParams")
         return params.ParameterList.accept(self)
 
     def visitParamsList(self, paramsList): # Lista de parametros
-        print("visitParamsList")
         return paramsList.ParameterList.accept(self)
 
     # ParameterList
     def visitCompParamsDecl(self, compParamsDecl):
         parametros = compParamsDecl.ParameterDecl.accept(self)
         parametrosMult = compParamsDecl.ParameterList_Mul.accept(self)
-        print("visitCompParamsDecl", parametros, parametrosMult)
         return parametros + parametrosMult
 
     # ParameterList_Mul
     def visitCallBackParameterList_Mul(self, callBackParameterList_Mul):
         parametro = callBackParameterList_Mul.ParameterDecl.accept(self)
         parametroMul = callBackParameterList_Mul.ParameterList_Mul1.accept(self)
-        print('visitCallBackParameterList_Mul', parametro, parametroMul)
         return parametro + parametroMul
 
     def visitEndParameterList_Mul(self, endParameterList_Mul):
-        print('visitEndParameterList_Mul')
         return endParameterList_Mul.ParameterDecl.accept(self)
 
     # ParameterDecl
@@ -93,80 +85,99 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
         return listaIDs
 
-    def visitParamDecl(self, paramDecl):
-        print("visitParamDecl")
-        #st.addVar(paramDecl.ID)
-
     # Block
     def visitDefinirStatementL(self, definirStatementL):
-        pass
+        definirStatementL.StatementList.accept(self)
 
     def visitMultFunc(self, multFunc):
-        pass
+        multFunc.StatementList.accept(self)
+        multFunc.FunctionDecl.accept(self)
 
     # StatementList
     def visitDefinirStatement(self, definirStatement):
-        pass
+        print('visitDefinirStatement')
+        definirStatement.Statement.accept(self)
 
     def visitCompoundStatmenteList(self, compoundStatmenteList):
-        pass
+        print('visitCompoundStatmenteList')
+        compoundStatmenteList.statement.accept(self)
+        compoundStatmenteList.statementList.accept(self)
 
     # Statement
     def visitStmtDeclaration(self, stmtDeclaration):
+        print('visitStmtDeclaration')
         pass
 
     def visitStmtSimple(self, stmtSimple):
+        print('visitStmtSimple')
         pass
 
     def visitStmtReturn(self, stmtReturn):
+        print('visitStmtReturn')
         pass
     
     def visitStmtBreak(self, stmtBreak):
+        print('visitStmtBreak')
         pass
     
     def visitStmtContinue(self, stmtContinue):
+        print('visitStmtContinue')
         pass
     
     def visitStmtBlock(self, stmtBlock):
+        print('visitStmtBlock')
         pass
     
     def visitStmtIf(self, stmtIf):
+        print('visitStmtIf')
         pass
     
     def visitStmtSwitch(self, stmtSwitch):
+        print('visitStmtSwitch')
         pass
     
     def visitCallStmtFor(self, stmtFor):
+        print('visitCallStmtFor')
         pass
 
     # Declaration
     def visitDeclConst(self, declConst):
+        print('visitDeclConst')
         pass
     
     def visitDeclType(self, declType):
+        print('visitDeclType')
         pass
     
     def visitDeclVar(self, declVar):
+        print('visitDeclVar')
         pass
     
     # SimpleStmt
     def visitStmtCondition(self, stmtCondition):
+        print('visitStmtCondition')
         pass
 
     def visitStmtIncDec(self, stmtIncDec):
+        print('visitStmtIncDec')
         pass
     
     def visitAssign(self, assign):
+        print('visitAssign')
         pass
     
     def visitDeclShortVar(self, declShortVar):
+        print('visitDeclShortVar')
         pass
     
     # ReturnStmt
     def visitExpReturn(self, expReturn):
+        print('visitExpReturn')
+        expReturn.ExpressionList.accept(self)
         pass
 
     def visitSimpleReturn(self, simpleReturn):
+        print('visitSimpleReturn')
         pass
     
     # BreakStmt
@@ -285,20 +296,16 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # IdentifierList
     def visitDefinirIDList(self, definirIDList):
         listIDs = definirIDList.CompIDList.accept(self)
-        print('visitDefinirIDList', definirIDList.ID, listIDs)
         return [definirIDList.ID] + listIDs
     
     def visitDefinirID(self, definirID): # ok
-        print('visitDefinirID')
         return [definirID.ID]
 
     # CompIDList
     def visitCompoundIDList(self, compoundIDList):
-        print('visitCompoundIDList', compoundIDList.ID)
         return [compoundIDList.ID] + compoundIDList.CompIDList.accept(self)
 
     def visitEndCompID(self, compoundIDList):
-        print('visitEndCompID', compoundIDList.ID)
         return [compoundIDList.ID]
 
     # ExpressionList

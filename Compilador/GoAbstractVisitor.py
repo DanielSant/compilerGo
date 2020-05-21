@@ -81,10 +81,6 @@ class GoAbstractVisitor(metaclass=ABCMeta):
     def visitParamIdDecl(self, paramIdDecl):
         pass
 
-    @abstractmethod
-    def visitParamDecl(self, paramDecl):
-        pass
-
     # Block
     @abstractmethod
     def visitDefinirStatementL(self, definirStatementL):
