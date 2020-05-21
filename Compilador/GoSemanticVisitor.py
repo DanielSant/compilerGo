@@ -182,115 +182,147 @@ class GoSemanticVisitor(GoAbstractVisitor):
     
     # BreakStmt
     def visitStmtBreack(self, stmtBreack):
+        print('visitStmtBreack')
         pass
 
     # ContinueStmt
     def visitStmtContinuePrint(self, stmtContinue):
+        print('visitStmtContinuePrint')
         pass
     
     # Ifstmt
     def visitSimpleIf(self, simpleIf):
+        print('visitSimpleIf')
         pass
 
     def visitCompIfElse(self, compIfElse):
+        print('visitCompIfElse')
         pass
     
     def visitIfElse(self, ifElse):
+        print('visitIfElse')
         pass
         
     # SwitchStmt
     def visitExprSwitch(self, exprSwitch):
+        print('visitExprSwitch')
         pass
     
     # SwitchStmt_Head
     def visitExprSwitchSimple(self, exprSwitchSimple):
+        print('visitExprSwitchSimple')
         pass
 
     # ExprSwitchHead1
     def visitExprSwitchHead1(self, exprSwitchHead1):
+        print('visitExprSwitchHead1')
         pass
     
     # ExprSwitchHead2 
     def visitExprSwitchHead2(self, exprSwitchHead2):
+        print('visitExprSwitchHead2')
         pass
 
     # ExprSwitchBody1
     def visitExprSwitchBody1(self, exprSwitchBody1):
+        print('visitExprSwitchBody1')
         pass
 
     # ExprSwitchBody2
     def visitExprSwitchBody2(self, exprSwitchBody2):
+        print('visitExprSwitchBody2')
         pass
 
     def visitExprSwitchExp(self, exprSwitchExp):
+        print('visitExprSwitchExp')
         pass
 
     # ExprCaseClauseList
     def visitCompoundCaseClause1(self, compoundCaseClase1):
+        print('visitCompoundCaseClause1')
         pass
 
     # ExprCaseClause
     def visitExprCase(self, exprCase):
+        print('visitExprCase')
         pass
 
     # ExprSwitchCase
     def visitCaseClauseExp(self, caseClauseExp):
+        print('visitCaseClauseExp')
         pass
 
     def visitCaseClause(self, caseClause):
+        print('visitCaseClause')
         pass
 
     # ForStmt
     def visitStmtFor(self, stmtFor):
+        print('visitStmtFor')
         pass
 
     def visitStmtForClause(self, stmtForClause):
+        print('visitStmtForClause')
         pass
 
     def visitStmtForRange(self, stmtForRange):
+        print('visitStmtForRange')
         pass
 
     def visitStmtForBlock(self, stmtForBlock):
+        print('visitStmtForBlock')
         pass
 
     # Condition
     def visitDefinirCondition(self, definirCondition):
+        print('visitDefinirCondition')
         pass
     # ForClause
     def visitClassicFor(self, classicFor):
+        print('visitClassicFor')
         pass
 
     def visitclassicFor2(self, classicFor2):
+        print('visitclassicFor2')
         pass
 
     # RangeClause
     def visitDefinirRange(self, definirRange):
+        print('visitDefinirRange')
         pass
 
     def visitRangeExpList(self, rangeExpList):
+        print('visitRangeExpList')
         pass
 
     def visitRangIDList(self, rangIDList):
+        print('visitRangIDList')
         pass
 
     # ConstDecl
     def visitSimpleConst(self, simpleConst):
+        print('visitSimpleConst')
         pass
 
     def visitCompConst(self, compConst):
+        print('visitCompConst')
         pass
 
     # ConstSpecList
     def visitCallConstSpec(self, callConstSpec):
+        print('visitCallConstSpec')
         pass
 
     def visitCompoundConstSpec(self, compoundConstSpec):
+        print('visitCompoundConstSpec')
         pass
 
     def visitListIdExp(self, listIdExp):
+        print('visitListIdExp')
         pass
 
     def visitListTypeExp(self, listTypeExp):
+        print('visitListTypeExp')
         pass
     
     # IdentifierList
@@ -310,153 +342,198 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     # ExpressionList
     def visitDefinirExpList(self, definirExpList):
+        print('visitDefinirExpList')
         pass
 
     def visitCallExpList(self, callExpList):
+        print('visitCallExpList')
         pass
 
     # ListExpr
     def visitSimpleExpList(self, simpleExpList):
+        print('visitSimpleExpList')
         pass
 
     def visitCompoundExpList(self, compoundExpList):
+        print('visitCompoundExpList')
         pass
 
     # TypeDecl
     def visitDefinirType(self, definirType):
+        print('visitDefinirType')
         pass
 
     def visitCallTypeSpecList(self, callTypeSpecList):
+        print('visitCallTypeSpecList')
         pass
 
     # TypeSpecList
     def visitCompTypeSpecList(self, compTypeSpecList):
+        print('visitCompTypeSpecList')
         pass
 
     def visitEndCompTypeSpec(self, endCompTypeSpec):
+        print('visitEndCompTypeSpec')
         pass
 
     # TypeSpec
     def visitSpecType(self, specType):
+        print('visitSpecType')
         pass
 
     # VarDecl
     def visitDefinirVar(self, definirVar):
+        print('visitDefinirVar')
         pass
 
     def visitCompVar(self, compVar):
+        print('visitCompVar')
         pass
 
     # VarSpecList
     def visitCompoundVarSpec(self, compoundVarSpec):
+        print('visitCompoundVarSpec')
         pass
 
     def visitEndCompVarSpec(self, endCompVarSpec):
+        print('visitEndCompVarSpec')
         pass
 
     # VarSpec
     def visitSpecVar(self, specVar):
+        print('visitSpecVar')
         pass
 
     def visitClassicVarSpec(self, classicVarSpec):
+        print('visitClassicVarSpec')
         pass
 
     def visitSimpleVarSpec(self, simpleVarSpec):
+        print('visitSimpleVarSpec')
         pass
 
     # CallFunc
     def visitSimpleCallFunc(self, simpleCallFunc):
+        print('visitSimpleCallFunc')
         pass
 
     def visitCallParenFunc(self, callParenFunc):
+        print('visitCallParenFunc')
         pass
 
     # IncDec
     def visitIncOp(self, incOp):
+        print('visitIncOp')
         pass
 
     def visitDecOp(self, decOp):
+        print('visitDecOp')
         pass
 
     # Assignment
     def visitAssignOp(self, assignOp):
+        print('visitAssignOp')
         pass
 
     # ShortVarDec
     def visitDeclShortVarDef(self, declShortVar):
+        print('visitDeclShortVarDef')
         pass
     
     # Expression
     def visitExpressionOR(self, expressionOR):
+        print('visitExpressionOR')
         pass
 
     def visitCallExp1(self, callExp1):
+        print('visitCallExp1')
         pass
 
     # Exp1
     def visitExpressionAND(self, expressionAND):
+        print('visitExpressionAND')
         pass
 
     def visitCallExp2(self, callExp2):
+        print('visitCallExp2')
         pass
 
     # Exp2
     def visitExpressionEquals(self, expressionEquals):
+        print('visitExpressionEquals')
         pass
 
     def visitExpressionDiferente(self, expressionDiferente):
+        print('visitExpressionDiferente')
         pass
 
     def visitExpressionLess(self, expressionLess):
+        print('visitExpressionLess')
         pass
 
     def visitExpressionLessEqual(self, expressionLessEqual):
+        print('visitExpressionLessEqual')
         pass
 
     def visitExpressionGreater(self, expressionGreater):
+        print('visitExpressionGreater')
         pass
 
     def visitExpressionGreaterEqual(self, expressionGreaterEqual):
+        print('visitExpressionGreaterEqual')
         pass
 
     def visitCallExp3(self, callExp3):
+        print('visitCallExp3')
         pass
 
     # Exp3
     def visitExpressionPlus(self, expressionPlus):
+        print('visitExpressionPlus')
         pass
 
     def visitExpressionMinus(self, expressionMinus):
+        print('visitExpressionMinus')
         pass
 
     def visitExpressionPot(self, expressionPot):
+        print('visitExpressionPot')
         pass
 
     def visitCallExp4(self, callExp4):
+        print('visitCallExp4')
         pass
 
     # Exp4
     def visitExpressionTimes(self, expressionTimes):
+        print('visitExpressionTimes')
         pass
 
     def visitExpressionDivide(self, expressionDivide):
+        print('visitExpressionDivide')
         pass
 
     def visitExpressionMod(self, expressionMod):
+        print('visitExpressionMod')
         pass
 
     def visitPrintNumberID(self, printNumberID):
+        print('visitPrintNumberID')
         pass
 
     # Exp5
     def visitExpressionNumber(self, expressionNumber):
+        print('visitExpressionNumber')
         pass
 
     def visitExpressionCallFunc(self, expressionCallFunc):
+        print('visitExpressionCallFunc')
         pass
 
     def visitExpressionID(self, expressionID):
+        print('visitExpressionID')
         pass
 
     def visitExpressionParens(self, expressionParens):
+        print('visitExpressionParens')
         pass
