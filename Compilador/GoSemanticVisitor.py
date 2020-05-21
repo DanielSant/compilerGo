@@ -511,7 +511,17 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     def visitExpressionMinus(self, expressionMinus):
         print('visitExpressionMinus')
-        pass
+        tipoExp1 = expressionMinus.Expr4.accept(self)
+        tipoExp2 = expressionMinus.Expr3.accept(self)
+        c = coercion(tipoExp1, tipoExp2)
+        if (c == None):
+            expressionMinus.accept(self.printer)
+            print('\n\t[Erro] Subtracao invalida. A expressao ', end='')
+            minusExp.exp1.accept(self.printer)
+            print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
+            minusExp.exp2.accept(self.printer)
+            print(' eh do tipo', tipoExp2, '\n')
+        return c
 
     def visitExpressionPot(self, expressionPot):
         print('visitExpressionPot')
@@ -524,6 +534,17 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # Exp4
     def visitExpressionTimes(self, expressionTimes):
         print('visitExpressionTimes')
+        tipoExp1 = expressionTimes.Expr4.accept(self)
+        tipoExp2 = expressionTimes.Expr3.accept(self)
+        c = coercion(tipoExp1, tipoExp2)
+        if (c == None):
+            expressionTimes.accept(self.printer)
+            print('\n\t[Erro] Multiplicacao invalida. A expressao ', end='')
+            timesExp.exp1.accept(self.printer)
+            print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
+            timesExp.exp2.accept(self.printer)
+            print(' eh do tipo', tipoExp2, '\n')
+        return c
         pass
 
     def visitExpressionDivide(self, expressionDivide):
