@@ -178,9 +178,9 @@ class GoSemanticVisitor(GoAbstractVisitor):
         scope = st.symbolTable[-1][st.SCOPE]
         bindable = st.getBindable(scope)
         if (tipoExp != bindable[st.TYPE]):
-            stmReturn.accept(self.printer)
+            expReturn.accept(self.printer)
             print('\t[Erro] O retorno da funcao', scope, 'eh do tipo', bindable[st.TYPE],end='')
-            print(' no entanto, o retorno passado foi do tipo', typeExp, '\n')
+            print(' no entanto, o retorno passado foi do tipo', tipoExp, '\n')
         st.endScope()
 
     def visitSimpleReturn(self, simpleReturn):
@@ -503,9 +503,9 @@ class GoSemanticVisitor(GoAbstractVisitor):
         if (c == None):
             expressionPlus.accept(self.printer)
             print('\n\t[Erro] Soma invalida. A expressao ', end='')
-            somaExp.exp1.accept(self.printer)
+            expressionPlus.exp1.accept(self.printer)
             print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
-            somaExp.exp2.accept(self.printer)
+            expressionPlus.exp2.accept(self.printer)
             print(' eh do tipo', tipoExp2, '\n')
         return c
 
@@ -517,9 +517,9 @@ class GoSemanticVisitor(GoAbstractVisitor):
         if (c == None):
             expressionMinus.accept(self.printer)
             print('\n\t[Erro] Subtracao invalida. A expressao ', end='')
-            minusExp.exp1.accept(self.printer)
+            expressionMinus.exp1.accept(self.printer)
             print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
-            minusExp.exp2.accept(self.printer)
+            expressionMinus.exp2.accept(self.printer)
             print(' eh do tipo', tipoExp2, '\n')
         return c
 
@@ -540,9 +540,9 @@ class GoSemanticVisitor(GoAbstractVisitor):
         if (c == None):
             expressionTimes.accept(self.printer)
             print('\n\t[Erro] Multiplicacao invalida. A expressao ', end='')
-            timesExp.exp1.accept(self.printer)
+            expressionTimes.exp1.accept(self.printer)
             print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
-            timesExp.exp2.accept(self.printer)
+            expressionTimes.exp2.accept(self.printer)
             print(' eh do tipo', tipoExp2, '\n')
         return c
         pass
