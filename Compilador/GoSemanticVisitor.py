@@ -200,7 +200,8 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # Ifstmt
     def visitSimpleIf(self, simpleIf):
         print('visitSimpleIf')
-        pass
+        simpleIf.Expression.accept(self)
+        # simpleIf.Block.accept(self)
 
     def visitCompIfElse(self, compIfElse):
         print('visitCompIfElse')
