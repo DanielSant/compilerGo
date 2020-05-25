@@ -72,14 +72,14 @@ t_TIMES         = r'\*'
 t_DIVIDE        = r'\/'
 t_LPAREN        = r'\('
 t_RPAREN        = r'\)'
-t_EQUALS        = r'=='
-t_DIFERENTE     = r'!='
+t_EQUALS        = r'\=='
+t_DIFERENTE     = r'\!='
 t_ASSIGN        = r'\='
 t_GREATER       = r'\>'
 t_LESS          = r'\<'
-t_GREATER_EQUAL = r'>='
-t_LESS_EQUAL    = r'<='
-t_AND           = r'&&'
+t_GREATER_EQUAL = r'\>='
+t_LESS_EQUAL    = r'\<='
+t_AND           = r'\&&'
 t_OR            = r'\|\|'
 t_POT           = r'\^'
 t_LCHAVES       = r'\{'
@@ -154,8 +154,8 @@ lexer = lex.lex()
     
 # Tipo da funcao não esta sendo printado
 data = '''
-func soma(x int, y int) int {
-    if x || y {
+func soma(x bool, y int) int {
+    if x <= y {
         return x / y;
     };
 }

@@ -489,11 +489,31 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     def visitExpressionLess(self, expressionLess):
         print('visitExpressionLess')
-        pass
+        tipoExp1 = expressionLess.Expr2.accept(self)
+        tipoExp2 = expressionLess.Expr3.accept(self)
+        c = coercion(tipoExp1, tipoExp2)
+        if (c != 'bool'):
+            expressionLess.accept(self.printer)
+            print('\n\t[Erro] Comparação invalida. A expressao ', end='')
+            expressionLess.Expr2.accept(self.printer)
+            print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
+            expressionLess.Expr3.accept(self.printer)
+            print(' eh do tipo', tipoExp2, 'quando deveriam ser do tipo boolean\n')
+        return c
 
     def visitExpressionLessEqual(self, expressionLessEqual):
         print('visitExpressionLessEqual')
-        pass
+        tipoExp1 = expressionLessEqual.Expr2.accept(self)
+        tipoExp2 = expressionLessEqual.Expr3.accept(self)
+        c = coercion(tipoExp1, tipoExp2)
+        if (c != 'bool'):
+            expressionLessEqual.accept(self.printer)
+            print('\n\t[Erro] Comparação invalida. A expressao ', end='')
+            expressionLessEqual.Expr2.accept(self.printer)
+            print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
+            expressionLessEqual.Expr3.accept(self.printer)
+            print(' eh do tipo', tipoExp2, 'quando deveriam ser do tipo boolean\n')
+        return c
 
     def visitExpressionGreater(self, expressionGreater):
         print('visitExpressionGreater')
