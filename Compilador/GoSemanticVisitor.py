@@ -453,8 +453,18 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # Expression
     def visitExpressionOR(self, expressionOR):
         print('visitExpressionOR')
-        pass
-
+        tipoExp1 = expressionOR.Exp.accept(self)
+        tipoExp2 = expressionOR.Exp1.accept(self)
+        c = coercion(tipoExp1, tipoExp2)
+        if (c == None):
+            expressionOR.accept(self.printer)
+            print('\n\t[Erro] Comparacao invalida. A expressao ', end='')
+            expressionOR.Exp.accept(self.printer)
+            print('eh do tipo', tipoExp1, 'e a expressao ', end='')
+            expressionOR.Exp1.accept(self.printer)
+            print('eh do tipo', tipoExp2, 'onde ambas deveriam ser do tipo', st.BOOL, '\n')
+        return c
+    
     def visitCallExp1(self, callExp1):
         print('visitCallExp1')
         pass
@@ -578,22 +588,21 @@ class GoSemanticVisitor(GoAbstractVisitor):
             expressionTimes.exp2.accept(self.printer)
             print(' eh do tipo', tipoExp2, '\n')
         return c
-        pass
+
 
     def visitExpressionDivide(self, expressionDivide):
         print('visitExpressionDivide')
-        tipoExp1 = expressionDivide.Expr4.accept(self)
-        tipoExp2 = expressionDivide.Expr3.accept(self)
+        tipoExp1 = expressionDivide.Expr5.accept(self)
+        tipoExp2 = expressionDivide.Expr4.accept(self)
         c = coercion(tipoExp1, tipoExp2)
         if (c == None):
             expressionDivide.accept(self.printer)
             print('\n\t[Erro] Divisao invalida. A expressao ', end='')
-            expressionDivide.exp1.accept(self.printer)
+            expressionDivide.Expr5.accept(self.printer)
             print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
-            expressionDivide.exp2.accept(self.printer)
+            expressionDivide.Expr4.accept(self.printer)
             print(' eh do tipo', tipoExp2, '\n')
         return c
-        pass
 
     def visitExpressionMod(self, expressionMod):
         print('visitExpressionMod')
