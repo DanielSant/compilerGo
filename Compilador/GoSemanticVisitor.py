@@ -582,6 +582,17 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     def visitExpressionDivide(self, expressionDivide):
         print('visitExpressionDivide')
+        tipoExp1 = expressionDivide.Expr4.accept(self)
+        tipoExp2 = expressionDivide.Expr3.accept(self)
+        c = coercion(tipoExp1, tipoExp2)
+        if (c == None):
+            expressionDivide.accept(self.printer)
+            print('\n\t[Erro] Divisao invalida. A expressao ', end='')
+            expressionDivide.exp1.accept(self.printer)
+            print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
+            expressionDivide.exp2.accept(self.printer)
+            print(' eh do tipo', tipoExp2, '\n')
+        return c
         pass
 
     def visitExpressionMod(self, expressionMod):
