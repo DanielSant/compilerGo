@@ -156,7 +156,7 @@ data = '''
 func soma(x float, y bool) int {
     x = 1;
     y = 2;
-    if x != y {
+    if x == y {
         return x % y;
     };
 }
