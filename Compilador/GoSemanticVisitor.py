@@ -9,6 +9,8 @@ def coercion(type1, type2):
             return st.FLOAT
         else:
             return st.INT
+    elif (type1 == st.BOOL and type2 == st.BOOL):
+        return st.BOOL
     else:
         return None
 
@@ -460,7 +462,17 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # Exp1
     def visitExpressionAND(self, expressionAND):
         print('visitExpressionAND')
-        pass
+        tipoExp1 = expressionAND.Expr1.accept(self)
+        tipoExp2 = expressionAND.Expr2.accept(self)
+        c = coercion(tipoExp1, tipoExp2)
+        if (c == None):
+            expressionAND.accept(self.printer)
+            print('\n\t[Erro] Comparacao invalida. A expressao ', end='')
+            expressionAND.Expr1.accept(self.printer)
+            print('eh do tipo', tipoExp1, 'e a expressao ', end='')
+            expressionAND.Expr2.accept(self.printer)
+            print('eh do tipo', tipoExp2, 'onde ambas deveriam ser do tipo', st.BOOL, '\n')
+        return c
 
     def visitCallExp2(self, callExp2):
         print('visitCallExp2')

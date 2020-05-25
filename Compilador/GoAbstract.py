@@ -880,7 +880,7 @@ class Exp1(metaclass=ABCMeta):
 class ExpressionAND(Exp1):
     def __init__(self, Expr1, Expr2):
         self.Expr1 = Expr1
-        self.Exp2 = Exp2
+        self.Expr2 = Expr2
 
     def accept(self, Visitor):
         return Visitor.visitExpressionAND(self)
