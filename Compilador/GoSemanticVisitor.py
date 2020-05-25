@@ -491,11 +491,21 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # Exp2
     def visitExpressionEquals(self, expressionEquals):
         print('visitExpressionEquals')
-        pass
+        tipoExpr2 = expressionEquals.Expr2.accept(self) 
+        tipoExpr3 = expressionEquals.Expr3.accept(self)
+        if(type(tipoExpr2) == type(tipoExpr3)):
+            return True
+        else:
+            return False
 
     def visitExpressionDiferente(self, expressionDiferente):
         print('visitExpressionDiferente')
-        pass
+        tipoExpr2 = expressionDiferente.Expr2.accept(self) 
+        tipoExpr3 = expressionDiferente.Expr3.accept(self)
+        if(type(tipoExpr2) != type(tipoExpr3)):
+            return True
+        else:
+            return False
 
     def visitExpressionLess(self, expressionLess):
         print('visitExpressionLess')
