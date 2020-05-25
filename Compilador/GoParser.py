@@ -390,7 +390,6 @@ def p_exp2(p):
 def p_exp3(p):
     '''exp3 : exp4 PLUS exp3
             | exp4 MINUS exp3
-            | exp4 POT exp3
             | exp4'''
     if(len(p) == 2):
         p[0] = p[1]
@@ -398,8 +397,7 @@ def p_exp3(p):
         p[0] = abstract.ExpressionPlus(p[1], p[3])
     elif(p[2] == '-'):
         p[0] = abstract.ExpressionMinus(p[1], p[3])
-    elif(p[2] == '^'):
-        p[0] = abstract.ExpressionPot(p[1], p[3])
+        
 
 def p_exp4(p):
     '''exp4 : exp5 TIMES exp4

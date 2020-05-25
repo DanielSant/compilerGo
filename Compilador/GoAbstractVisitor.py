@@ -497,9 +497,6 @@ class GoAbstractVisitor(metaclass=ABCMeta):
     def visitExpressionMinus(self, expressionMinus):
         pass
 
-    @abstractmethod
-    def visitExpressionPot(self, expressionPot):
-        pass
 
     @abstractmethod
     def visitCallExp4(self, callExp4):

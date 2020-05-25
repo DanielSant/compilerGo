@@ -527,11 +527,6 @@ class Visitor(GoAbstractVisitor):
         print('-', end = ' ')
         expressionMinus.Expr3.accept(self)
 
-    def visitExpressionPot(self, expressionPot):
-        expressionPot.Expr4.accept(self)
-        print('^', end = ' ')
-        expressionPot.Expr3.accept(self)
-
     def visitCallExp4(self, callExp4):
         callExp4.Expr4.accept(self)
 

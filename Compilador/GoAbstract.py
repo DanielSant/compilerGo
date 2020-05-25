@@ -962,14 +962,7 @@ class ExpressionMinus(Exp3):
 
     def accept(self, Visitor):
         return Visitor.visitExpressionMinus(self)
-
-class ExpressionPot(Exp3):
-    def __init__(self, Expr4, Expr3):
-        self.Expr4 = Expr4
-        self.Expr3 = Expr3
-
-    def accept(self, Visitor):
-        return Visitor.visitExpressionPot(self)
+        
 
 ##ABSTRATA##
 class Exp4(metaclass=ABCMeta):

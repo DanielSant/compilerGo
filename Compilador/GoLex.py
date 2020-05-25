@@ -81,7 +81,6 @@ t_GREATER_EQUAL = r'\>='
 t_LESS_EQUAL    = r'\<='
 t_AND           = r'\&&'
 t_OR            = r'\|\|'
-t_POT           = r'\^'
 t_LCHAVES       = r'\{'
 t_RCHAVES       = r'\}'
 t_SEMICOLON     = r'\;'
@@ -154,9 +153,11 @@ lexer = lex.lex()
     
 # Tipo da funcao não esta sendo printado
 data = '''
-func soma(x bool, y int) int {
-    if x <= y {
-        return x / y;
+func soma(x float, y int) int {
+    x = 1;
+    y = 2;
+    if x && y {
+        return x % y;
     };
 }
 func principal(x, p, k, l float, y float, z string, t bool) int {
