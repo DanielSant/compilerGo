@@ -357,29 +357,16 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     def visitCallExpList(self, callExpList):
         print('visitCallExpList')
-        tipoExpList = {}
-        tipoExpList1 = {}
-        tipoExpList = callExpList.Expression.accept(self)
-        tipoExpList1 = callExpList.ListExpr.accept(self)
-        print('Chamada:', tipoExpList, tipoExpList1)
-        # if (tipoExpList == None or tipoExpList1 == None):
-        #     callExpList.accept(self.printer)
-        #     print('[Erro] variavel indefinida')
-        #     return [tipoExpList]
-            
-        return [tipoExpList] + [tipoExpList1]
+        return [callExpList.Expression.accept(self)] + callExpList.ListExpr.accept(self)
 
     # ListExpr
     def visitSimpleExpList(self, simpleExpList):
         print('visitSimpleExpList')
-        return simpleExpList.Expression.accept(self)
+        return [simpleExpList.Expression.accept(self)]
 
     def visitCompoundExpList(self, compoundExpList):
         print('visitCompoundExpList')
-        exp = compoundExpList.Expression.accept(self)
-        lista = compoundExpList.ListExpr.accept(self)
-        
-        return [exp] + [lista]
+        return [compoundExpList.Expression.accept(self)] + compoundExpList.ListExpr.accept(self)
 
     # TypeDecl
     def visitDefinirType(self, definirType):
@@ -434,8 +421,22 @@ class GoSemanticVisitor(GoAbstractVisitor):
         print('visitClassicVarSpec')
         variaveis = classicVarSpec.IdentifierList.accept(self)
         tipo = classicVarSpec.Type
-        print(variaveis, tipo)
-        classicVarSpec.ExpressionList.accept(self)
+
+        for k in range(len(variaveis)):
+            st.addVar(variaveis[k], tipo)
+
+        expressao = classicVarSpec.ExpressionList.accept(self)
+
+        if(type(expressao) != type([])):
+            if(expressao != tipo):
+                classicVarSpec.accept(self.printer)
+                print('\n\t[Erro] atribuicao nao compativel')
+        else: 
+            for i in range (len(expressao)):
+                if(expressao[i] != tipo):
+                    classicVarSpec.accept(self.printer)
+                    print('\n\t[Erro] atribuicao nao compativel')
+                    break
 
     def visitSimpleVarSpec(self, simpleVarSpec):
         print('visitSimpleVarSpec')
@@ -462,13 +463,25 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # Assignment
     def visitAssignOp(self, assignOp):
         print('visitAssignOp')
-        listaExp = {}
-        listaExp1 = {}
         listaExp = assignOp.ExpressionList.accept(self) # lado esquerdo
-        print('[LISTAS esq]', listaExp, 'len:', len(listaExp))
         
         listaExp1 = assignOp.ExpressionList1.accept(self) # lado direito
-        print('[LISTAS]', listaExp1)
+
+        if(None in listaExp):
+            assignOp.accept(self.printer)
+            print('[Erro] variavel indefinida')
+
+        if(len(listaExp) != len(listaExp1)):
+            assignOp.accept(self.printer)
+            print('[Erro] de atribuicao, ', len(listaExp), ' variaveis mas ', len(listaExp1), 'valores')
+
+        for i in range(len(listaExp)):
+            if(listaExp[i] != listaExp1[i]):
+                assignOp.accept(self.printer)
+                print('\n\t[Erro] tipo de atribuicao invalida') 
+                break
+
+
 
     # ShortVarDec
     def visitDeclShortVarDef(self, declShortVar):
