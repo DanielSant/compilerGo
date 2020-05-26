@@ -357,16 +357,29 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     def visitCallExpList(self, callExpList):
         print('visitCallExpList')
-        pass
+        tipoExpList = {}
+        tipoExpList1 = {}
+        tipoExpList = callExpList.Expression.accept(self)
+        tipoExpList1 = callExpList.ListExpr.accept(self)
+        print('Chamada:', tipoExpList, tipoExpList1)
+        # if (tipoExpList == None or tipoExpList1 == None):
+        #     callExpList.accept(self.printer)
+        #     print('[Erro] variavel indefinida')
+        #     return [tipoExpList]
+            
+        return [tipoExpList] + [tipoExpList1]
 
     # ListExpr
     def visitSimpleExpList(self, simpleExpList):
         print('visitSimpleExpList')
-        pass
+        return simpleExpList.Expression.accept(self)
 
     def visitCompoundExpList(self, compoundExpList):
         print('visitCompoundExpList')
-        pass
+        exp = compoundExpList.Expression.accept(self)
+        lista = compoundExpList.ListExpr.accept(self)
+        
+        return [exp] + [lista]
 
     # TypeDecl
     def visitDefinirType(self, definirType):
@@ -394,7 +407,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # VarDecl
     def visitDefinirVar(self, definirVar):
         print('visitDefinirVar')
-        pass
+        definirVar.VarSpec.accept(self)
 
     def visitCompVar(self, compVar):
         print('visitCompVar')
@@ -412,11 +425,17 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # VarSpec
     def visitSpecVar(self, specVar):
         print('visitSpecVar')
-        pass
+        variaveis = specVar.IdentifierList.accept(self)
+        tipo = specVar.Type
+        for k in range(len(variaveis)):
+            st.addVar(variaveis[k], tipo)
 
     def visitClassicVarSpec(self, classicVarSpec):
         print('visitClassicVarSpec')
-        pass
+        variaveis = classicVarSpec.IdentifierList.accept(self)
+        tipo = classicVarSpec.Type
+        print(variaveis, tipo)
+        classicVarSpec.ExpressionList.accept(self)
 
     def visitSimpleVarSpec(self, simpleVarSpec):
         print('visitSimpleVarSpec')
@@ -443,7 +462,13 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # Assignment
     def visitAssignOp(self, assignOp):
         print('visitAssignOp')
-        pass
+        listaExp = {}
+        listaExp1 = {}
+        listaExp = assignOp.ExpressionList.accept(self) # lado esquerdo
+        print('[LISTAS esq]', listaExp, 'len:', len(listaExp))
+        
+        listaExp1 = assignOp.ExpressionList1.accept(self) # lado direito
+        print('[LISTAS]', listaExp1)
 
     # ShortVarDec
     def visitDeclShortVarDef(self, declShortVar):
@@ -586,9 +611,9 @@ class GoSemanticVisitor(GoAbstractVisitor):
         if (c == None):
             expressionPlus.accept(self.printer)
             print('\n\t[Erro] Soma invalida. A expressao ', end='')
-            expressionPlus.exp1.accept(self.printer)
+            expressionPlus.Expr4.accept(self.printer)
             print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
-            expressionPlus.exp2.accept(self.printer)
+            expressionPlus.Expr3.accept(self.printer)
             print(' eh do tipo', tipoExp2, '\n')
         return c
 
@@ -657,9 +682,8 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     def visitPrintNumberID(self, printNumberID):
         print('visitPrintNumberID')
-        if (printNumberID.numberOrId.isnumeric()):
-            print('Numero')
-            #print(isinstance(f, int))
+        if (isinstance(printNumberID.numberOrId, int)):
+            return st.INT
         else:
             idName = st.getBindable(printNumberID.numberOrId)
             if (idName != None):
