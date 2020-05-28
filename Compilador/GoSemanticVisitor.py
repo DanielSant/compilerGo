@@ -269,7 +269,8 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # ForStmt
     def visitStmtFor(self, stmtFor):
         print('visitStmtFor')
-        pass
+        stmtFor.Condition.accept(self)
+        stmtFor.Block.accept(self)
 
     def visitStmtForClause(self, stmtForClause):
         print('visitStmtForClause')
@@ -286,7 +287,8 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # Condition
     def visitDefinirCondition(self, definirCondition):
         print('visitDefinirCondition')
-        pass
+        definirCondition.Expression.accept(self)
+
     # ForClause
     def visitClassicFor(self, classicFor):
         print('visitClassicFor')
@@ -398,16 +400,17 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     def visitCompVar(self, compVar):
         print('visitCompVar')
-        pass
+        compVar.VarSpecList.accept(self)
 
     # VarSpecList
     def visitCompoundVarSpec(self, compoundVarSpec):
         print('visitCompoundVarSpec')
-        pass
+        compoundVarSpec.VarSpec.accept(self)
+        compoundVarSpec.VarSpecList.accept(self)
 
     def visitEndCompVarSpec(self, endCompVarSpec):
         print('visitEndCompVarSpec')
-        pass
+        endCompVarSpec.VarSpec.accept(self)
 
     # VarSpec
     def visitSpecVar(self, specVar):
@@ -440,7 +443,10 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     def visitSimpleVarSpec(self, simpleVarSpec):
         print('visitSimpleVarSpec')
-        pass
+        variavel = simpleVarSpec.IdentifierList.accept(self)
+        tipo = simpleVarSpec.ExpressionList.accept(self)
+        for x in range(len(variavel)):
+            st.addVar(variavel[x], tipo)
 
     # CallFunc
     def visitSimpleCallFunc(self, simpleCallFunc):
@@ -560,13 +566,13 @@ class GoSemanticVisitor(GoAbstractVisitor):
         tipoExp1 = expressionLess.Expr2.accept(self)
         tipoExp2 = expressionLess.Expr3.accept(self)
         c = coercion(tipoExp1, tipoExp2)
-        if (c != st.BOOL):
+        if (c == None):
             expressionLess.accept(self.printer)
             print('\n\t[Erro] Comparação invalida. A expressao ', end='')
             expressionLess.Expr2.accept(self.printer)
             print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
             expressionLess.Expr3.accept(self.printer)
-            print(' eh do tipo', tipoExp2, 'quando deveriam ser do tipo boolean\n')
+            print(' eh do tipo', tipoExp2, 'quando deveriam ser do mesmo tipo\n')
         return c
 
     def visitExpressionLessEqual(self, expressionLessEqual):

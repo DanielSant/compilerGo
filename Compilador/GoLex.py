@@ -153,10 +153,10 @@ lexer = lex.lex()
     
 # Tipo da funcao não esta sendo printado
 data = '''
-func soma(x float, y int) int {
-    x, y = TRUE, 3;
+func soma(x bool, y int) int {
+    //x, y = TRUE, 3;
     //y = 2;
-    if x == y {
+    if x < y {
         return x % y;
     };
 }
