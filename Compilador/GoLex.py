@@ -166,6 +166,7 @@ func principal(x int, y float) int {
     var d int = 42;
     var a, b int = 20, 40;
     var w = 15;
+    abc = 5;
     var (
         a = 13;
         v bool;

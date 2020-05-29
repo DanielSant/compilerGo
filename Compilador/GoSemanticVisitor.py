@@ -274,10 +274,14 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     def visitStmtForClause(self, stmtForClause):
         print('visitStmtForClause')
-        pass
+        stmtForClause.ForClause.accept(self)
+        stmtForClause.Block.accept(self)
+        
 
     def visitStmtForRange(self, stmtForRange):
         print('visitStmtForRange')
+        stmtForRange.RangeClause.accept(self)
+        stmtForRange.Block.accept(self)
         pass
 
     def visitStmtForBlock(self, stmtForBlock):
@@ -296,7 +300,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     def visitclassicFor2(self, classicFor2):
         print('visitclassicFor2')
-        pass
+        classicFor2.Condition.accept(self)
 
     # RangeClause
     def visitDefinirRange(self, definirRange):
@@ -305,7 +309,9 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     def visitRangeExpList(self, rangeExpList):
         print('visitRangeExpList')
-        pass
+        rangeExpList.ExpressionList.accept(self)
+        rangeExpList.Expression.accept(self)
+        
 
     def visitRangIDList(self, rangIDList):
         print('visitRangIDList')
@@ -314,7 +320,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # ConstDecl
     def visitSimpleConst(self, simpleConst):
         print('visitSimpleConst')
-        pass
+        simpleConst.ConstSpec.accept(self)
 
     def visitCompConst(self, compConst):
         print('visitCompConst')
@@ -473,19 +479,29 @@ class GoSemanticVisitor(GoAbstractVisitor):
         
         listaExp1 = assignOp.ExpressionList1.accept(self) # lado direito
 
-        if(None in listaExp):
+
+        if(type(listaExp) is list):
+            if(None in listaExp):
+                assignOp.accept(self.printer)
+                print('[Erro] variavel indefinida')
+
+            if(len(listaExp) != len(listaExp1)):
+                assignOp.accept(self.printer)
+                print('[Erro] de atribuicao, ', len(listaExp), ' variaveis mas ', len(listaExp1), 'valores')
+
+            for i in range(len(listaExp)):
+                if(listaExp[i] != listaExp1[i]):
+                    assignOp.accept(self.printer)
+                    print('\n\t[Erro] tipo de atribuicao invalida') 
+                    break
+
+        elif(listaExp == None):
             assignOp.accept(self.printer)
             print('[Erro] variavel indefinida')
 
-        if(len(listaExp) != len(listaExp1)):
-            assignOp.accept(self.printer)
-            print('[Erro] de atribuicao, ', len(listaExp), ' variaveis mas ', len(listaExp1), 'valores')
+        
 
-        for i in range(len(listaExp)):
-            if(listaExp[i] != listaExp1[i]):
-                assignOp.accept(self.printer)
-                print('\n\t[Erro] tipo de atribuicao invalida') 
-                break
+        
 
 
 
@@ -716,7 +732,8 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     def visitExpressionCallFunc(self, expressionCallFunc):
         print('visitExpressionCallFunc')
-        pass
+        expressionCallFunc.callFunc.accept(self)
+        
 
     def visitExpressionID(self, expressionID):
         print('visitExpressionID')
