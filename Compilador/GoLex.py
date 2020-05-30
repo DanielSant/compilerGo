@@ -14,8 +14,6 @@ reserved = {
     'if': 'IF',
     'range': 'RANGE',
     'case': 'CASE',
-    'map': 'MAP',
-    'struct': 'STRUCT',
     'type': 'TYPE',
     'continue': 'CONTINUE',
     'for': 'FOR',
@@ -31,8 +29,6 @@ reserved = {
     'bool' : 'BOOL',
     'byte' : 'BYTE',
     'float' : 'FLOAT',
-    'print': 'PRINT',
-    'println': 'PRINTLN'
 }
 
 # List of token names.   This is always required
@@ -43,7 +39,6 @@ tokens = [
     'MINUS',
     'TIMES',
     'DIVIDE',
-    'POT',
     'EQUALS',
     'DIFERENTE',
     'ASSIGN',
