@@ -282,7 +282,6 @@ class GoSemanticVisitor(GoAbstractVisitor):
         print('visitStmtForRange')
         stmtForRange.RangeClause.accept(self)
         stmtForRange.Block.accept(self)
-        pass
 
     def visitStmtForBlock(self, stmtForBlock):
         print('visitStmtForBlock')
@@ -296,7 +295,9 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # ForClause
     def visitClassicFor(self, classicFor):
         print('visitClassicFor')
-        pass
+        classicFor.initPostStmt.accept(self)
+        classicFor.Condition.accept(self)
+        classicFor.initPostStmt1.accept(self)
 
     def visitclassicFor2(self, classicFor2):
         print('visitclassicFor2')
@@ -305,7 +306,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # RangeClause
     def visitDefinirRange(self, definirRange):
         print('visitDefinirRange')
-        pass
+        definirRange.Expression.accept(self)
 
     def visitRangeExpList(self, rangeExpList):
         print('visitRangeExpList')
@@ -466,11 +467,18 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # IncDec
     def visitIncOp(self, incOp):
         print('visitIncOp')
-        pass
+        tipo = incOp.Expression.accept(self)
+        print(st.symbolTable)
+        if(tipo != st.INT):
+            incOp.accept(self.printer)
+            print('\n\t[Erro] Variavel a ser incrementada deve ser do tipo inteiro')
 
     def visitDecOp(self, decOp):
         print('visitDecOp')
-        pass
+        tipo = decOp.Expression.accept(self)
+        if(tipo != st.INT):
+            decOp.accept(self.printer)
+            print('\n\t[Erro] Variavel a ser decrementada deve ser do tipo inteiro')
 
     # Assignment
     def visitAssignOp(self, assignOp):
@@ -584,13 +592,13 @@ class GoSemanticVisitor(GoAbstractVisitor):
         tipoExp1 = expressionLessEqual.Expr2.accept(self)
         tipoExp2 = expressionLessEqual.Expr3.accept(self)
         c = coercion(tipoExp1, tipoExp2)
-        if (c != st.BOOL):
+        if (c == None):
             expressionLessEqual.accept(self.printer)
             print('\n\t[Erro] Comparação invalida. A expressao ', end='')
             expressionLessEqual.Expr2.accept(self.printer)
             print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
             expressionLessEqual.Expr3.accept(self.printer)
-            print(' eh do tipo', tipoExp2, 'quando deveriam ser do tipo boolean\n')
+            print(' eh do tipo', tipoExp2, 'quando deveriam ser do mesmo tipo\n')
         return c
 
     def visitExpressionGreater(self, expressionGreater):
@@ -598,13 +606,13 @@ class GoSemanticVisitor(GoAbstractVisitor):
         tipoExp1 = expressionGreater.Expr2.accept(self)
         tipoExp2 = expressionGreater.Expr3.accept(self)
         c = coercion(tipoExp1, tipoExp2)
-        if (c != st.BOOL):
+        if (c == None):
             expressionGreater.accept(self.printer)
             print('\n\t[Erro] Comparação invalida. A expressao ', end='')
             expressionGreater.Expr2.accept(self.printer)
             print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
             expressionGreater.Expr3.accept(self.printer)
-            print(' eh do tipo', tipoExp2, 'quando deveriam ser do tipo boolean\n')
+            print(' eh do tipo', tipoExp2, 'quando deveriam ser do mesmo tipo\n')
         return c
 
     def visitExpressionGreaterEqual(self, expressionGreaterEqual):
@@ -612,13 +620,13 @@ class GoSemanticVisitor(GoAbstractVisitor):
         tipoExp1 = expressionGreaterEqual.Expr2.accept(self)
         tipoExp2 = expressionGreaterEqual.Expr3.accept(self)
         c = coercion(tipoExp1, tipoExp2)
-        if (c != st.BOOL):
+        if (c == None):
             expressionGreaterEqual.accept(self.printer)
             print('\n\t[Erro] Comparação invalida. A expressao ', end='')
             expressionGreaterEqual.Expr2.accept(self.printer)
             print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
             expressionGreaterEqual.Expr3.accept(self.printer)
-            print(' eh do tipo', tipoExp2, 'quando deveriam ser do tipo boolean\n')
+            print(' eh do tipo', tipoExp2, 'quando deveriam ser do mesmo tipo\n')
         return c
 
     def visitCallExp3(self, callExp3):
@@ -708,9 +716,9 @@ class GoSemanticVisitor(GoAbstractVisitor):
         if (isinstance(printNumberID.numberOrId, int)):
             return st.INT
         elif (printNumberID.numberOrId == 'true' or printNumberID.numberOrId == 'false'):
-            return st.BOOL;
+            return st.BOOL
         elif (printNumberID.numberOrId[0] == '\"'):
-            return st.STRING;
+            return st.STRING
         else:
             idName = st.getBindable(printNumberID.numberOrId)
             if (idName != None):

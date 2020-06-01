@@ -179,6 +179,7 @@ func principal(x int, y float) int {
         n;
         break;
     };
+    //var c int;
     for a, d = range c {
         a = a + 1;
         continue;
@@ -187,6 +188,13 @@ func principal(x int, y float) int {
         a = a + 1; 
     };
     for ;a < 10; {
+        a = a + 1;
+        if 5 + 3 < 8 {
+            a = 7;
+        };
+    };
+
+    for a = 10 ;a < 10; a++{
         a = a + 1;
         if 5 + 3 < 8 {
             a = 7;
@@ -221,7 +229,7 @@ func principal(x int, y float) int {
     };
     for b = 1; b < 100; b++ {
         b = b + 1;
-    };    
+    }; 
 }
 
 // Isto é comentário
