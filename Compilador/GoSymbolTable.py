@@ -1,10 +1,10 @@
 #Dicionario que representa a tabela de simbolos.
-symbolTable = []
+symbolTable = [{'scope': 'global', 'print': {'bindable': 'func', 'params': ['', 'string'], 'type': 'string'}, 'println': {'bindable': 'func', 'params': ['', 'string'], 'type': 'string'}}]
 # 'int': 'INT',
-#     'string': 'STRING',
-#     'bool' : 'BOOL',
-#     'byte' : 'BYTE',
-#     'float' : 'FLOAT',
+# 'string': 'STRING',
+# 'bool' : 'BOOL',
+# 'byte' : 'BYTE',
+# 'float' : 'FLOAT',
 
 # break
 # default

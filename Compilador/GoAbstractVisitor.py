@@ -434,11 +434,6 @@ class GoAbstractVisitor(metaclass=ABCMeta):
     def visitAssignOp(self, assignOp): #observacao
         pass
 
-    # ShortVarDec
-    @abstractmethod
-    def visitDeclShortVarDef(self, declShortVar):
-        pass
-
     # Expression
     @abstractmethod
     def visitExpressionOR(self, expressionOR):

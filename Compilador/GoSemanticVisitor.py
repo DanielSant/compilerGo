@@ -479,7 +479,6 @@ class GoSemanticVisitor(GoAbstractVisitor):
         
         listaExp1 = assignOp.ExpressionList1.accept(self) # lado direito
 
-
         if(type(listaExp) is list):
             if(None in listaExp):
                 assignOp.accept(self.printer)
@@ -499,17 +498,6 @@ class GoSemanticVisitor(GoAbstractVisitor):
             assignOp.accept(self.printer)
             print('[Erro] variavel indefinida')
 
-        
-
-        
-
-
-
-    # ShortVarDec
-    def visitDeclShortVarDef(self, declShortVar):
-        print('visitDeclShortVarDef')
-        pass
-    
     # Expression
     def visitExpressionOR(self, expressionOR):
         print('visitExpressionOR')
@@ -719,6 +707,10 @@ class GoSemanticVisitor(GoAbstractVisitor):
         print('visitPrintNumberID')
         if (isinstance(printNumberID.numberOrId, int)):
             return st.INT
+        elif (printNumberID.numberOrId == 'true' or printNumberID.numberOrId == 'false'):
+            return st.BOOL;
+        elif (printNumberID.numberOrId[0] == '\"'):
+            return st.STRING;
         else:
             idName = st.getBindable(printNumberID.numberOrId)
             if (idName != None):

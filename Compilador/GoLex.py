@@ -21,7 +21,6 @@ reserved = {
     'switch': 'SWITCH',
     'return': 'RETURN',
     'var': 'VAR',
-    'boolean': 'BOOLEAN',
     'true': 'TRUE',
     'false': 'FALSE',
     'int': 'INT',
@@ -96,6 +95,11 @@ def t_NUMBER(t):
     t.value = int(t.value)
     return t
 
+def t_STRING(t):
+    r'\"([^\\\n]|(\\.))*?\"'
+    t.type = reserved.get(t.value, 'STRING')
+    return t
+
 # Indentacao # Wedson Help
 ArrayTabulacao = [0]
 IndicePosicao = 0
@@ -149,8 +153,12 @@ lexer = lex.lex()
 # Tipo da funcao não esta sendo printado
 data = '''
 func soma(x bool, y int) int {
-    //x, y = TRUE, 3;
+    x, y = true, 3;
+    var eta string;
     //y = 2;
+    eta = "This is a string";
+    print(x);
+    println(eta);
     if x < y {
         return x % y;
     };

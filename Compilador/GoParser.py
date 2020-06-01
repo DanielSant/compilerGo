@@ -344,10 +344,6 @@ def p_assignment(p):
     '''assignment : expressionList ASSIGN expressionList'''
     p[0] = abstract.AssignOp(p[1], p[3])
 
-def p_shortVarDec(p):
-    '''shortVarDec : identifierList ASSIGN expressionList'''
-    p[0] = abstract.DeclShortVarDef(p[1], p[3])
-
 def p_exp(p):
     '''expression : expression OR exp1
                   | exp1'''
@@ -415,6 +411,9 @@ def p_exp4(p):
 
 def p_exp5(p):
     '''exp5 : NUMBER
+            | TRUE
+            | FALSE
+            | STRING
             | callFunc
             | ID
             | LPAREN expression RPAREN'''
