@@ -167,10 +167,6 @@ class GoSemanticVisitor(GoAbstractVisitor):
         print('visitAssign')
         pass
     
-    def visitDeclShortVar(self, declShortVar):
-        print('visitDeclShortVar')
-        pass
-    
     # ReturnStmt
     def visitExpReturn(self, expReturn):
         print('visitExpReturn')
@@ -181,7 +177,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
             scope = st.symbolTable[indice][st.SCOPE]    
             bindable = st.getBindable(scope)
             if (bindable != None):
-                break;
+                break
 
         if (tipoExp != bindable[st.TYPE]):
             expReturn.accept(self.printer)
@@ -285,18 +281,24 @@ class GoSemanticVisitor(GoAbstractVisitor):
     def visitStmtFor(self, stmtFor):
         print('visitStmtFor')
         stmtFor.Condition.accept(self)
+        st.beginScope(st.FOR)
         stmtFor.Block.accept(self)
+        st.varCheck(st.endScope())
 
     def visitStmtForClause(self, stmtForClause):
         print('visitStmtForClause')
         stmtForClause.ForClause.accept(self)
+        st.beginScope(st.FOR)
         stmtForClause.Block.accept(self)
+        st.varCheck(st.endScope())
         
 
     def visitStmtForRange(self, stmtForRange):
         print('visitStmtForRange')
         stmtForRange.RangeClause.accept(self)
+        st.beginScope(st.FOR)
         stmtForRange.Block.accept(self)
+        st.varCheck(st.endScope())
 
     def visitStmtForBlock(self, stmtForBlock):
         print('visitStmtForBlock')
@@ -305,7 +307,11 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # Condition
     def visitDefinirCondition(self, definirCondition):
         print('visitDefinirCondition')
-        definirCondition.Expression.accept(self)
+        if(definirCondition.Expression.accept(self) in st.TiposPrimitivos):
+            pass
+        else:
+            definirCondition.accept(self.printer)
+            print('\n\t[Erro]: Condicao invalida')
 
     # ForClause
     def visitClassicFor(self, classicFor):
@@ -361,10 +367,12 @@ class GoSemanticVisitor(GoAbstractVisitor):
     
     # IdentifierList
     def visitDefinirIDList(self, definirIDList):
+        print('visitDefinirIDList')
         listIDs = definirIDList.CompIDList.accept(self)
         return [definirIDList.ID] + listIDs
     
     def visitDefinirID(self, definirID): # ok
+        print('visitDefinirID')
         return [definirID.ID]
 
     # CompIDList
@@ -501,24 +509,44 @@ class GoSemanticVisitor(GoAbstractVisitor):
         
         listaExp1 = assignOp.ExpressionList1.accept(self) # lado direito
 
-        if(type(listaExp) is list):
-            if(None in listaExp):
-                assignOp.accept(self.printer)
-                print('\n\t[Erro]: Variavel indefinida')
-
-            if(len(listaExp) != len(listaExp1)):
-                assignOp.accept(self.printer)
-                print('\n\t[Erro]: Erro de atribuicao, ', len(listaExp), ' variaveis mas ', len(listaExp1), 'valores')
-
-            for i in range(len(listaExp)):
-                if(listaExp[i] != listaExp1[i]):
-                    assignOp.accept(self.printer)
-                    print('\n\t[Erro]: Tipo de atribuicao invalida') 
-                    break
-
-        elif(listaExp == None):
+        if(listaExp != listaExp1):
             assignOp.accept(self.printer)
-            print('\n\t[Erro]: Variavel indefinida')
+            print('\n\t[Erro]: Tipo de atribuicao invalida')
+
+    # ShortVarDecl
+    def visitDefinirShortVar(self, shortVar):
+        print('visitShortVarDecl')
+        variaveis = shortVar.IdentifierList.accept(self)
+        tipos = shortVar.ExpressionList.accept(self)
+        if(type(variaveis) is list and type(tipos) is list):
+            if(len(variaveis) == len(tipos)):
+                for k in range(len(variaveis)):
+                    if(variaveis[k] in lex.reserved):
+                        shortVar.accept(self.printer)
+                        print('\n\t[Erro]: Declaracao invalida')
+                    else:
+                        for k in range(len(variaveis)):
+                            if(tipos[k] in st.TiposPrimitivos):
+                                st.addVar(variaveis[k], tipos[k])
+                            else:
+                                shortVar.accept(self.printer)
+                                print('\n\t[Erro]: Declaracao invalida')
+            else:
+                shortVar.accept(self.printer)
+                print('\n\t[Erro]: Declaracao invalida')
+        elif(type(variaveis) is list):
+            shortVar.accept(self.printer)
+            print('\n\t[Erro]: Declaracao invalida')
+        elif(variaveis in lex.reserved):
+            shortVar.accept(self.printer)
+            print('\n\t[Erro]: Declaracao invalida')
+        elif(tipos in st.TiposPrimitivos):
+            st.addVar(variaveis, tipos)
+        else:
+            shortVar.accept(self.printer)
+            print('\n\t[Erro]: Declaracao invalida')
+        
+
 
     # Expression
     def visitExpressionOR(self, expressionOR):
@@ -737,7 +765,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
             idName = st.getBindable(printNumberID.numberOrId)
             if (idName != None):
                 return idName[st.TYPE]
-            return None
+            return printNumberID.numberOrId
         
     # Exp5
     def visitExpressionNumber(self, expressionNumber):

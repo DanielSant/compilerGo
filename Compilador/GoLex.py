@@ -56,7 +56,8 @@ tokens = [
     'COMMA',
     'MOD',
     'DPLUS',
-    'DMINUS'
+    'DMINUS',
+    'COLONEQ'
 ] + list(reserved.values())
 
 # Regular expression rules for simple tokens
@@ -83,6 +84,7 @@ t_COMMA         = r'\,'
 t_MOD           = r'\%'
 t_DPLUS         = r'\+\+'
 t_DMINUS        = r'\-\-'
+t_COLONEQ       = r'\:\='
  
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
@@ -153,23 +155,12 @@ lexer = lex.lex()
 # Tipo da funcao não esta sendo printado
 data = '''
 func soma(x bool, y int, z string, l int, u float) int {
-    x, y = true, 3;
-    var jota int = 3;
-    var eta string;
-    //y = 2;
-    eta = "This is a string";
-    print(x);
-    println(eta);
-    if x < y {
-        if x == y {
-            var def int;
-            return x % y;
-        } else {
-            return x;
-        };
-        return x % y;
-    } else if x > y {
-        return x + y;
+    var i = 4;
+    curta, lala, aklsa := i, 3, 2;
+    l, y = 6, 5;
+
+    for x+y{
+        var ala int = 0;
     };
 }
 

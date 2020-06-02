@@ -50,6 +50,7 @@ YES = 'yes'
 NO = 'no'
 USED = 'used'
 Number = [INT, FLOAT]
+TiposPrimitivos = [INT, FLOAT, BOOL, STRING]
 
 #beginScope = criar um novo escopo
 def beginScope(nameScope):

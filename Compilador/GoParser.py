@@ -96,8 +96,13 @@ def p_declaration(p):
 def p_simpleStmt(p):
     '''simpleStmt : condition
                   | incDec
-                  | assignment'''
+                  | assignment
+                  | shortVar'''
     p[0] = p[1]
+
+def p_shortVar(p):
+    '''shortVar : expressionList COLONEQ expressionList'''
+    p[0] = abstract.DefinirShortVar(p[1], p[3])
 
 def p_returnStmt(p):
     '''returnStmt : RETURN expressionList

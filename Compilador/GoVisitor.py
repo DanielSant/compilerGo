@@ -147,9 +147,11 @@ class Visitor(GoAbstractVisitor):
     def visitAssign(self, assign):
         assign.Assignment.accept(self)
     
-    def visitDeclShortVar(self, declShortVar):
-        declShortVar.ShortVarDecl.accept(self)
-    
+    def visitDefinirShortVar(self, declShortVar):
+        declShortVar.IdentifierList.accept(self)
+        print(':=', end = ' ')
+        declShortVar.ExpressionList.accept(self)
+
     # ReturnStmt
     def visitExpReturn(self, expReturn):
         print('return', end =' ')
@@ -456,12 +458,6 @@ class Visitor(GoAbstractVisitor):
         assignOp.ExpressionList.accept(self)
         print('=', end = ' ')
         assignOp.ExpressionList1.accept(self)
-
-    # ShortVarDec
-    def visitDeclShortVarDef(self, declShortVar):
-        declShortVar.IdentifierList.accept(self)
-        print('=', end = ' ')
-        declShortVar.ExpressionList.accept(self)
     
     # Expression
     def visitExpressionOR(self, expressionOR):

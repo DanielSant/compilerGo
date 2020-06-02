@@ -158,10 +158,6 @@ class GoAbstractVisitor(metaclass=ABCMeta):
     def visitAssign(self, assign):
         pass
 
-    @abstractmethod
-    def visitDeclShortVar(self, declShortVar):
-        pass
-
     # ReturnStmt
     @abstractmethod
     def visitExpReturn(self, expReturn):
@@ -428,6 +424,11 @@ class GoAbstractVisitor(metaclass=ABCMeta):
     # Assignment
     @abstractmethod
     def visitAssignOp(self, assignOp): #observacao
+        pass
+
+    # ShortVarDecl
+    @abstractmethod
+    def visitDefinirShortVar(self, shortVar):
         pass
 
     # Expression

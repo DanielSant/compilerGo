@@ -201,6 +201,21 @@ class SimpleStmt(metaclass=ABCMeta):
     def accept(self, Visitor):
         pass
 
+#ABSTRATA##
+class ShortVar(metaclass=ABCMeta):
+    @abstractclassmethod
+    def accept(self, Visitor):
+        pass
+
+##CONCRETA##
+class DefinirShortVar(ShortVar):
+    def __init__(self, IdentifierList, ExpressionList):
+        self.IdentifierList = IdentifierList
+        self.ExpressionList = ExpressionList  
+        
+    def accept(self, Visitor):
+        return Visitor.visitDefinirShortVar(self)
+
 ##ABSTRATA##
 class ReturnStmt(metaclass=ABCMeta):
     @abstractclassmethod
@@ -728,6 +743,7 @@ class CompVar(VarDecl):
     def accept(self, Visitor):
         return Visitor.visitCompVar(self)
 
+
 ##ABSTRATA##
 class VarSpecList(metaclass=ABCMeta):
     @abstractclassmethod
@@ -749,6 +765,7 @@ class EndCompVarSpec(VarSpecList):
 
     def accept(self, Visitor):
         return Visitor.visitEndCompVarSpec(self)
+        
 
 ##ABSTRATA##
 class VarSpec(metaclass=ABCMeta):
@@ -839,21 +856,6 @@ class AssignOp(Assignment):
         
     def accept(self, Visitor):
         return Visitor.visitAssignOp(self)
-
-##ABSTRATA##
-class ShortVarDecl(metaclass=ABCMeta):
-    @abstractclassmethod
-    def accept(self, Visitor):
-        pass
-
-##CONCRETA##
-class DeclShortVarDef(ShortVarDecl):
-    def __init__(self, IdentifierList, ExpressionList):
-        self.IdentifierList = IdentifierList
-        self.ExpressionList = ExpressionList  
-        
-    def accept(self, Visitor):
-        return Visitor.visitDeclShortVarDef(self)
 
 ##ABSTRATA##
 class Expression(metaclass=ABCMeta):
