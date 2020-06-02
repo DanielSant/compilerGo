@@ -109,63 +109,63 @@ class GoSemanticVisitor(GoAbstractVisitor):
         compoundStatmenteList.statementList.accept(self)
 
     # Statement
-    def visitStmtDeclaration(self, stmtDeclaration):
-        print('visitStmtDeclaration')
-        pass
+    # def visitStmtDeclaration(self, stmtDeclaration):
+    #     print('visitStmtDeclaration')
+    #     pass
 
-    def visitStmtSimple(self, stmtSimple):
-        print('visitStmtSimple')
-        pass
+    # def visitStmtSimple(self, stmtSimple):
+    #     print('visitStmtSimple')
+    #     pass
 
-    def visitStmtReturn(self, stmtReturn):
-        print('visitStmtReturn')
-        pass
+    # def visitStmtReturn(self, stmtReturn):
+    #     print('visitStmtReturn')
+    #     pass
     
-    def visitStmtBreak(self, stmtBreak):
-        print('visitStmtBreak')
-        pass
+    # def visitStmtBreak(self, stmtBreak):
+    #     print('visitStmtBreak')
+    #     pass
     
-    def visitStmtContinue(self, stmtContinue):
-        print('visitStmtContinue')
-        pass
+    # def visitStmtContinue(self, stmtContinue):
+    #     print('visitStmtContinue')
+    #     pass
     
-    def visitStmtIf(self, stmtIf):
-        print('visitStmtIf')
-        pass
+    # def visitStmtIf(self, stmtIf):
+    #     print('visitStmtIf')
+    #     pass
     
-    def visitStmtSwitch(self, stmtSwitch):
-        print('visitStmtSwitch')
-        pass
+    # def visitStmtSwitch(self, stmtSwitch):
+    #     print('visitStmtSwitch')
+    #     pass
     
-    def visitCallStmtFor(self, stmtFor):
-        print('visitCallStmtFor')
-        pass
+    # def visitCallStmtFor(self, stmtFor):
+    #     print('visitCallStmtFor')
+    #     pass
 
     # Declaration
-    def visitDeclConst(self, declConst):
-        print('visitDeclConst')
-        pass
+    # def visitDeclConst(self, declConst):
+    #     print('visitDeclConst')
+    #     pass
     
-    def visitDeclType(self, declType):
-        print('visitDeclType')
-        pass
+    # def visitDeclType(self, declType):
+    #     print('visitDeclType')
+    #     pass
     
-    def visitDeclVar(self, declVar):
-        print('visitDeclVar')
-        pass
+    # def visitDeclVar(self, declVar):
+    #     print('visitDeclVar')
+    #     pass
     
     # SimpleStmt
-    def visitStmtCondition(self, stmtCondition):
-        print('visitStmtCondition')
-        pass
+    # def visitStmtCondition(self, stmtCondition):
+    #     print('visitStmtCondition')
+    #     pass
 
-    def visitStmtIncDec(self, stmtIncDec):
-        print('visitStmtIncDec')
-        pass
+    # def visitStmtIncDec(self, stmtIncDec):
+    #     print('visitStmtIncDec')
+    #     pass
     
-    def visitAssign(self, assign):
-        print('visitAssign')
-        pass
+    # def visitAssign(self, assign):
+    #     print('visitAssign')
+    #     pass
     
     # ReturnStmt
     def visitExpReturn(self, expReturn):
@@ -186,16 +186,18 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     def visitSimpleReturn(self, simpleReturn):
         print('visitSimpleReturn')
-        pass
+        st.endScope()
     
     # BreakStmt
     def visitStmtBreack(self, stmtBreack):
         print('visitStmtBreack')
+        # endScope?
         pass
 
     # ContinueStmt
     def visitStmtContinuePrint(self, stmtContinue):
         print('visitStmtContinuePrint')
+        # endScope?
         pass
     
     # Ifstmt
@@ -227,82 +229,89 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # SwitchStmt
     def visitExprSwitch(self, exprSwitch):
         print('visitExprSwitch')
-        pass
+        exprSwitch.switchStmt_Head.accept(self)
+        exprSwitch.switchStmt_Body.accept(self)
     
     # SwitchStmt_Head
     def visitExprSwitchSimple(self, exprSwitchSimple):
         print('visitExprSwitchSimple')
-        pass
+        exprSwitchSimple.switchStmt_Body.accept(self)
 
     # ExprSwitchHead1
     def visitExprSwitchHead1(self, exprSwitchHead1):
         print('visitExprSwitchHead1')
-        pass
+        exprSwitchHead1.SimpleStmt.accept(self)
+        exprSwitchHead1.expression.accept(self)
     
     # ExprSwitchHead2 
     def visitExprSwitchHead2(self, exprSwitchHead2):
         print('visitExprSwitchHead2')
-        pass
+        exprSwitchHead2.simpleStmt.accept(self)
 
     # ExprSwitchBody1
     def visitExprSwitchBody1(self, exprSwitchBody1):
         print('visitExprSwitchBody1')
-        pass
+        exprSwitchBody1.exprCaseClauseList.accept(self)
 
     # ExprSwitchBody2
     def visitExprSwitchBody2(self, exprSwitchBody2):
         print('visitExprSwitchBody2')
+        # this body is empty
         pass
 
-    def visitExprSwitchExp(self, exprSwitchExp):
-        print('visitExprSwitchExp')
-        pass
+    # def visitExprSwitchExp(self, exprSwitchExp):
+    #     print('visitExprSwitchExp')
+    #     pass
 
     # ExprCaseClauseList
     def visitCompoundCaseClause1(self, compoundCaseClase1):
         print('visitCompoundCaseClause1')
-        pass
+        compoundCaseClase1.ExprCaseClause.accept(self)
+        compoundCaseClase1.ExprCaseClauseList.accept(self)
 
     # ExprCaseClause
     def visitExprCase(self, exprCase):
         print('visitExprCase')
-        pass
+        exprCase.ExprSwitchCase.accept(self)
+        exprCase.StatementList.accept(self)
 
     # ExprSwitchCase
     def visitCaseClauseExp(self, caseClauseExp):
         print('visitCaseClauseExp')
-        pass
+        caseClauseExp.ExpressionList.accept(self)
 
     def visitCaseClause(self, caseClause):
         print('visitCaseClause')
+        # print do case
         pass
 
     # ForStmt
     def visitStmtFor(self, stmtFor):
         print('visitStmtFor')
-        stmtFor.Condition.accept(self)
         st.beginScope(st.FOR)
+        stmtFor.Condition.accept(self)
         stmtFor.Block.accept(self)
         st.varCheck(st.endScope())
 
     def visitStmtForClause(self, stmtForClause):
         print('visitStmtForClause')
-        stmtForClause.ForClause.accept(self)
         st.beginScope(st.FOR)
+        stmtForClause.ForClause.accept(self)
         stmtForClause.Block.accept(self)
         st.varCheck(st.endScope())
         
-
     def visitStmtForRange(self, stmtForRange):
         print('visitStmtForRange')
-        stmtForRange.RangeClause.accept(self)
         st.beginScope(st.FOR)
+        stmtForRange.RangeClause.accept(self)
         stmtForRange.Block.accept(self)
         st.varCheck(st.endScope())
 
     def visitStmtForBlock(self, stmtForBlock):
         print('visitStmtForBlock')
-        pass
+        st.beginScope(st.FOR)
+        stmtForBlock.Block.accept(self)
+        st.varCheck(st.endScope())
 
     # Condition
     def visitDefinirCondition(self, definirCondition):
@@ -327,17 +336,37 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # RangeClause
     def visitDefinirRange(self, definirRange):
         print('visitDefinirRange')
-        definirRange.Expression.accept(self)
+        if (definirRange.Expression.accept(self) != st.STRING):
+            definirRange.accept(self.printer)
+            print('\n\t[ERRO] Declaracao do range precisa ser do tipo string')
 
     def visitRangeExpList(self, rangeExpList):
         print('visitRangeExpList')
-        rangeExpList.ExpressionList.accept(self)
-        rangeExpList.Expression.accept(self)
-        
+        left = rangeExpList.ExpressionList.accept(self)
+        right = rangeExpList.Expression.accept(self)
 
-    def visitRangIDList(self, rangIDList):
-        print('visitRangIDList')
-        pass
+        if (type(left) is list):
+            if (left[0] in st.TiposPrimitivos and left[0] != st.INT):
+                rangeExpList.accept(self.printer)
+                print('\n\t [ERRO] O tipo da primeira variavel precisa ser inteiro.')
+            elif(left[0] != st.INT):
+                st.addVar(left[0], st.INT)
+
+            if (left[1] in st.TiposPrimitivos and left[1] != st.STRING):
+                rangeExpList.accept(self.printer)
+                print('\n\t [ERRO] O tipo da segunda variavel precisa ser string.')
+            elif(left[1] != st.STRING):
+                st.addVar(left[1], st.STRING)
+
+        elif(left in lex.reserved and left != st.STRING):
+            rangeExpList.accept(self.printer)
+            print('\n\t[ERRO] Variavel precisa ser do tipo string.')
+        elif(left != st.STRING):
+            st.addVar(left, st.STRING)
+            
+        if (right != st.STRING):
+            rangeExpList.accept(self.printer)
+            print('\n\t[ERRO] Declaracao range precisa ser do tipo string')
 
     # ConstDecl
     def visitSimpleConst(self, simpleConst):
@@ -346,24 +375,28 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     def visitCompConst(self, compConst):
         print('visitCompConst')
-        pass
+        compConst.constSpecList.accept(self)
 
     # ConstSpecList
     def visitCallConstSpec(self, callConstSpec):
         print('visitCallConstSpec')
-        pass
+        callConstSpec.ConstSpec.accept(self)
 
     def visitCompoundConstSpec(self, compoundConstSpec):
         print('visitCompoundConstSpec')
-        pass
+        compoundConstSpec.ConstSpec.accept(self)
+        compoundConstSpec.ConstSpecList.accept(self)
 
     def visitListIdExp(self, listIdExp):
         print('visitListIdExp')
-        pass
+        listIdExp.IdentifierList.accept(self)
+        listIdExp.ExpressionList.accept(self)
 
     def visitListTypeExp(self, listTypeExp):
         print('visitListTypeExp')
-        pass
+        listTypeExp.IdentifierList.accept(self)
+        tipo = listTypeExp.Type
+        listTypeExp.ExpressionList.accept(self)
     
     # IdentifierList
     def visitDefinirIDList(self, definirIDList):
@@ -383,9 +416,9 @@ class GoSemanticVisitor(GoAbstractVisitor):
         return [compoundIDList.ID]
 
     # ExpressionList
-    def visitDefinirExpList(self, definirExpList):
-        print('visitDefinirExpList')
-        pass
+    # def visitDefinirExpList(self, definirExpList):
+    #     print('visitDefinirExpList')
+    #     pass
 
     def visitCallExpList(self, callExpList):
         print('visitCallExpList')
@@ -403,25 +436,27 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # TypeDecl
     def visitDefinirType(self, definirType):
         print('visitDefinirType')
-        pass
+        definirType.TypeSpec.accept(self)
 
     def visitCallTypeSpecList(self, callTypeSpecList):
         print('visitCallTypeSpecList')
-        pass
+        callTypeSpecList.TypeSpecList.accept(self)
 
     # TypeSpecList
     def visitCompTypeSpecList(self, compTypeSpecList):
         print('visitCompTypeSpecList')
-        pass
+        compTypeSpecList.TypeSpec.accept(self)
+        compTypeSpecList.TypeSpecList.accept(self)
 
     def visitEndCompTypeSpec(self, endCompTypeSpec):
         print('visitEndCompTypeSpec')
-        pass
+        endCompTypeSpec.TypeSpec.accept(self)
 
     # TypeSpec
     def visitSpecType(self, specType):
         print('visitSpecType')
-        pass
+        identifier = specType.ID
+        tipo = specType.Type
 
     # VarDecl
     def visitDefinirVar(self, definirVar):
@@ -481,11 +516,12 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # CallFunc
     def visitSimpleCallFunc(self, simpleCallFunc):
         print('visitSimpleCallFunc')
-        pass
+        ident = simpleCallFunc.ID
+        simpleCallFunc.ExpressionList.accept(self)
 
     def visitCallParenFunc(self, callParenFunc):
         print('visitCallParenFunc')
-        pass
+        ident = callParenFunc.ID
 
     # IncDec
     def visitIncOp(self, incOp):
@@ -546,8 +582,6 @@ class GoSemanticVisitor(GoAbstractVisitor):
             shortVar.accept(self.printer)
             print('\n\t[Erro]: Declaracao invalida')
         
-
-
     # Expression
     def visitExpressionOR(self, expressionOR):
         print('visitExpressionOR')
@@ -563,9 +597,9 @@ class GoSemanticVisitor(GoAbstractVisitor):
             print('eh do tipo', tipoExp2, 'onde ambas deveriam ser do tipo', st.BOOL, '\n')
         return c
     
-    def visitCallExp1(self, callExp1):
-        print('visitCallExp1')
-        pass
+    # def visitCallExp1(self, callExp1):
+    #     print('visitCallExp1')
+    #     pass
 
     # Exp1
     def visitExpressionAND(self, expressionAND):
@@ -582,9 +616,9 @@ class GoSemanticVisitor(GoAbstractVisitor):
             print('eh do tipo', tipoExp2, 'onde ambas deveriam ser do tipo', st.BOOL, '\n')
         return c
 
-    def visitCallExp2(self, callExp2):
-        print('visitCallExp2')
-        pass
+    # def visitCallExp2(self, callExp2):
+    #     print('visitCallExp2')
+    #     pass
 
     # Exp2
     def visitExpressionEquals(self, expressionEquals):
@@ -671,9 +705,9 @@ class GoSemanticVisitor(GoAbstractVisitor):
             print(' eh do tipo', tipoExp2, 'quando deveriam ser do mesmo tipo\n')
         return c
 
-    def visitCallExp3(self, callExp3):
-        print('visitCallExp3')
-        pass
+    # def visitCallExp3(self, callExp3):
+    #     print('visitCallExp3')
+    #     pass
 
     # Exp3
     def visitExpressionPlus(self, expressionPlus):
@@ -704,10 +738,9 @@ class GoSemanticVisitor(GoAbstractVisitor):
             print(' eh do tipo', tipoExp2, '\n')
         return c
 
-
-    def visitCallExp4(self, callExp4):
-        print('visitCallExp4')
-        pass
+    # def visitCallExp4(self, callExp4):
+    #     print('visitCallExp4')
+    #     pass
 
     # Exp4
     def visitExpressionTimes(self, expressionTimes):
@@ -723,7 +756,6 @@ class GoSemanticVisitor(GoAbstractVisitor):
             expressionTimes.exp2.accept(self.printer)
             print(' eh do tipo', tipoExp2, '\n')
         return c
-
 
     def visitExpressionDivide(self, expressionDivide):
         print('visitExpressionDivide')
@@ -768,19 +800,18 @@ class GoSemanticVisitor(GoAbstractVisitor):
             return printNumberID.numberOrId
         
     # Exp5
-    def visitExpressionNumber(self, expressionNumber):
-        print('visitExpressionNumber')
-        pass
+    # def visitExpressionNumber(self, expressionNumber):
+    #     print('visitExpressionNumber')
+    #     pass
 
     def visitExpressionCallFunc(self, expressionCallFunc):
         print('visitExpressionCallFunc')
         expressionCallFunc.callFunc.accept(self)
         
-
-    def visitExpressionID(self, expressionID):
-        print('visitExpressionID')
-        pass
+    # def visitExpressionID(self, expressionID):
+    #     print('visitExpressionID')
+    #     pass
 
     def visitExpressionParens(self, expressionParens):
         print('visitExpressionParens')
-        pass
+        expressionParens.expression.accept(self)

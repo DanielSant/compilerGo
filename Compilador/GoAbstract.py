@@ -168,7 +168,7 @@ class StatementList(metaclass=ABCMeta):
 		pass
 
 ##CONCRETA##
-class DefinirStatement(StatementList): ##PRECISA OBSERVAR ISSO
+class DefinirStatement(StatementList):
     def __init__ (self, Statement):
         self.Statement = Statement
 

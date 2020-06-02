@@ -100,63 +100,63 @@ class GoAbstractVisitor(metaclass=ABCMeta):
        pass
 
     # Statement
-    @abstractmethod
-    def visitStmtDeclaration(self, stmtDeclaration):
-        pass
+    # @abstractmethod
+    # def visitStmtDeclaration(self, stmtDeclaration):
+    #     pass
     
-    @abstractmethod
-    def visitStmtSimple(self, stmtSimple):
-        pass
+    # @abstractmethod
+    # def visitStmtSimple(self, stmtSimple):
+    #     pass
 
-    @abstractmethod
-    def visitStmtReturn(self, stmtReturn):
-        pass
+    # @abstractmethod
+    # def visitStmtReturn(self, stmtReturn):
+    #     pass
 
-    @abstractmethod
-    def visitStmtBreak(self, stmtBreak):
-        pass
+    # @abstractmethod
+    # def visitStmtBreak(self, stmtBreak):
+    #     pass
 
-    @abstractmethod
-    def visitStmtContinue(self, stmtContinue):
-        pass
+    # @abstractmethod
+    # def visitStmtContinue(self, stmtContinue):
+    #     pass
 
-    @abstractmethod
-    def visitStmtIf(self, stmtIf):
-        pass
+    # @abstractmethod
+    # def visitStmtIf(self, stmtIf):
+    #     pass
     
-    @abstractmethod
-    def visitStmtSwitch(self, stmtSwitch):
-        pass
+    # @abstractmethod
+    # def visitStmtSwitch(self, stmtSwitch):
+    #     pass
 
-    @abstractmethod
-    def visitCallStmtFor(self, stmtFor):
-        pass
+    # @abstractmethod
+    # def visitCallStmtFor(self, stmtFor):
+    #     pass
     
     # Declaration
-    @abstractmethod
-    def visitDeclConst(self, declConst):
-        pass
+    # @abstractmethod
+    # def visitDeclConst(self, declConst):
+    #     pass
 
-    @abstractmethod
-    def visitDeclType(self, declType):
-        pass
+    # @abstractmethod
+    # def visitDeclType(self, declType):
+    #     pass
 
-    @abstractmethod
-    def visitDeclVar(self, declVar):
-        pass
+    # @abstractmethod
+    # def visitDeclVar(self, declVar):
+    #     pass
 
     # SimpleStmt
-    @abstractmethod
-    def visitStmtCondition(self, stmtCondition):
-        pass
+    # @abstractmethod
+    # def visitStmtCondition(self, stmtCondition):
+    #     pass
 
-    @abstractmethod
-    def visitStmtIncDec(self, stmtIncDec):
-        pass
+    # @abstractmethod
+    # def visitStmtIncDec(self, stmtIncDec):
+    #     pass
 
-    @abstractmethod
-    def visitAssign(self, assign):
-        pass
+    # @abstractmethod
+    # def visitAssign(self, assign):
+    #     pass
 
     # ReturnStmt
     @abstractmethod
@@ -220,9 +220,9 @@ class GoAbstractVisitor(metaclass=ABCMeta):
     def visitExprSwitchBody2(self, exprSwitchBody2):
         pass
 
-    @abstractmethod
-    def visitExprSwitchExp(self, exprSwitchExp):
-        pass
+    # @abstractmethod
+    # def visitExprSwitchExp(self, exprSwitchExp):
+    #     pass
     
     # ExprCaseClauseList
     @abstractmethod
@@ -283,10 +283,6 @@ class GoAbstractVisitor(metaclass=ABCMeta):
     def visitRangeExpList(self, rangeExpList):
         pass
 
-    @abstractmethod
-    def visitRangIDList(self, rangIDList):
-        pass
-
     # ConstDecl
     @abstractmethod
     def visitSimpleConst(self, simpleConst):
@@ -332,9 +328,9 @@ class GoAbstractVisitor(metaclass=ABCMeta):
         pass
 
     # ExpressionList
-    @abstractmethod
-    def visitDefinirExpList(self, definirExpList):
-        pass
+    # @abstractmethod
+    # def visitDefinirExpList(self, definirExpList):
+    #     pass
 
     @abstractmethod
     def visitCallExpList(self, callExpList):
@@ -436,9 +432,9 @@ class GoAbstractVisitor(metaclass=ABCMeta):
     def visitExpressionOR(self, expressionOR):
         pass
 
-    @abstractmethod
-    def visitCallExp1(self, callExp1):
-        pass
+    # @abstractmethod
+    # def visitCallExp1(self, callExp1):
+    #     pass
 
     # Exp1
     @abstractmethod
@@ -476,9 +472,9 @@ class GoAbstractVisitor(metaclass=ABCMeta):
     def visitExpressionGreaterEqual(self, expressionGreaterEqual):
         pass
 
-    @abstractmethod
-    def visitCallExp3(self, callExp3):
-        pass
+    # @abstractmethod
+    # def visitCallExp3(self, callExp3):
+    #     pass
 
     # Exp3
     @abstractmethod
@@ -490,9 +486,9 @@ class GoAbstractVisitor(metaclass=ABCMeta):
         pass
 
 
-    @abstractmethod
-    def visitCallExp4(self, callExp4):
-        pass
+    # @abstractmethod
+    # def visitCallExp4(self, callExp4):
+    #     pass
 
     # Exp4
     @abstractmethod
@@ -512,17 +508,17 @@ class GoAbstractVisitor(metaclass=ABCMeta):
         pass
 
     # Exp5
-    @abstractmethod
-    def visitExpressionNumber(self, expressionNumber):
-        pass
+    # @abstractmethod
+    # def visitExpressionNumber(self, expressionNumber):
+    #     pass
 
     @abstractmethod
     def visitExpressionCallFunc(self, expressionCallFunc):
         pass
 
-    @abstractmethod
-    def visitExpressionID(self, expressionID):
-        pass
+    # @abstractmethod
+    # def visitExpressionID(self, expressionID):
+    #     pass
 
     @abstractmethod
     def visitExpressionParens(self, expressionParens):

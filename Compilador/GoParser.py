@@ -212,10 +212,11 @@ def p_initPostStmt(p):
 
 def p_rangeClause(p):
     '''rangeClause : RANGE expression
-                   | expressionList ASSIGN RANGE expression''' 
+                   | expressionList ASSIGN RANGE expression
+                   | expressionList COLONEQ RANGE expression''' 
     if(len(p) == 3):
         p[0] = abstract.DefinirRange(p[2])
-    elif(isinstance(p[1], abstract.ExpressionList)):
+    elif(len(p) == 5):
         p[0] = abstract.RangeExpList(p[1], p[4])
     
 def p_constDecl(p):
