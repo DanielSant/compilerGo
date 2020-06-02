@@ -183,7 +183,9 @@ class GoSemanticVisitor(GoAbstractVisitor):
             expReturn.accept(self.printer)
             print('\t[Erro] O retorno da funcao', scope, 'eh do tipo', bindable[st.TYPE],end='')
             print(' no entanto, o retorno passado foi do tipo', tipoExp, '\n')
-        st.endScope()
+        lista_dicionario = st.endScope()
+        if(lista_dicionario != None):
+            print('Essas variaveis nao foram utilizadas:', lista_dicionario)
 
     def visitSimpleReturn(self, simpleReturn):
         print('visitSimpleReturn')
@@ -467,8 +469,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # IncDec
     def visitIncOp(self, incOp):
         print('visitIncOp')
-        tipo = incOp.Expression.accept(self)
-        print(st.symbolTable)
+        tipo = incOp.Expression.accept(self) 
         if(tipo != st.INT):
             incOp.accept(self.printer)
             print('\n\t[Erro] Variavel a ser incrementada deve ser do tipo inteiro')

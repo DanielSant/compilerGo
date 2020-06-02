@@ -48,6 +48,9 @@ PRINT = 'print'
 PRINTLN = 'println'
 BINDABLE = 'bindable'
 SCOPE = 'scope'
+YES = 'yes'
+NO = 'no'
+USED = 'used'
 Number = [INT, FLOAT]
 
 #beginScope = criar um novo escopo
@@ -59,12 +62,18 @@ def beginScope(nameScope):
 #basicamente elimina o ultimo escopo
 def endScope():
     global symbolTable
+    lista_dicionario = []
+    for i in symbolTable[-1]:
+        if(type(symbolTable[-1][i]) == type({})):
+            if (symbolTable[-1][i][USED] == NO):
+                lista_dicionario.append(i)
     symbolTable = symbolTable[0:-1]
+    return lista_dicionario
 
 #adiciona uma variavel na tabela de simbolos
 def addVar(name, type):
     global symbolTable
-    symbolTable[-1][name] = {BINDABLE: VAR, TYPE: type} #acessa a ultima posição da lista com o nome da variavel ou metodo [nome], associando um dicionario
+    symbolTable[-1][name] = {BINDABLE: VAR, TYPE: type, USED: NO} #acessa a ultima posição da lista com o nome da variavel ou metodo [nome], associando um dicionario
 
 #adiciona uma função na tabela de simbolos
 def addFunction(name, params, returnType):
@@ -76,5 +85,6 @@ def getBindable(bindableName):
     global symbolTable
     for i in reversed(range(len(symbolTable))):
         if(bindableName in symbolTable[i].keys()):
+            symbolTable[i][bindableName][USED] = YES
             return symbolTable[i][bindableName]
     return None
