@@ -121,10 +121,6 @@ class GoAbstractVisitor(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def visitStmtBlock(self, stmtBlock):
-        pass
-
-    @abstractmethod
     def visitStmtIf(self, stmtIf):
         pass
     

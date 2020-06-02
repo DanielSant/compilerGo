@@ -30,8 +30,9 @@ class GoSemanticVisitor(GoAbstractVisitor):
         for k in range(0, len(parametrosRetorno[0:-1]), 2):
             st.addVar(parametrosRetorno[0:-1][k], parametrosRetorno[0:-1][k+1])
 
-        # print('symbolTable', st.symbolTable)
         definirFuncBody.FunctionBody.accept(self)
+        st.varCheck(st.endScope())
+        # print('Last symbol table:', st.symbolTable)
 
     # Signature
     def visitDefinirParamsT(self, definirParamsT): # ok
@@ -128,10 +129,6 @@ class GoSemanticVisitor(GoAbstractVisitor):
         print('visitStmtContinue')
         pass
     
-    def visitStmtBlock(self, stmtBlock):
-        print('visitStmtBlock')
-        pass
-    
     def visitStmtIf(self, stmtIf):
         print('visitStmtIf')
         pass
@@ -178,16 +175,18 @@ class GoSemanticVisitor(GoAbstractVisitor):
     def visitExpReturn(self, expReturn):
         print('visitExpReturn')
         tipoExp = expReturn.ExpressionList.accept(self)
-        scope = st.symbolTable[-1][st.SCOPE]
-        bindable = st.getBindable(scope)
+
+        # Volta ao escopo que tem o tipo de retorno.
+        for indice in reversed(range(len(st.symbolTable))):
+            scope = st.symbolTable[indice][st.SCOPE]    
+            bindable = st.getBindable(scope)
+            if (bindable != None):
+                break;
+
         if (tipoExp != bindable[st.TYPE]):
             expReturn.accept(self.printer)
             print('\n\t[Erro]: O retorno da funcao', scope, 'eh do tipo', bindable[st.TYPE],end='')
             print(' no entanto, o retorno passado foi do tipo', tipoExp, '\n')
-        lista_dicionario = st.endScope()
-        if(lista_dicionario != None):
-            for k in range(len(lista_dicionario)):
-                print('[Erro]:',lista_dicionario[k], 'declarada mas nao usada')
 
     def visitSimpleReturn(self, simpleReturn):
         print('visitSimpleReturn')
@@ -207,15 +206,27 @@ class GoSemanticVisitor(GoAbstractVisitor):
     def visitSimpleIf(self, simpleIf):
         print('visitSimpleIf')
         simpleIf.Expression.accept(self)
+        st.beginScope(st.IF)
         simpleIf.Block.accept(self)
-
+        st.varCheck(st.endScope())
+        
     def visitCompIfElse(self, compIfElse):
         print('visitCompIfElse')
-        pass
-    
+        compIfElse.Expression.accept(self)
+        st.beginScope(st.IF)
+        compIfElse.Block.accept(self)
+        st.varCheck(st.endScope())
+        compIfElse.IfStmt.accept(self)
+
     def visitIfElse(self, ifElse):
         print('visitIfElse')
-        pass
+        ifElse.Expression.accept(self)
+        st.beginScope(st.IF)
+        ifElse.Block.accept(self)
+        st.varCheck(st.endScope())
+        st.beginScope(st.ELSE)
+        ifElse.Block1.accept(self)
+        st.varCheck(st.endScope())
         
     # SwitchStmt
     def visitExprSwitch(self, exprSwitch):

@@ -34,8 +34,6 @@ DEFAULT = 'default'
 IF = 'if'
 RANGE = 'range'
 CASE = 'case'
-MAP = 'map'
-STRUCT = 'struct'
 CONTINUE = 'continue'
 FOR = 'for'
 ELSE = 'else'
@@ -88,3 +86,9 @@ def getBindable(bindableName):
             symbolTable[i][bindableName][USED] = YES
             return symbolTable[i][bindableName]
     return None
+
+# Verifica
+def varCheck(listVar):
+    if(listVar != None):
+        for k in range(len(listVar)):
+            print('[Erro]:',listVar[k], 'declarada mas nao usada')

@@ -161,7 +161,15 @@ func soma(x bool, y int, z string, l int, u float) int {
     print(x);
     println(eta);
     if x < y {
+        if x == y {
+            var def int;
+            return x % y;
+        } else {
+            return x;
+        };
         return x % y;
+    } else if x > y {
+        return x + y;
     };
 }
 

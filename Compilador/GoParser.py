@@ -82,7 +82,6 @@ def p_statement(p):
                  | returnStmt
                  | breakStmt
                  | continueStmt
-                 | block
                  | ifStmt
                  | switchStmt
                  | forStmt'''
