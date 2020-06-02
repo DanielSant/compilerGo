@@ -2,6 +2,7 @@ from GoAbstractVisitor import GoAbstractVisitor
 import GoSymbolTable as st
 from GoVisitor import Visitor
 import GoAbstract as sa
+import GoLex as lex
 
 def coercion(type1, type2):
     if (type1 in st.Number and type2 in st.Number):
@@ -181,11 +182,12 @@ class GoSemanticVisitor(GoAbstractVisitor):
         bindable = st.getBindable(scope)
         if (tipoExp != bindable[st.TYPE]):
             expReturn.accept(self.printer)
-            print('\t[Erro] O retorno da funcao', scope, 'eh do tipo', bindable[st.TYPE],end='')
+            print('\n\t[Erro]: O retorno da funcao', scope, 'eh do tipo', bindable[st.TYPE],end='')
             print(' no entanto, o retorno passado foi do tipo', tipoExp, '\n')
         lista_dicionario = st.endScope()
         if(lista_dicionario != None):
-            print('Essas variaveis nao foram utilizadas:', lista_dicionario)
+            for k in range(len(lista_dicionario)):
+                print('[Erro]:',lista_dicionario[k], 'declarada mas nao usada')
 
     def visitSimpleReturn(self, simpleReturn):
         print('visitSimpleReturn')
@@ -442,12 +444,12 @@ class GoSemanticVisitor(GoAbstractVisitor):
         if(type(expressao) != type([])):
             if(expressao != tipo):
                 classicVarSpec.accept(self.printer)
-                print('\n\t[Erro] atribuicao nao compativel')
+                print('\n\t[Erro]: Atribuicao nao compativel')
         else: 
             for i in range (len(expressao)):
                 if(expressao[i] != tipo):
                     classicVarSpec.accept(self.printer)
-                    print('\n\t[Erro] atribuicao nao compativel')
+                    print('\n\t[Erro]: Atribuicao nao compativel')
                     break
 
     def visitSimpleVarSpec(self, simpleVarSpec):
@@ -472,14 +474,14 @@ class GoSemanticVisitor(GoAbstractVisitor):
         tipo = incOp.Expression.accept(self) 
         if(tipo != st.INT):
             incOp.accept(self.printer)
-            print('\n\t[Erro] Variavel a ser incrementada deve ser do tipo inteiro')
+            print('\n\t[Erro]: Variavel a ser incrementada deve ser do tipo inteiro')
 
     def visitDecOp(self, decOp):
         print('visitDecOp')
         tipo = decOp.Expression.accept(self)
         if(tipo != st.INT):
             decOp.accept(self.printer)
-            print('\n\t[Erro] Variavel a ser decrementada deve ser do tipo inteiro')
+            print('\n\t[Erro]: Variavel a ser decrementada deve ser do tipo inteiro')
 
     # Assignment
     def visitAssignOp(self, assignOp):
@@ -491,21 +493,21 @@ class GoSemanticVisitor(GoAbstractVisitor):
         if(type(listaExp) is list):
             if(None in listaExp):
                 assignOp.accept(self.printer)
-                print('[Erro] variavel indefinida')
+                print('\n\t[Erro]: Variavel indefinida')
 
             if(len(listaExp) != len(listaExp1)):
                 assignOp.accept(self.printer)
-                print('[Erro] de atribuicao, ', len(listaExp), ' variaveis mas ', len(listaExp1), 'valores')
+                print('\n\t[Erro]: Erro de atribuicao, ', len(listaExp), ' variaveis mas ', len(listaExp1), 'valores')
 
             for i in range(len(listaExp)):
                 if(listaExp[i] != listaExp1[i]):
                     assignOp.accept(self.printer)
-                    print('\n\t[Erro] tipo de atribuicao invalida') 
+                    print('\n\t[Erro]: Tipo de atribuicao invalida') 
                     break
 
         elif(listaExp == None):
             assignOp.accept(self.printer)
-            print('[Erro] variavel indefinida')
+            print('\n\t[Erro]: Variavel indefinida')
 
     # Expression
     def visitExpressionOR(self, expressionOR):
@@ -515,7 +517,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
         c = coercion(tipoExp1, tipoExp2)
         if (c != st.BOOL):
             expressionOR.accept(self.printer)
-            print('\n\t[Erro] Comparacao invalida. A expressao ', end='')
+            print('\n\t[Erro]: Comparacao invalida. A expressao ', end='')
             expressionOR.Exp.accept(self.printer)
             print('eh do tipo', tipoExp1, 'e a expressao ', end='')
             expressionOR.Exp1.accept(self.printer)
@@ -534,7 +536,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
         c = coercion(tipoExp1, tipoExp2)
         if (c != st.BOOL):
             expressionAND.accept(self.printer)
-            print('\n\t[Erro] Comparacao invalida. A expressao ', end='')
+            print('\n\t[Erro]: Comparacao invalida. A expressao ', end='')
             expressionAND.Expr1.accept(self.printer)
             print('eh do tipo', tipoExp1, 'e a expressao ', end='')
             expressionAND.Expr2.accept(self.printer)
@@ -553,7 +555,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
         c = coercion(tipoExp2, tipoExp3)
         if (c == None):
             expressionEquals.accept(self.printer)
-            print('\n\t[Erro] Comparação invalida. A expressao ', end='')
+            print('\n\t[Erro]: Comparação invalida. A expressao ', end='')
             expressionEquals.Expr2.accept(self.printer)
             print(' eh do tipo', tipoExp2, 'enquanto a expressao ', end='')
             expressionEquals.Expr3.accept(self.printer)
@@ -567,7 +569,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
         c = coercion(tipoExp1, tipoExp2)
         if (c == None):
             expressionDiferente.accept(self.printer)
-            print('\n\t[Erro] Comparação invalida. A expressao ', end='')
+            print('\n\t[Erro]: Comparação invalida. A expressao ', end='')
             expressionDiferente.Expr2.accept(self.printer)
             print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
             expressionDiferente.Expr3.accept(self.printer)
@@ -581,7 +583,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
         c = coercion(tipoExp1, tipoExp2)
         if (c == None):
             expressionLess.accept(self.printer)
-            print('\n\t[Erro] Comparação invalida. A expressao ', end='')
+            print('\n\t[Erro]: Comparação invalida. A expressao ', end='')
             expressionLess.Expr2.accept(self.printer)
             print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
             expressionLess.Expr3.accept(self.printer)
@@ -595,7 +597,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
         c = coercion(tipoExp1, tipoExp2)
         if (c == None):
             expressionLessEqual.accept(self.printer)
-            print('\n\t[Erro] Comparação invalida. A expressao ', end='')
+            print('\n\t[Erro]: Comparação invalida. A expressao ', end='')
             expressionLessEqual.Expr2.accept(self.printer)
             print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
             expressionLessEqual.Expr3.accept(self.printer)
@@ -609,7 +611,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
         c = coercion(tipoExp1, tipoExp2)
         if (c == None):
             expressionGreater.accept(self.printer)
-            print('\n\t[Erro] Comparação invalida. A expressao ', end='')
+            print('\n\t[Erro]: Comparação invalida. A expressao ', end='')
             expressionGreater.Expr2.accept(self.printer)
             print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
             expressionGreater.Expr3.accept(self.printer)
@@ -623,7 +625,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
         c = coercion(tipoExp1, tipoExp2)
         if (c == None):
             expressionGreaterEqual.accept(self.printer)
-            print('\n\t[Erro] Comparação invalida. A expressao ', end='')
+            print('\n\t[Erro]: Comparação invalida. A expressao ', end='')
             expressionGreaterEqual.Expr2.accept(self.printer)
             print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
             expressionGreaterEqual.Expr3.accept(self.printer)
@@ -642,7 +644,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
         c = coercion(tipoExp1, tipoExp2)
         if (c == None):
             expressionPlus.accept(self.printer)
-            print('\n\t[Erro] Soma invalida. A expressao ', end='')
+            print('\n\t[Erro]: Soma invalida. A expressao ', end='')
             expressionPlus.Expr4.accept(self.printer)
             print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
             expressionPlus.Expr3.accept(self.printer)
@@ -656,7 +658,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
         c = coercion(tipoExp1, tipoExp2)
         if (c == None):
             expressionMinus.accept(self.printer)
-            print('\n\t[Erro] Subtracao invalida. A expressao ', end='')
+            print('\n\t[Erro]: Subtracao invalida. A expressao ', end='')
             expressionMinus.exp1.accept(self.printer)
             print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
             expressionMinus.exp2.accept(self.printer)
@@ -676,7 +678,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
         c = coercion(tipoExp1, tipoExp2)
         if (c == None):
             expressionTimes.accept(self.printer)
-            print('\n\t[Erro] Multiplicacao invalida. A expressao ', end='')
+            print('\n\t[Erro]: Multiplicacao invalida. A expressao ', end='')
             expressionTimes.exp1.accept(self.printer)
             print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
             expressionTimes.exp2.accept(self.printer)
@@ -691,7 +693,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
         c = coercion(tipoExp1, tipoExp2)
         if (c == None):
             expressionDivide.accept(self.printer)
-            print('\n\t[Erro] Divisao invalida. A expressao ', end='')
+            print('\n\t[Erro]: Divisao invalida. A expressao ', end='')
             expressionDivide.Expr5.accept(self.printer)
             print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
             expressionDivide.Expr4.accept(self.printer)
@@ -705,7 +707,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
         c = coercion(tipoExp1, tipoExp2)
         if (c != st.INT):
             expressionMod.accept(self.printer)
-            print('\n\t[Erro] Operacao de Mod invalida. A expressao ', end='')
+            print('\n\t[Erro]: Operacao de Mod invalida. A expressao ', end='')
             expressionMod.Expr5.accept(self.printer)
             print(' eh do tipo', tipoExp1, 'enquanto a expressao ', end='')
             expressionMod.Expr4.accept(self.printer)

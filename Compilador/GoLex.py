@@ -154,6 +154,7 @@ lexer = lex.lex()
 data = '''
 func soma(x bool, y int, z string, l int, u float) int {
     x, y = true, 3;
+    var jota int = 3;
     var eta string;
     //y = 2;
     eta = "This is a string";
