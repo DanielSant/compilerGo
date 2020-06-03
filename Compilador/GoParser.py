@@ -238,13 +238,10 @@ def p_constSpecList(p):
         p[0] = abstract.CompoundConstSpec(p[1], p[3])
 
 def p_constSpec(p):
-    '''constSpec : identifierList
-                 | identifierList ASSIGN expressionList
+    '''constSpec : identifierList ASSIGN expressionList
                  | identifierList type ASSIGN expressionList''' 
 
-    if(len(p) == 2):
-        p[0] = p[1]
-    elif(len(p) == 4):
+    if(len(p) == 4):
         p[0] = abstract.ListIdExp(p[1], p[3])
     else:
         p[0] = abstract.ListIdTypeExp(p[1], p[2], p[4])

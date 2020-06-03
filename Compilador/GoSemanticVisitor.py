@@ -404,8 +404,19 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     def visitListIdExp(self, listIdExp):
         print('visitListIdExp')
-        listIdExp.IdentifierList.accept(self)
-        listIdExp.ExpressionList.accept(self)
+        idList = listIdExp.IdentifierList.accept(self)
+        expList = listIdExp.ExpressionList.accept(self)
+
+        if(type(expList) is not list):
+            expList = [expList]
+
+        if(len(idList) != len(expList)):
+            listIdExp.accept(self.printer)
+            print('[Erro]: ', len(idList), 'constantes mas', len(expList), 'valores')
+        else:
+            for i in range(len(idList)):
+                st.addVar(idList[i], expList[i])
+                st.symbolTable[-1][idList[i]][st.CONST] = 'const'
 
     def visitListTypeExp(self, listTypeExp):
         print('visitListTypeExp')
@@ -574,11 +585,22 @@ class GoSemanticVisitor(GoAbstractVisitor):
         print('visitAssignOp')
         listaExp = assignOp.ExpressionList.accept(self) # lado esquerdo
         
-        listaExp1 = assignOp.ExpressionList1.accept(self) # lado direito
+        listaExp1 = assignOp.ExpressionList1.accept(self) # lado direito   
+        
+        if(listaExp not in st.TiposPrimitivos):
+            bindable = st.getBindable(listaExp)
+            if(st.CONST in bindable):
+                assignOp.accept(self.printer)
+                print('\n\t[Erro]: Atribuicao invalida de constante')
+        if(listaExp1 not in st.TiposPrimitivos):
+            bindable = st.getBindable(listaExp1)
+            if(st.TYPE in bindable):
+                listaExp1 = bindable[st.TYPE]
+            if(listaExp != listaExp1):
+                assignOp.accept(self.printer)
+                print('\n\t[Erro]: Tipo de atribuicao invalida')
 
-        if(listaExp != listaExp1):
-            assignOp.accept(self.printer)
-            print('\n\t[Erro]: Tipo de atribuicao invalida')
+        
 
     # ShortVarDecl
     def visitDefinirShortVar(self, shortVar):
@@ -827,6 +849,8 @@ class GoSemanticVisitor(GoAbstractVisitor):
         else:
             idName = st.getBindable(printNumberID.numberOrId)
             if (idName != None):
+                if(st.CONST in idName):
+                    return printNumberID.numberOrId
                 return idName[st.TYPE]
             return printNumberID.numberOrId
         

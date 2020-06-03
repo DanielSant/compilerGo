@@ -159,6 +159,7 @@ func funcao () int{
 }
 func principal(b int, y float) int {
     var a string = "daniel";
+    var l = 4;
     switch {
         case 1:
             var b string;
@@ -166,7 +167,9 @@ func principal(b int, y float) int {
         case 2:
             5 + 8;
     };
-    var bb int = 5;
+    const constante, kk = 5, 6;
+    a = constante;
+    constante = 9;
     a = funcao(5);
     return b;
 }
