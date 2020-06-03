@@ -154,88 +154,16 @@ lexer = lex.lex()
     
 # Tipo da funcao não esta sendo printado
 data = '''
-func soma(x bool, y int, z string, l int, u float) int {
-    var i = 4;
-    curta, lala, aklsa := i, 3, 2;
-    l, y = 6, 5;
 
-    for {
-        var blockfor int = 10;
-    };
-
-    //for l, x := range "must be a string" {
-    //    var algo int = 15;
-    //};
-
-    //for variavelqualquer := range "must be a string" {
-    //    var algo int = 15;
-    //};
-}
 func principal(x int, y float) int {
-    var l int;
-    var d int = 42;
-    var a, b int = 20, 40;
-    var w = 15;
-    abc := 5;
-    var (
-        a = 13;
-        v bool;
-        k int;
-    );
-    for a < 5 {
-        //n;
-        break;
-    };
-    //var c int;
-    for a, d = range c {
-        a = a + 1;
-        continue;
-    };
-    for range a + 10 {
-        a = a + 1; 
-    };
-    for ;a < 10; {
-        a = a + 1;
-        if 5 + 3 < 8 {
-            a = 7;
-        };
-    };
-    for a = 10 ;a < 10; a++{
-        a = a + 1;
-        if 5 + 3 < 8 {
-            a = 7;
-        };
-    };
-    const abc;
-    const abc = 5 + 5;
-    const abc int = 5 + 5;
-    const (
-        a;
-        b;
-        c;
-        d = 5 + 5;
-    );
-    type variavel string;
-    type (
-        z int;
-    );
-    a = soma(x, y);
-    h = funcao();
-    a = 3 + 2;
-    switch a = 5 - 6; {
-        case 1:
+    var a string = "Wagner";
+    switch a; {
+        case "Wagner":
             5 + 5;
         case 2:
             5 + 8;
     };
-    if 5 + 3 == 8 {
-        a = 7;
-    } else {
-        a = 0;
-    };
-    for b = 1; b < 100; b++ {
-        b = b + 1;
-    };
+   
     return x;
 }
 // Isto é comentário

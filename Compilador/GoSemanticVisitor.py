@@ -278,7 +278,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # ExprSwitchCase
     def visitCaseClauseExp(self, caseClauseExp):
         print('visitCaseClauseExp')
-        caseClauseExp.ExpressionList.accept(self)
+        print(caseClauseExp.ExpressionList.accept(self))
 
     def visitCaseClause(self, caseClause):
         print('visitCaseClause')
