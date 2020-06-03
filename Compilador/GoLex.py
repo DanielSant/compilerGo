@@ -154,7 +154,9 @@ lexer = lex.lex()
     
 # Tipo da funcao não esta sendo printado
 data = '''
-
+func funcao () int{
+    return 5;
+}
 func principal(b int, y float) int {
     var a string = "daniel";
     switch {
@@ -164,8 +166,9 @@ func principal(b int, y float) int {
         case 2:
             5 + 8;
     };
-   
-    return y;
+    var bb int = 5;
+    a = funcao(5);
+    return b;
 }
 // Isto é comentário
 '''

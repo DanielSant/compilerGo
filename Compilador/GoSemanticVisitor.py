@@ -27,8 +27,9 @@ class GoSemanticVisitor(GoAbstractVisitor):
         parametrosRetorno = definirFuncBody.Signature.accept(self)
         st.addFunction(definirFuncBody.ID, parametrosRetorno[0:-1], parametrosRetorno[-1])
         st.beginScope(definirFuncBody.ID)
-        for k in range(0, len(parametrosRetorno[0:-1]), 2):
-            st.addVar(parametrosRetorno[0:-1][k], parametrosRetorno[0:-1][k+1])
+        if(parametrosRetorno[0] != None):
+            for k in range(0, len(parametrosRetorno[0:-1]), 2):
+                st.addVar(parametrosRetorno[0:-1][k], parametrosRetorno[0:-1][k+1])
 
         definirFuncBody.FunctionBody.accept(self)
         st.varCheck(st.endScope())
@@ -64,6 +65,9 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     def visitParamsList(self, paramsList): # Lista de parametros
         return paramsList.ParameterList.accept(self)
+
+    def visitDefinirParamsParameters(self, definirParams):
+        return [None]
 
     # ParameterList
     def visitCompParamsDecl(self, compParamsDecl):
@@ -241,6 +245,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
         st.beginScope(st.SWITCH)
         st.symbolTable[-1][st.SWITCHTYPE] = ''
         exprSwitchSimple.switchStmt_Body.accept(self)
+        st.varCheck(st.endScope())
 
     # ExprSwitchHead1
     def visitExprSwitchHead1(self, exprSwitchHead1):
@@ -526,12 +531,28 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # CallFunc
     def visitSimpleCallFunc(self, simpleCallFunc):
         print('visitSimpleCallFunc')
-        ident = simpleCallFunc.ID
-        simpleCallFunc.ExpressionList.accept(self)
+        idFunc = simpleCallFunc.ID
+        bindable = st.getBindable(idFunc)
+        params = []
+        for i in range(1, len(bindable[st.PARAMS]), 2):
+            params.append(bindable[st.PARAMS][i])
+        
+        paramsCall = simpleCallFunc.ExpressionList.accept(self)
+        
+        if(type(paramsCall) is not list):
+            paramsCall = [paramsCall]
+
+        if(params != paramsCall):
+            simpleCallFunc.accept(self.printer)
+            print('\n\t[Erro]: Parametros incompativeis')
+
+        return bindable[st.TYPE]
 
     def visitCallParenFunc(self, callParenFunc):
         print('visitCallParenFunc')
-        ident = callParenFunc.ID
+        idFunc = callParenFunc.ID
+        bindable = st.getBindable(idFunc)
+        return bindable[st.TYPE]
 
     # IncDec
     def visitIncOp(self, incOp):
@@ -816,7 +837,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     def visitExpressionCallFunc(self, expressionCallFunc):
         print('visitExpressionCallFunc')
-        expressionCallFunc.callFunc.accept(self)
+        return expressionCallFunc.callFunc.accept(self)
         
     # def visitExpressionID(self, expressionID):
     #     print('visitExpressionID')

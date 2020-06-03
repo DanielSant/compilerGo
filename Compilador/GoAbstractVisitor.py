@@ -57,9 +57,9 @@ class GoAbstractVisitor(metaclass=ABCMeta):
     def visitParamsList(self, paramsList):
         pass
 
-    # @abstractmethod
-    # def visitDefinirParamsParameters(self, definirParams):
-    #     pass
+    @abstractmethod
+    def visitDefinirParamsParameters(self, definirParams):
+        pass
 
     # ParameterList
     @abstractmethod
