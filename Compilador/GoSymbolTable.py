@@ -49,6 +49,7 @@ SCOPE = 'scope'
 YES = 'yes'
 NO = 'no'
 USED = 'used'
+SWITCHTYPE = 'switchtype'
 Number = [INT, FLOAT]
 TiposPrimitivos = [INT, FLOAT, BOOL, STRING]
 

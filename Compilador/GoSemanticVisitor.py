@@ -203,23 +203,23 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # Ifstmt
     def visitSimpleIf(self, simpleIf):
         print('visitSimpleIf')
-        simpleIf.Expression.accept(self)
         st.beginScope(st.IF)
+        simpleIf.Expression.accept(self)
         simpleIf.Block.accept(self)
         st.varCheck(st.endScope())
         
     def visitCompIfElse(self, compIfElse):
         print('visitCompIfElse')
-        compIfElse.Expression.accept(self)
         st.beginScope(st.IF)
+        compIfElse.Expression.accept(self)
         compIfElse.Block.accept(self)
         st.varCheck(st.endScope())
         compIfElse.IfStmt.accept(self)
 
     def visitIfElse(self, ifElse):
         print('visitIfElse')
-        ifElse.Expression.accept(self)
         st.beginScope(st.IF)
+        ifElse.Expression.accept(self)
         ifElse.Block.accept(self)
         st.varCheck(st.endScope())
         st.beginScope(st.ELSE)
@@ -229,24 +229,29 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # SwitchStmt
     def visitExprSwitch(self, exprSwitch):
         print('visitExprSwitch')
-        exprSwitch.switchStmt_Head.accept(self)
+        st.beginScope(st.SWITCH)
+        tipo = exprSwitch.switchStmt_Head.accept(self)
+        st.symbolTable[-1][st.SWITCHTYPE] = tipo
         exprSwitch.switchStmt_Body.accept(self)
+        st.varCheck(st.endScope())
     
     # SwitchStmt_Head
     def visitExprSwitchSimple(self, exprSwitchSimple):
         print('visitExprSwitchSimple')
+        st.beginScope(st.SWITCH)
+        st.symbolTable[-1][st.SWITCHTYPE] = ''
         exprSwitchSimple.switchStmt_Body.accept(self)
 
     # ExprSwitchHead1
     def visitExprSwitchHead1(self, exprSwitchHead1):
         print('visitExprSwitchHead1')
-        exprSwitchHead1.SimpleStmt.accept(self)
-        exprSwitchHead1.expression.accept(self)
+        exprSwitchHead1.simpleStmt.accept(self)
+        return exprSwitchHead1.expression.accept(self)
     
     # ExprSwitchHead2 
     def visitExprSwitchHead2(self, exprSwitchHead2):
         print('visitExprSwitchHead2')
-        exprSwitchHead2.simpleStmt.accept(self)
+        return exprSwitchHead2.simpleStmt.accept(self)
 
     # ExprSwitchBody1
     def visitExprSwitchBody1(self, exprSwitchBody1):
@@ -278,7 +283,11 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # ExprSwitchCase
     def visitCaseClauseExp(self, caseClauseExp):
         print('visitCaseClauseExp')
-        print(caseClauseExp.ExpressionList.accept(self))
+        caseType = caseClauseExp.ExpressionList.accept(self)
+        switchType = st.symbolTable[-1][st.SWITCHTYPE]
+        if (switchType != '' and switchType != caseType):
+            caseClauseExp.accept(self.printer)
+            print('\n\t[ERRO] case eh do tipo', caseType, 'quando deveria ser do tipo', switchType)
 
     def visitCaseClause(self, caseClause):
         print('visitCaseClause')
@@ -316,8 +325,9 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # Condition
     def visitDefinirCondition(self, definirCondition):
         print('visitDefinirCondition')
-        if(definirCondition.Expression.accept(self) in st.TiposPrimitivos):
-            pass
+        tipo = definirCondition.Expression.accept(self)
+        if(tipo in st.TiposPrimitivos):
+            return tipo
         else:
             definirCondition.accept(self.printer)
             print('\n\t[Erro]: Condicao invalida')
