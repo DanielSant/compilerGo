@@ -157,21 +157,14 @@ data = '''
 func funcao () int{
     return 5;
 }
-func principal(b int, y float) int {
-    var b, y = 2, 3;
-    var faff, afaff, llo string = "aaa";
-    var a string = "daniel";
-    
-    switch {
-        case 1:
-            var b string;
-            5 + 5;
-        case 2:
-            5 + 8;
-    };
-    const al = "caio";
+func principal() int {
+    const b int = 5;
+    const (
+        z, kk string = "blabalab", 5;
+        f = "blabla";
+    );
 
-    return a;
+    return b + "Daniel";
 }
 // Isto é comentário
 '''

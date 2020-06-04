@@ -176,6 +176,11 @@ class GoSemanticVisitor(GoAbstractVisitor):
         print('visitExpReturn')
         tipoExp = expReturn.ExpressionList.accept(self)
 
+        if(tipoExp not in st.TiposPrimitivos and tipoExp != None):
+            tipoExp = st.getBindable(tipoExp)
+            if (tipoExp != None):
+                tipoExp = tipoExp[st.TYPE]
+
         # Volta ao escopo que tem o tipo de retorno.
         for indice in reversed(range(len(st.symbolTable))):
             scope = st.symbolTable[indice][st.SCOPE]    
@@ -415,14 +420,51 @@ class GoSemanticVisitor(GoAbstractVisitor):
             print('[Erro]: ', len(idList), 'constantes mas', len(expList), 'valores')
         else:
             for i in range(len(idList)):
-                st.addVar(idList[i], expList[i])
-                st.symbolTable[-1][idList[i]][st.CONST] = 'const'
+                if(st.getBindable(idList[i]) == None):
+                    if (expList[i] not in st.TiposPrimitivos):
+                        expAux = st.getBindable(expList[i])
+                        if(expAux == None):
+                            listIdExp.accept(self.printer)
+                            print('\n\t[ERRO]: Atribuicao nao compativel')
+                        else:
+                            st.addVar(idList[i], expList[st.TYPE])
+                            st.symbolTable[-1][idList[i]][st.CONST] = 'const'
+                    else:
+                        st.addVar(idList[i], expList[i])
+                        st.symbolTable[-1][idList[i]][st.CONST] = 'const'
+                else:
+                    listIdExp.accept(self.printer)
+                    print('\n\t[Erro]:', idList[i], 'redefinida neste bloco')
 
     def visitListTypeExp(self, listTypeExp):
         print('visitListTypeExp')
-        listTypeExp.IdentifierList.accept(self)
+        variaveis = listTypeExp.IdentifierList.accept(self)
         tipo = listTypeExp.Type
-        listTypeExp.ExpressionList.accept(self)
+
+        for indice in range(len(variaveis)):
+            if(st.getBindable(variaveis[indice]) == None):
+                st.addVar(variaveis[indice], tipo)
+            else:
+                listTypeExp.accept(self.printer)
+                print('\n\t[ERRO]:', variaveis[indice], 'redefinida neste bloco')
+
+        expressao = listTypeExp.ExpressionList.accept(self)
+
+        if(type(expressao) is not list):
+            if(expressao in st.TiposPrimitivos and expressao != tipo):
+                listTypeExp.accept(self.printer)
+                print('\n\t[ERRO]: Atribuicao nao compativel')
+            elif(expressao != tipo):
+                expressao = st.getBindable(expressao)
+                if(None == expressao or expressao[st.TYPE] != tipo):
+                    listTypeExp.accept(self.printer)
+                    print('\n\t[ERRO]: Atribuicao nao compativel')
+        else:
+            for ind in range(len(expressao)):
+                if(expressao[ind] != tipo):
+                    listTypeExp.accept(self.printer)
+                    print('\n\t[ERRO]: Atribuicao nao compativel')
+                    break
     
     # IdentifierList
     def visitDefinirIDList(self, definirIDList):
@@ -549,7 +591,15 @@ class GoSemanticVisitor(GoAbstractVisitor):
         else:
             for x in range(len(variavel)):
                 if(st.getBindable(variavel[x]) == None):
-                    st.addVar(variavel[x], tipo[x])
+                    if (tipo[x] not in st.TiposPrimitivos):
+                        tipoAux = st.getBindable(tipo[x])
+                        if(tipoAux == None):
+                            simpleVarSpec.accept(self.printer)
+                            print('\n\t[ERRO]: Atribuicao nao compativel')
+                        else:
+                            st.addVar(variavel[x], tipoAux[st.TYPE])
+                    else:
+                        st.addVar(variavel[x], tipo[x])
                 else:
                     simpleVarSpec.accept(self.printer)
                     print('\n\t[Erro]:', variavel[x], 'redefinida neste bloco')
