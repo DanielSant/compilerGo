@@ -517,7 +517,11 @@ class GoSemanticVisitor(GoAbstractVisitor):
         tipo = classicVarSpec.Type
 
         for k in range(len(variaveis)):
-            st.addVar(variaveis[k], tipo)
+            if(st.getBindable(variaveis[k]) == None):
+                st.addVar(variaveis[k], tipo)
+            else:
+                classicVarSpec.accept(self.printer)
+                print('\n\t[Erro]:', variaveis[k], 'redefinida neste bloco')
 
         expressao = classicVarSpec.ExpressionList.accept(self)
 
@@ -544,7 +548,11 @@ class GoSemanticVisitor(GoAbstractVisitor):
             print('\n\t[Erro]:', len(variavel), 'variaveis mas', len(tipo), 'valores')
         else:
             for x in range(len(variavel)):
-                st.addVar(variavel[x], tipo[x])
+                if(st.getBindable(variavel[x]) == None):
+                    st.addVar(variavel[x], tipo[x])
+                else:
+                    simpleVarSpec.accept(self.printer)
+                    print('\n\t[Erro]:', variavel[x], 'redefinida neste bloco')
 
     # CallFunc
     def visitSimpleCallFunc(self, simpleCallFunc):
@@ -601,11 +609,15 @@ class GoSemanticVisitor(GoAbstractVisitor):
                 print('\n\t[Erro]: Atribuicao invalida de constante')
         if(listaExp1 not in st.TiposPrimitivos):
             bindable = st.getBindable(listaExp1)
-            if(st.TYPE in bindable):
-                listaExp1 = bindable[st.TYPE]
-            if(listaExp != listaExp1):
+            if(bindable != None):
+                if(st.TYPE in bindable):
+                    listaExp1 = bindable[st.TYPE]
+                if(listaExp != listaExp1):
+                    assignOp.accept(self.printer)
+                    print('\n\t[Erro]: Tipo de atribuicao invalida')
+            else:
                 assignOp.accept(self.printer)
-                print('\n\t[Erro]: Tipo de atribuicao invalida')
+                print('\n\t[Erro]: Erro de atribuicao')
 
         
 
