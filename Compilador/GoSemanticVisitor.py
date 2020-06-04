@@ -536,8 +536,15 @@ class GoSemanticVisitor(GoAbstractVisitor):
         print('visitSimpleVarSpec')
         variavel = simpleVarSpec.IdentifierList.accept(self)
         tipo = simpleVarSpec.ExpressionList.accept(self)
-        for x in range(len(variavel)):
-            st.addVar(variavel[x], tipo)
+
+        if(type(tipo) is not list):
+            tipo = [tipo]
+        if(len(variavel) != len(tipo)):
+            simpleVarSpec.accept(self.printer)
+            print('\n\t[Erro]:', len(variavel), 'variaveis mas', len(tipo), 'valores')
+        else:
+            for x in range(len(variavel)):
+                st.addVar(variavel[x], tipo[x])
 
     # CallFunc
     def visitSimpleCallFunc(self, simpleCallFunc):
