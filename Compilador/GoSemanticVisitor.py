@@ -46,7 +46,12 @@ class GoSemanticVisitor(GoAbstractVisitor):
 
     # Result
     def visitDefinirTipo(self, definirTipo):
-        return [definirTipo.Type]
+        tipo = st.getNewType(definirTipo.Type)
+        if (tipo == None):
+            definirTipo.accept(self.printer)
+            print('\n\t[ERRO] tipo de retorno indefinido')
+
+        return [tipo]
 
     # Type
     # def visitTint()
@@ -87,7 +92,12 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # ParameterDecl
     def visitParamIdDecl(self, paramIdDecl): # ok
         listaIDs = paramIdDecl.IdentifierList.accept(self)
-        tipo = paramIdDecl.Type
+        tipo = st.getNewType(paramIdDecl.Type)
+
+        if (tipo == None):
+            paramIdDecl.accept(self.printer)
+            print('\n\t[ERRO] Tipo indefenido')
+
         for k in range(len(listaIDs)+len(listaIDs)):
             if(k%2 != 0):
                 listaIDs.insert(k, tipo)
@@ -439,7 +449,7 @@ class GoSemanticVisitor(GoAbstractVisitor):
     def visitListTypeExp(self, listTypeExp):
         print('visitListTypeExp')
         variaveis = listTypeExp.IdentifierList.accept(self)
-        tipo = listTypeExp.Type
+        tipo = st.getNewType(listTypeExp.Type)
 
         for indice in range(len(variaveis)):
             if(st.getBindable(variaveis[indice]) == None):
@@ -453,12 +463,12 @@ class GoSemanticVisitor(GoAbstractVisitor):
         if(type(expressao) is not list):
             if(expressao in st.TiposPrimitivos and expressao != tipo):
                 listTypeExp.accept(self.printer)
-                print('\n\t[ERRO]: Atribuicao nao compativel')
+                print('\n\t[ERRO]: Atribuicao nao compativel com o tipo declarado')
             elif(expressao != tipo):
                 expressao = st.getBindable(expressao)
                 if(None == expressao or expressao[st.TYPE] != tipo):
                     listTypeExp.accept(self.printer)
-                    print('\n\t[ERRO]: Atribuicao nao compativel')
+                    print('\n\t[ERRO]: Atribuicao nao compativel com o tipo declarado')
         else:
             for ind in range(len(expressao)):
                 if(expressao[ind] != tipo):
@@ -524,7 +534,13 @@ class GoSemanticVisitor(GoAbstractVisitor):
     def visitSpecType(self, specType):
         print('visitSpecType')
         identifier = specType.ID
-        tipo = specType.Type
+        tipo = st.getNewType(specType.Type)
+
+        if (tipo == None):
+            specType.accept(self.printer)
+            print('\n\t[ERRO] Tipo indefinido')
+
+        st.addNewType(identifier, tipo)
 
     # VarDecl
     def visitDefinirVar(self, definirVar):
@@ -549,7 +565,12 @@ class GoSemanticVisitor(GoAbstractVisitor):
     def visitSpecVar(self, specVar):
         print('visitSpecVar')
         variaveis = specVar.IdentifierList.accept(self)
-        tipo = specVar.Type
+        tipo = st.getNewType(specVar.Type)
+
+        if(tipo == None):
+            specVar.accept(self.printer)
+            print('\n\t[ERRO] Tipo indefinido')
+
         for k in range(len(variaveis)):
             st.addVar(variaveis[k], tipo)
 
@@ -557,6 +578,11 @@ class GoSemanticVisitor(GoAbstractVisitor):
         print('visitClassicVarSpec')
         variaveis = classicVarSpec.IdentifierList.accept(self)
         tipo = classicVarSpec.Type
+
+        tipo = st.getNewType(tipo)
+        if(tipo == None):
+            classicVarSpec.accept(self.printer)
+            print('\n\t[ERRO] Tipo indefinido')
 
         for k in range(len(variaveis)):
             if(st.getBindable(variaveis[k]) == None):
@@ -570,12 +596,12 @@ class GoSemanticVisitor(GoAbstractVisitor):
         if(type(expressao) != type([])):
             if(expressao != tipo):
                 classicVarSpec.accept(self.printer)
-                print('\n\t[Erro]: Atribuicao nao compativel')
+                print('\n\t[Erro]: Atribuicao nao compativel com o tipo declarado')
         else: 
             for i in range (len(expressao)):
                 if(expressao[i] != tipo):
                     classicVarSpec.accept(self.printer)
-                    print('\n\t[Erro]: Atribuicao nao compativel')
+                    print('\n\t[Erro]: Atribuicao nao compativel com o tipo declarado')
                     break
 
     def visitSimpleVarSpec(self, simpleVarSpec):

@@ -154,17 +154,14 @@ lexer = lex.lex()
     
 # Tipo da funcao não esta sendo printado
 data = '''
-func funcao () int{
-    return 5;
-}
-func principal() int {
-    const b int = 5;
-    const (
-        z, kk string = "blabalab", 5;
-        f = "blabla";
-    );
+func principal() string {
+    type ohloko int;
+    type newString string;
+    var b newString = "Daniel";
 
-    return b + "Daniel";
+    const (z ohloko = 15;);
+
+    return b;
 }
 // Isto é comentário
 '''

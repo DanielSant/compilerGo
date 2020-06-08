@@ -50,6 +50,7 @@ YES = 'yes'
 NO = 'no'
 USED = 'used'
 SWITCHTYPE = 'switchtype'
+NEWTYPE = 'newtype'
 Number = [INT, FLOAT]
 TiposPrimitivos = [INT, FLOAT, BOOL, STRING]
 
@@ -94,3 +95,19 @@ def varCheck(listVar):
     if(listVar != None):
         for k in range(len(listVar)):
             print('[Erro]:',listVar[k], 'declarada mas nao usada')
+
+# Adiciona um novo tipo declarado pelo usuario
+def addNewType(name, type):
+    global symbolTable
+    symbolTable[-1][name] = {BINDABLE: NEWTYPE, TYPE: type, USED: NO} #acessa a ultima posição da lista com o nome do tipo [nome], associando um dicionario
+
+# Pega o tipo primitivo do novo tipo de volta
+def getNewType(NewType):
+    if (NewType not in TiposPrimitivos):
+            NewType = getBindable(NewType)
+            if (NewType != None):
+                return NewType[TYPE]
+            else:
+                return NewType
+    else:
+        return NewType

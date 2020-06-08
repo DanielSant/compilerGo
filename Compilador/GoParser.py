@@ -25,7 +25,8 @@ def p_type(p):
             | STRING
             | BOOL
             | BYTE
-            | FLOAT'''
+            | FLOAT
+            | ID'''
     p[0] = p[1]
 
 def p_parameters(p):
