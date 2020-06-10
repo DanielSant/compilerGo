@@ -1,4 +1,6 @@
-class Visitor():
+from GoAbstractVisitor import GoAbstractVisitor
+
+class Visitor(GoAbstractVisitor):
     # FunctionDecl
     def visitDefinirFunc(self, definirFunc):
         print('func', end =' ')
@@ -145,9 +147,11 @@ class Visitor():
     def visitAssign(self, assign):
         assign.Assignment.accept(self)
     
-    def visitDeclShortVar(self, declShortVar):
-        declShortVar.ShortVarDecl.accept(self)
-    
+    def visitDefinirShortVar(self, declShortVar):
+        declShortVar.IdentifierList.accept(self)
+        print(':=', end = ' ')
+        declShortVar.ExpressionList.accept(self)
+
     # ReturnStmt
     def visitExpReturn(self, expReturn):
         print('return', end =' ')
@@ -454,12 +458,6 @@ class Visitor():
         assignOp.ExpressionList.accept(self)
         print('=', end = ' ')
         assignOp.ExpressionList1.accept(self)
-
-    # ShortVarDec
-    def visitDeclShortVarDef(self, declShortVar):
-        declShortVar.IdentifierList.accept(self)
-        print('=', end = ' ')
-        declShortVar.ExpressionList.accept(self)
     
     # Expression
     def visitExpressionOR(self, expressionOR):
@@ -476,8 +474,9 @@ class Visitor():
         print('&&', end = ' ')
         expressionAND.Expr2.accept(self)
 
-    def visitCallExp2(self, callExp2):
-        callExp2.Expr2.accept(self)
+    # Exp1
+    # def visitExpressionAND(self, expressionAND):
+    #     callExp2.Expr2.accept(self)
 
     # Exp2
     def visitExpressionEquals(self, expressionEquals):
@@ -523,11 +522,6 @@ class Visitor():
         expressionMinus.Expr4.accept(self)
         print('-', end = ' ')
         expressionMinus.Expr3.accept(self)
-
-    def visitExpressionPot(self, expressionPot):
-        expressionPot.Expr4.accept(self)
-        print('^', end = ' ')
-        expressionPot.Expr3.accept(self)
 
     def visitCallExp4(self, callExp4):
         callExp4.Expr4.accept(self)

@@ -14,8 +14,6 @@ reserved = {
     'if': 'IF',
     'range': 'RANGE',
     'case': 'CASE',
-    'map': 'MAP',
-    'struct': 'STRUCT',
     'type': 'TYPE',
     'continue': 'CONTINUE',
     'for': 'FOR',
@@ -23,7 +21,6 @@ reserved = {
     'switch': 'SWITCH',
     'return': 'RETURN',
     'var': 'VAR',
-    'boolean': 'BOOLEAN',
     'true': 'TRUE',
     'false': 'FALSE',
     'int': 'INT',
@@ -31,8 +28,6 @@ reserved = {
     'bool' : 'BOOL',
     'byte' : 'BYTE',
     'float' : 'FLOAT',
-    'print': 'PRINT',
-    'println': 'PRINTLN'
 }
 
 # List of token names.   This is always required
@@ -43,7 +38,6 @@ tokens = [
     'MINUS',
     'TIMES',
     'DIVIDE',
-    'POT',
     'EQUALS',
     'DIFERENTE',
     'ASSIGN',
@@ -62,7 +56,8 @@ tokens = [
     'COMMA',
     'MOD',
     'DPLUS',
-    'DMINUS'
+    'DMINUS',
+    'COLONEQ'
 ] + list(reserved.values())
 
 # Regular expression rules for simple tokens
@@ -72,16 +67,15 @@ t_TIMES         = r'\*'
 t_DIVIDE        = r'\/'
 t_LPAREN        = r'\('
 t_RPAREN        = r'\)'
-t_EQUALS        = r'=='
-t_DIFERENTE     = r'!='
+t_EQUALS        = r'\=='
+t_DIFERENTE     = r'\!='
 t_ASSIGN        = r'\='
 t_GREATER       = r'\>'
 t_LESS          = r'\<'
-t_GREATER_EQUAL = r'>='
-t_LESS_EQUAL    = r'<='
-t_AND           = r'&&'
+t_GREATER_EQUAL = r'\>='
+t_LESS_EQUAL    = r'\<='
+t_AND           = r'\&&'
 t_OR            = r'\|\|'
-t_POT           = r'\^'
 t_LCHAVES       = r'\{'
 t_RCHAVES       = r'\}'
 t_SEMICOLON     = r'\;'
@@ -90,6 +84,7 @@ t_COMMA         = r'\,'
 t_MOD           = r'\%'
 t_DPLUS         = r'\+\+'
 t_DMINUS        = r'\-\-'
+t_COLONEQ       = r'\:\='
  
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
@@ -100,6 +95,11 @@ def t_ID(t):
 def t_NUMBER(t):
     r'\d+'
     t.value = int(t.value)
+    return t
+
+def t_STRING(t):
+    r'\"([^\\\n]|(\\.))*?\"'
+    t.type = reserved.get(t.value, 'STRING')
     return t
 
 # Indentacao # Wedson Help
@@ -154,84 +154,30 @@ lexer = lex.lex()
     
 # Tipo da funcao não esta sendo printado
 data = '''
-func principal(x int, y float) int {
-
-    var l int;
-
-    var d int = 42;
-
-    var w = 15;
-
-    var (
-        a = 13;
-        v bool;
-        k int;
-    );
-
-    for a < 5 {
-        n;
-        break;
-    };
-
-    for a, d = range c {
-        a = a + 1;
-        continue;
-    };
-
-    for range a + 10 {
-        a = a + 1; 
-    };
-
-    for ;a < 10; {
-        a = a + 1;
-
-        if 5 + 3 < 8 {
-            a = 7;
-        };
-    };
-
-    const abc;
-    const abc = 5 + 5;
-    const abc int = 5 + 5;
-
-    const (
-        a;
-        b;
-        c;
-        d = 5 + 5;
-    );
-
-    type variavel string;
-
-    type (
-        z int;
-    );
-
-    a = soma(x, y);
-    h = funcao();
-
-    a = 3 + 2;
-    switch a = 5 - 6; {
-        case 1:
-            5 + 5;
-        case 2:
-            5 + 8;
-    };
-
-    if 5 + 3 == 8 {
-        a = 7;
-    } else {
-        a = 0;
-    };
-
-    for b = 1; b < 100; b++ {
-        b = b + 1;
-    };    
-}
-func soma(int, int) int {
-    return x + y;
+func principal(par1 int, par2 bool) string {
+    type ohloko int;
+    type newString string;
+    var b newString = "Daniel";
+    const (z ohloko = 15;);
+    return b;
 }
 
+func principal2() string {
+    type newString string;
+    var l newString = "Daniel";
+    var b newString = "Daniel";
+    var d = 1;
+    var e = principal(e, d);
+    if 3 > 4 {
+        var g = true;
+        var f = principal(d, g);
+    };
+    var f int = 2;
+    if f || b{println(b);};
+    for k := 0; k < 15; k++ {println(b);};
+    const (z int = 15;);
+    return b;
+}
 // Isto é comentário
 '''
 

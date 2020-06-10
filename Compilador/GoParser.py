@@ -2,14 +2,11 @@ import ply.yacc as yacc
 import ply.lex as lex
 from GoLex import tokens
 import GoAbstract as abstract
+import GoSemanticVisitor as sv
 
 def p_functionDecl(p):
-    '''functionDecl : FUNC ID signature
-                    | FUNC ID signature functionBody'''
-    if(len(p) == 4):
-        p[0] = abstract.DefinirFunc(p[2], p[3])
-    else:
-        p[0] = abstract.DefinirFuncBody(p[2], p[3], p[4])
+    '''functionDecl : FUNC ID signature functionBody'''
+    p[0] = abstract.DefinirFuncBody(p[2], p[3], p[4])
 
 def p_signature(p):
     '''signature : parameters
@@ -28,7 +25,8 @@ def p_type(p):
             | STRING
             | BOOL
             | BYTE
-            | FLOAT'''
+            | FLOAT
+            | ID'''
     p[0] = p[1]
 
 def p_parameters(p):
@@ -56,12 +54,8 @@ def p_parameterList_Mul(p):
         p[0] = abstract.EndParameterList_Mul(p[2])
 
 def p_parameterDecl(p):
-    '''parameterDecl : identifierList type
-                     | type'''
-    if(len(p) == 3):
-        p[0] = abstract.ParamIdDecl(p[1], p[2])
-    else:
-        p[0] = abstract.ParamDecl(p[1])
+    '''parameterDecl : identifierList type'''
+    p[0] = abstract.ParamIdDecl(p[1], p[2])
 
 def p_functionBody(p):
     '''functionBody : block'''
@@ -89,7 +83,6 @@ def p_statement(p):
                  | returnStmt
                  | breakStmt
                  | continueStmt
-                 | block
                  | ifStmt
                  | switchStmt
                  | forStmt'''
@@ -104,8 +97,13 @@ def p_declaration(p):
 def p_simpleStmt(p):
     '''simpleStmt : condition
                   | incDec
-                  | assignment'''
+                  | assignment
+                  | shortVar'''
     p[0] = p[1]
+
+def p_shortVar(p):
+    '''shortVar : expressionList COLONEQ expressionList'''
+    p[0] = abstract.DefinirShortVar(p[1], p[3])
 
 def p_returnStmt(p):
     '''returnStmt : RETURN expressionList
@@ -215,10 +213,11 @@ def p_initPostStmt(p):
 
 def p_rangeClause(p):
     '''rangeClause : RANGE expression
-                   | expressionList ASSIGN RANGE expression''' 
+                   | expressionList ASSIGN RANGE expression
+                   | expressionList COLONEQ RANGE expression''' 
     if(len(p) == 3):
         p[0] = abstract.DefinirRange(p[2])
-    elif(isinstance(p[1], abstract.ExpressionList)):
+    elif(len(p) == 5):
         p[0] = abstract.RangeExpList(p[1], p[4])
     
 def p_constDecl(p):
@@ -240,13 +239,10 @@ def p_constSpecList(p):
         p[0] = abstract.CompoundConstSpec(p[1], p[3])
 
 def p_constSpec(p):
-    '''constSpec : identifierList
-                 | identifierList ASSIGN expressionList
+    '''constSpec : identifierList ASSIGN expressionList
                  | identifierList type ASSIGN expressionList''' 
 
-    if(len(p) == 2):
-        p[0] = p[1]
-    elif(len(p) == 4):
+    if(len(p) == 4):
         p[0] = abstract.ListIdExp(p[1], p[3])
     else:
         p[0] = abstract.ListIdTypeExp(p[1], p[2], p[4])
@@ -351,10 +347,6 @@ def p_assignment(p):
     '''assignment : expressionList ASSIGN expressionList'''
     p[0] = abstract.AssignOp(p[1], p[3])
 
-def p_shortVarDec(p):
-    '''shortVarDec : identifierList ASSIGN expressionList'''
-    p[0] = abstract.DeclShortVarDef(p[1], p[3])
-
 def p_exp(p):
     '''expression : expression OR exp1
                   | exp1'''
@@ -397,7 +389,6 @@ def p_exp2(p):
 def p_exp3(p):
     '''exp3 : exp4 PLUS exp3
             | exp4 MINUS exp3
-            | exp4 POT exp3
             | exp4'''
     if(len(p) == 2):
         p[0] = p[1]
@@ -405,8 +396,7 @@ def p_exp3(p):
         p[0] = abstract.ExpressionPlus(p[1], p[3])
     elif(p[2] == '-'):
         p[0] = abstract.ExpressionMinus(p[1], p[3])
-    elif(p[2] == '^'):
-        p[0] = abstract.ExpressionPot(p[1], p[3])
+        
 
 def p_exp4(p):
     '''exp4 : exp5 TIMES exp4
@@ -424,6 +414,9 @@ def p_exp4(p):
 
 def p_exp5(p):
     '''exp5 : NUMBER
+            | TRUE
+            | FALSE
+            | STRING
             | callFunc
             | ID
             | LPAREN expression RPAREN'''
@@ -442,9 +435,14 @@ def p_error(p):
 
 parser = yacc.yacc()
 
-result = parser.parse(debug=True)
+result = parser.parse(debug=False)
 
-visit = abstract.Visitor.Visitor()
+visit = sv.GoSemanticVisitor()
+
+# for r in result:
+#     r.accept(visit)
+
+# visit = abstract.Visitor.Visitor()
 
 print('\n')
 
