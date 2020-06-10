@@ -154,13 +154,28 @@ lexer = lex.lex()
     
 # Tipo da funcao não esta sendo printado
 data = '''
-func principal() string {
+func principal(par1 int, par2 bool) string {
     type ohloko int;
     type newString string;
     var b newString = "Daniel";
-
     const (z ohloko = 15;);
+    return b;
+}
 
+func principal2() string {
+    type newString string;
+    var l newString = "Daniel";
+    var b newString = "Daniel";
+    var d = 1;
+    var e = principal(e, d);
+    if 3 > 4 {
+        var g = true;
+        var f = principal(d, g);
+    };
+    var f int = 2;
+    if f || b{println(b);};
+    for k := 0; k < 15; k++ {println(b);};
+    const (z int = 15;);
     return b;
 }
 // Isto é comentário
