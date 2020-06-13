@@ -262,10 +262,15 @@ func tests(prm int) int {
     switch variable {
         case 1:
             println("one");
+            break;
         case 2:
             println("two");
+            break;
         case 3:
             println("three");
+            break;
+        default:
+            println("None");
     };
     //FunctionCalls
     b = factorial(4);
