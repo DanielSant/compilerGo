@@ -685,20 +685,20 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # Exp2
     def visitExpressionEquals(self, expressionEquals):
         #print('visitExpressionEquals')
-        tipoExp2 = expressionEquals.Expr2.accept(self)
-        tipoExp3 = expressionEquals.Expr3.accept(self)
+        tipoExp1 = expressionEquals.Expr2.accept(self)
+        tipoExp2 = expressionEquals.Expr3.accept(self)
 
         tipoExp1 = st.getNewType(tipoExp1)
         tipoExp2 = st.getNewType(tipoExp2)
 
-        c = coercion(tipoExp2, tipoExp3)
+        c = coercion(tipoExp2, tipoExp2)
         if (c == None):
             expressionEquals.accept(self.printer)
             print('\n\t[Erro]: Comparação invalida. A expressao ', end='')
             expressionEquals.Expr2.accept(self.printer)
             print(' eh do tipo', tipoExp2, 'enquanto a expressao ', end='')
             expressionEquals.Expr3.accept(self.printer)
-            print(' eh do tipo', tipoExp3, 'quando deveriam ser do mesmo tipo\n')
+            print(' eh do tipo', tipoExp2, 'quando deveriam ser do mesmo tipo\n')
         return c
 
     def visitExpressionDiferente(self, expressionDiferente):
@@ -841,8 +841,8 @@ class GoSemanticVisitor(GoAbstractVisitor):
     # Exp4
     def visitExpressionTimes(self, expressionTimes):
         #print('visitExpressionTimes')
-        tipoExp1 = expressionTimes.Expr4.accept(self)
-        tipoExp2 = expressionTimes.Expr3.accept(self)
+        tipoExp1 = expressionTimes.Expr5.accept(self)
+        tipoExp2 = expressionTimes.Expr4.accept(self)
 
         tipoExp1 = st.getNewType(tipoExp1)
         tipoExp2 = st.getNewType(tipoExp2)
