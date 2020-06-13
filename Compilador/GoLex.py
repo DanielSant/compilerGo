@@ -154,6 +154,13 @@ lexer = lex.lex()
     
 # Tipo da funcao não esta sendo printado
 data = '''
+func factorial(x int) int {
+	if x == 0 {
+		return 1;
+	};
+	return x * factorial(x-1);
+}
+
 func principal(par1 int, par2 bool) string {
     type ohloko int;
     type newString string;
@@ -177,6 +184,98 @@ func principal2() string {
     for k := 0; k < 15; k++ {println(b);};
     const (z int = 15;);
     return b;
+}
+
+func tests(prm int) int {
+    //Definicao de tipos
+    type integer int;
+    type charset string;
+    type boolean bool;
+
+    //Variaveis
+    var a = "initial";
+    var b, c int = 1, 2;
+    var d = true;
+    var e int;
+    f := "apple";
+    var idade integer = 21;
+    var nome, sobrenome charset = "Jhonatan", "Bitencourt";
+    var TorF boolean = true;
+    var aTrueVar boolean = true;
+    var aFalseVar boolean = false;
+
+    //Constantes
+    const n = 500000000;
+    const (
+        z int = 15;
+        y string = "Teste";
+    );
+
+    //For's
+    i := 1;
+    for i <= 3 {
+        i = i + 1;
+    };
+
+    for j := 7; j <= 9; j++ {
+        println(j);
+    };
+
+    for n := 0; n <= 5; n++ {
+        if n%2 == 0 {
+            continue;
+        };
+        println(n);
+    };
+
+    //If If-else
+    if 7%2 == 0 {
+        println("7 is even");
+    } else {
+        println("7 is odd");
+    };
+
+    if 8%4 == 0 {
+        println("8 is divisible by 4");
+    };
+
+    if aFalseVar || aTrueVar {
+        println("here we are, OR not");
+    };
+
+    if aFalseVar && aTrueVar {
+        println("AND here we are");
+    };
+
+    if 8>5 {
+        println("8 is greater than 5");
+    };
+
+    if 2<5 {
+        println("2 is less than 5");
+    } else {
+        println("how did you get here?");
+    };
+
+    //Switch
+    variable := 1;
+    switch variable {
+        case 1:
+            println("one");
+        case 2:
+            println("two");
+        case 3:
+            println("three");
+    };
+    //FunctionCalls
+    b = factorial(4);
+    f = principal(idade, TorF);
+    print(nome);
+    print(sobrenome);
+    var result = factorial(2) - 9 + 3;
+    result = result * 2;
+    //return
+    return result;
 }
 // Isto é comentário
 '''
